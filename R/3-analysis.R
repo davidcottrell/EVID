@@ -123,22 +123,24 @@ plot2save <- ggplot(hst , aes(time2, fill = Race3)) +
 ggsave (plot2save, filename = "../Plots/example01.pdf", height = 3, width = 11)
 
 
-pdf("../Plots/number_of_locations.pdf", height = 4)
-vte12 %>%  group_by(hr, day, location) %>% count() %>% count() %>% complete(hr, day, fill = list(nn = 0)) %>%
-  ggplot(aes(hr, nn, colour = day, group = day)) + geom_line(position = position_nudge(.5)) + theme_bw() + scale_colour_grey(start = 0.8, end = 0.2, name = "Day") +
+
+forplot <- vte12 %>%  group_by(hr, day, location) %>% count() %>% count() %>% complete(hr, day, fill = list(nn = 0))
+
+plot2save <- ggplot(forplot, aes(hr, nn, colour = day, group = day)) + geom_line(position = position_nudge(.5)) + theme_bw() + scale_colour_grey(start = 0.8, end = 0.2, name = "Day") +
   geom_vline(xintercept = 13, colour ="red") + geom_point( position = position_nudge(.5)) + xlab("") + xlim(lim) +
   scale_y_continuous(breaks = seq(0, 100, 5), name = "") +
   #ggtitle("Number of locations where votes are being cast") +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5),
         legend.text = element_text(size = 8),
         legend.key.height = unit(.8,"line"))
-dev.off()
+ggsave (plot2save, filename = "../Plots/number_of_locations.pdf", height = 4, width = 7)
+
 
 plot2save <- ggplot(vte12, aes(x=hr)) +  geom_bar(stat="count", position = position_nudge(.5)) + geom_vline(xintercept = 13, colour ="red") +
   scale_y_continuous(breaks = seq(0, 100000, 10000), labels = seq(0, 100, 10), name = "Count in thousands\n") + theme_bw() +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) + xlab("")  + xlim(lim) 
 #ggtitle("Distribution of Voters by Hour Voted")
-ggsave(plot2save, filename = "../Plots/histogram_by_hour.pdf", height = 4, width = 11)
+ggsave(plot2save, filename = "../Plots/histogram_by_hour.pdf", height = 4, width = 7)
 
 library(MultinomialCI)
 cis <- function(x, i){data.frame(multinomialCI(x,.05))[,i]}
@@ -157,7 +159,7 @@ plot2save <- ggplot(plt1, aes(hr, pct, colour = race, group = race, ymin = low, 
   scale_x_discrete(limits = c(levels(plt1$hr), "1:00am") ) +
   #ggtitle("Racial Composition of Early Voters by Hour") +
   scale_colour_discrete(name = "Race")  
-ggsave(plot2save, filename = "../Plots/racial_composition.pdf", height = 4, width = 11)
+ggsave(plot2save, filename = "../Plots/racial_composition.pdf", height = 4, width = 7)
 
 
 plt1.3 <- vte12 %>% group_by(hr,race) %>% summarize(pct = mean(party == "DEM"), n=n()) %>% mutate(party = "DEM") %>% filter(n>30, !is.na(race), race != "Other")
@@ -177,7 +179,7 @@ plot2save <- ggplot(pt, aes(hr, pct, group = interaction(party, race), colour = 
   scale_x_discrete(limits = lim) +
   scale_colour_manual(values = c("#F8766D", "#7CAE00", "#00BFC4", "#C77CFF", "black"),  name = "Race")  
 #ggtitle("Partisan Composition of Early Voters by Hour (Whites)")
-ggsave(plot2save, file = "../Plots/partisan_composition_by_race.pdf", height = 4, width = 11)
+ggsave(plot2save, file = "../Plots/partisan_composition_by_race.pdf", height = 4, width = 7)
 
 ###EVID 2016
 vte16 <- vte %>% filter(year == 2016)
@@ -195,7 +197,7 @@ plot2save <- vte16 %>% group_by(hr, day, location) %>% count() %>% count() %>% c
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5),
         legend.text = element_text(size = 8),
         legend.key.height = unit(.8,"line"))
-ggsave (plot2save, file = "../Plots/number_of_locations_2016.pdf", height = 4)
+ggsave (plot2save, file = "../Plots/number_of_locations_2016.pdf", height = 4, width = 7)
 
 plot2save <- ggplot(filter(vte, race != "Asian",race != "Other"), aes(x=hr)) +  geom_bar(stat="count", position = position_nudge(.5)) + facet_grid(race~year) + geom_vline(xintercept = 13, colour ="red") +
   scale_y_continuous(breaks = seq(0, 100000, 10000), labels = seq(0, 100, 10), name = "Count in thousands\n") + theme_bw() +
