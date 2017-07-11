@@ -190,9 +190,8 @@ vte16$day <- factor(vte16$day, labels = c("MON 10/24",  "TUE 10/25", "WED 10/26"
 
 lim <- c(levels(vte16$hr), "1:00am")
 
-#pdf("../Plots/number_of_locations_2016.pdf", height = 4)
-plot2save <- vte16 %>% group_by(hr, day, location) %>% count() %>% count() %>% complete(hr, day, fill = list(nn = 0)) %>%
-  ggplot(aes(hr, nn, colour = day, group = day)) + geom_line(position = position_nudge(.5)) + theme_bw() + scale_colour_grey(start = 0.8, end = 0.2, name = "Day") +
+forplot <- vte16 %>% group_by(hr, day, location) %>% count() %>% count() %>% complete(hr, day, fill = list(nn = 0))
+plot2save <-  ggplot(forplot, aes(hr, nn, colour = day, group = day)) + geom_line(position = position_nudge(.5)) + theme_bw() + scale_colour_grey(start = 0.8, end = 0.2, name = "Day") +
   geom_vline(xintercept = 13, colour ="red") + geom_point( position = position_nudge(.5)) + xlab("") + xlim(lim) +
   scale_y_continuous(breaks = seq(0, 125, 5), name = "") +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5),
