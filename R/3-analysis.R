@@ -2,6 +2,7 @@ library(tidyverse)
 library(lubridate)
 library(stringr)
 library(RSQLite)
+library(stargazer)
 
 ## Set working directory
 if (length(grep("herron", Sys.info()["user"]))) {
