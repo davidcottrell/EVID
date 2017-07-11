@@ -3,7 +3,15 @@ library(lubridate)
 library(stringr)
 library(RSQLite)
 
-setwd("~/Dropbox/EVID/R")
+## Set working directory
+
+if (length(grep("herron", Sys.info()["user"]))) {
+  ## Michael
+  setwd("/Users/herron/research/EVID/R")
+} else {
+  ## David
+  setwd("~/Dropbox/EVID/R")
+}
 
 my_db <- src_sqlite("../Data/evid-db.sqlite3")
 
