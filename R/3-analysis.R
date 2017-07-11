@@ -4,7 +4,6 @@ library(stringr)
 library(RSQLite)
 
 ## Set working directory
-
 if (length(grep("herron", Sys.info()["user"]))) {
   ## Michael
   setwd("/Users/herron/research/EVID/R")
@@ -90,8 +89,7 @@ hst$Race3 <- if_else(hst$race == "White", "White", "Non-White")
 hst$Race3 <- factor(hst$Race3, levels = c("White", "Non-White"))
 hst$time2[hst$time2 <= 7] <- 7 + .000001
 clse <- hst %>% group_by(day) %>% summarize( close = max(time2))
-pdf("../Plots/example00.pdf", height = 3, width = 11)
-ggplot(hst , aes(time2, fill = Race3)) + 
+plot2save <- ggplot(hst , aes(time2, fill = Race3)) + 
   geom_histogram(binwidth = 10/60, colour = "black", boundary = 0) + 
   geom_vline(xintercept = 19, colour = "red") +
   geom_vline(data = clse, aes(xintercept = close), colour = "red", linetype = "dashed") +
@@ -102,8 +100,7 @@ ggplot(hst , aes(time2, fill = Race3)) +
   scale_y_continuous(breaks = seq(0,45,10), limits = c(0,45), name = "Count\n") +
   theme(legend.position = c(.8,.7)) +
   theme(axis.text = element_text(size = 12)) 
-dev.off()
-
+ggsave (plot2save, filename = "../Plots/example00.pdf", height = 3, width = 11)
 
 
 xlabs <- c(paste0(c(7:11), ":00am"), paste0(c(12, 1:11), ":00pm"), paste0(c(12,1), ":00am"))
@@ -112,8 +109,7 @@ hst$Race3 <- if_else(hst$race == "White", "White", "Non-White")
 hst$Race3 <- factor(hst$Race3, levels = c("White", "Non-White"))
 hst$time2[hst$time2 <= 7] <- 7 + .000001
 clse <- hst %>% group_by(day) %>% summarize( close = max(time2))
-pdf("../Plots/example01.pdf", height = 3, width = 11)
-ggplot(hst , aes(time2, fill = Race3)) + 
+plot2save <- ggplot(hst , aes(time2, fill = Race3)) + 
   geom_histogram(binwidth = 10/60, colour = "black", boundary = 0) + 
   geom_vline(xintercept = 19, colour = "red") +
   geom_vline(data = clse, aes(xintercept = close), colour = "red", linetype = "dashed") +
@@ -124,7 +120,7 @@ ggplot(hst , aes(time2, fill = Race3)) +
   scale_y_continuous(breaks = seq(0,45,10), limits = c(0,45), name = "Count\n") +
   theme(axis.text = element_text(size = 12)) +
   guides(fill = F)
-dev.off()
+ggsave (plot2save, filename = "../Plots/example01.pdf", height = 3, width = 11)
 
 
 pdf("../Plots/number_of_locations.pdf", height = 4)
@@ -138,12 +134,11 @@ vte12 %>%  group_by(hr, day, location) %>% count() %>% count() %>% complete(hr, 
         legend.key.height = unit(.8,"line"))
 dev.off()
 
-pdf("../Plots/histogram_by_hour.pdf", height = 4)
-ggplot(vte12, aes(x=hr)) +  geom_bar(stat="count", position = position_nudge(.5)) + geom_vline(xintercept = 13, colour ="red") +
-  scale_y_continuous(breaks = seq(0, 100000, 10000), labels = seq(0, 100, 10), name = "Count in Thousands\n") + theme_bw() +
+plot2save <- ggplot(vte12, aes(x=hr)) +  geom_bar(stat="count", position = position_nudge(.5)) + geom_vline(xintercept = 13, colour ="red") +
+  scale_y_continuous(breaks = seq(0, 100000, 10000), labels = seq(0, 100, 10), name = "Count in thousands\n") + theme_bw() +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) + xlab("")  + xlim(lim) 
 #ggtitle("Distribution of Voters by Hour Voted")
-dev.off()
+ggsave(plot2save, filename = "../Plots/histogram_by_hour.pdf", height = 4, width = 11)
 
 library(MultinomialCI)
 cis <- function(x, i){data.frame(multinomialCI(x,.05))[,i]}
@@ -152,8 +147,7 @@ plt1 <- vte12 %>% filter(!is.na(race), race != "Other") %>% group_by(hr, race) %
 rc <- c("White", "Black", "Hispanic", "Asian")
 plt1$race <- factor(plt1$race, rc)
 
-pdf("../Plots/racial_composition.pdf", height = 4)
-ggplot(plt1, aes(hr, pct, colour = race, group = race, ymin = low, ymax = high)) + 
+plot2save <- ggplot(plt1, aes(hr, pct, colour = race, group = race, ymin = low, ymax = high)) + 
   geom_line(position = position_nudge(.5)) + geom_point(position = position_nudge(.5)) + 
   #geom_errorbar(width = 0)  + 
   theme_bw() + ylab("Percent") +  xlab("") +
@@ -163,7 +157,8 @@ ggplot(plt1, aes(hr, pct, colour = race, group = race, ymin = low, ymax = high))
   scale_x_discrete(limits = c(levels(plt1$hr), "1:00am") ) +
   #ggtitle("Racial Composition of Early Voters by Hour") +
   scale_colour_discrete(name = "Race")  
-dev.off()
+ggsave(plot2save, filename = "../Plots/racial_composition.pdf", height = 4, width = 11)
+
 
 plt1.3 <- vte12 %>% group_by(hr,race) %>% summarize(pct = mean(party == "DEM"), n=n()) %>% mutate(party = "DEM") %>% filter(n>30, !is.na(race), race != "Other")
 rc <- c("White", "Black", "Hispanic", "Asian", "All")
@@ -172,8 +167,7 @@ plt1.35 <- vte12 %>% group_by(hr) %>% summarize(pct = mean(party == "DEM", na.rm
 rc <- c("White", "Black", "Hispanic", "Asian", "All")
 plt1.35$race <- factor(plt1.35$race, rc)
 pt <-bind_rows(plt1.3, plt1.35)
-pdf("../Plots/partisan_composition_by_race.pdf", height = 4)
-ggplot(pt, aes(hr, pct, group = interaction(party, race), colour = race)) + 
+plot2save <- ggplot(pt, aes(hr, pct, group = interaction(party, race), colour = race)) + 
   geom_line(position = position_nudge(.5)) + geom_point(position = position_nudge(.5)) +
   theme_bw() + ylab("Percent") +  xlab("") +
   geom_vline(xintercept = 13, colour ="red") +
@@ -183,7 +177,7 @@ ggplot(pt, aes(hr, pct, group = interaction(party, race), colour = race)) +
   scale_x_discrete(limits = lim) +
   scale_colour_manual(values = c("#F8766D", "#7CAE00", "#00BFC4", "#C77CFF", "black"),  name = "Race")  
 #ggtitle("Partisan Composition of Early Voters by Hour (Whites)")
-dev.off()
+ggsave(plot2save, file = "../Plots/partisan_composition_by_race.pdf", height = 4, width = 11)
 
 ###EVID 2016
 vte16 <- vte %>% filter(year == 2016)
@@ -193,22 +187,21 @@ vte16$day <- factor(vte16$day, labels = c("MON 10/24",  "TUE 10/25", "WED 10/26"
 
 lim <- c(levels(vte16$hr), "1:00am")
 
-pdf("../Plots/number_of_locations_2016.pdf", height = 4)
-vte16 %>%  group_by(hr, day, location) %>% count() %>% count() %>% complete(hr, day, fill = list(nn = 0)) %>%
+#pdf("../Plots/number_of_locations_2016.pdf", height = 4)
+plot2save <- vte16 %>% group_by(hr, day, location) %>% count() %>% count() %>% complete(hr, day, fill = list(nn = 0)) %>%
   ggplot(aes(hr, nn, colour = day, group = day)) + geom_line(position = position_nudge(.5)) + theme_bw() + scale_colour_grey(start = 0.8, end = 0.2, name = "Day") +
   geom_vline(xintercept = 13, colour ="red") + geom_point( position = position_nudge(.5)) + xlab("") + xlim(lim) +
   scale_y_continuous(breaks = seq(0, 125, 5), name = "") +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5),
         legend.text = element_text(size = 8),
         legend.key.height = unit(.8,"line"))
-dev.off()
+ggsave (plot2save, file = "../Plots/number_of_locations_2016.pdf", height = 4)
 
-pdf("../Plots/histogram_by_hour_by_race_2012_2016.pdf", height = 4, width = 8)
-ggplot(filter(vte, race != "Asian",race != "Other"), aes(x=hr)) +  geom_bar(stat="count", position = position_nudge(.5)) + facet_grid(race~year) + geom_vline(xintercept = 13, colour ="red") +
-  scale_y_continuous(breaks = seq(0, 100000, 10000), labels = seq(0, 100, 10), name = "Count in Thousands\n") + theme_bw() +
+plot2save <- ggplot(filter(vte, race != "Asian",race != "Other"), aes(x=hr)) +  geom_bar(stat="count", position = position_nudge(.5)) + facet_grid(race~year) + geom_vline(xintercept = 13, colour ="red") +
+  scale_y_continuous(breaks = seq(0, 100000, 10000), labels = seq(0, 100, 10), name = "Count in thousands\n") + theme_bw() +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) + xlab("") +
   scale_x_discrete(breaks = hrs,limits = hrs)  
-dev.off()
+ggsave (plot2save, file = "../Plots/histogram_by_hour_by_race_2012_2016.pdf", height = 4, width = 8)
 
 
 
@@ -373,8 +366,8 @@ plt3under <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13],
 
 plt3overunder <- bind_rows(plt3over, plt3under)
 
-pdf("../Plots/probability_of_voting_in_2016_over_under.pdf", height = 5)
-ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) + 
+
+plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) + 
   geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
   geom_vline(xintercept = 13, colour ="red") +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
@@ -383,4 +376,4 @@ ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) +
   scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
   ggtitle("") +
   theme(legend.position = c(.3,.2))
-dev.off()
+ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under.pdf", height = 5, width = 11)
