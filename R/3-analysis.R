@@ -156,7 +156,7 @@ plot2save <- ggplot(plt1, aes(hr, pct, colour = race, group = race, ymin = low, 
   theme_bw() + ylab("Percent") +  xlab("") +
   geom_vline(xintercept = 13, colour ="red") +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
-  scale_y_continuous(breaks = seq(0, 1, .05), labels = seq(0, 100, 5), name = "Percent of Total Voters\n") +
+  scale_y_continuous(breaks = seq(0, 1, .05), labels = seq(0, 100, 5), name = "Percent of total voters\n") +
   scale_x_discrete(limits = c(levels(plt1$hr), "1:00am") ) +
   #ggtitle("Racial Composition of Early Voters by Hour") +
   scale_colour_discrete(name = "Race")  
@@ -176,7 +176,7 @@ plot2save <- ggplot(pt, aes(hr, pct, group = interaction(party, race), colour = 
   geom_vline(xintercept = 13, colour ="red") +
   geom_hline(yintercept = .5, colour ="grey") +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
-  scale_y_continuous(breaks = seq(0, 1, .05), labels = seq(0, 100, 5), name = "Percent Democrat\n", limits = c(.3,1)) +
+  scale_y_continuous(breaks = seq(0, 1, .05), labels = seq(0, 100, 5), name = "Percent Democratic\n", limits = c(.3,1)) +
   scale_x_discrete(limits = lim) +
   scale_colour_manual(values = c("#F8766D", "#7CAE00", "#00BFC4", "#C77CFF", "black"),  name = "Race")  
 #ggtitle("Partisan Composition of Early Voters by Hour (Whites)")
