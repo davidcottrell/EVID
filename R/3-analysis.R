@@ -303,23 +303,23 @@ t <- stargazer(mn,
                  "4:00pm \\& Over",
                  "5:00pm \\& Over",
                  "6:00pm \\& Over",
-                 "Gender: Male",
+                 "Gender: male",
                  "Race: Black",
                  "Race: Hispanic",
                  "Race: Asian",
-                 "Age Group: 30-39",
-                 "Age Group: 40-49",
-                 "Age Group: 50-59",
-                 "Age Group: 60-69",
-                 "Age Group: 70+",
-                 "Party: Independent",
-                 "Party: None",
+                 "Age group: 30-39",
+                 "Age group: 40-49",
+                 "Age group: 50-59",
+                 "Age group: 60-69",
+                 "Age group: 70+",
+                 "Party: independent",
+                 "Party: none",
                  "Party: Republican",
-                 "Voted08: Yes"),
+                 "Voted08: yes"),
                no.space = TRUE,
-               font.size = "footnotesize")
+               font.size = "scriptsize")
 
-cat(t, file="../plots/table_out.tex", sep="\n")
+cat(t, file = "../plots/table_out.tex", sep = "\n")
 
 
 
