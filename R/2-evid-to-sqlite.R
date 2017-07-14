@@ -1,6 +1,7 @@
 library(tidyverse)
 library(hms)
 library(stringr)
+library(DBI)
 
 
 coltypes <- list(
@@ -104,15 +105,15 @@ ora12 <- ora12 %>% mutate(time = str_sub(time, 1, 5), date = str_replace(date, "
 ora12 <- left_join(ora12, loc12, by = "voterid")
 ora12 <- ora12 %>% select(voterid, county, location, date, time)
 ora12 <- ora12 %>% mutate(time = str_pad(time, pad = "0", width = 5, side = "left"))
-ora12 <- ora12 %>% filter(!is.na(location)) #remove 133 that dont match to in-person early voting locations
+ora12 <- ora12 %>% filter(!is.na(location)) #remove 292 that dont match to in-person early voting locations
 
 path <- "../Data/Parsed/OrangeEarlyVotingEVID2016General-parsed.txt"
-ora16 <- read_delim(path, delim = "\t", col_types = coltypes)
+ora16 <- read_delim(path, delim = ";", col_types = coltypes)
 ora16 <- ora16 %>% transmute(voterid, county = "ORA", date, time)
 ora16 <- ora16 %>% mutate(time = str_sub(time, 1, 5) , date = str_replace(date, "2016", "16") ) 
 ora16 <- left_join(ora16, loc16, by = "voterid")
 ora16 <- ora16 %>% select(voterid, county, location, date, time)
-ora16 <- ora16 %>% filter(!is.na(location)) #remove 3 that dont match to in-person early voting locations
+ora16 <- ora16 %>% filter(!is.na(location)) #remove 8 that dont match to in-person early voting locations
 
 # Palm Beach --------------------------------------------------------------
 

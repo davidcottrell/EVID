@@ -24,6 +24,12 @@ evid <- evid %>% mutate(datetime = parse_datetime(paste(date, time), "%m/%d/%y %
 
 make_hour <- function(d) {hour(d) + minute(d)/60}
 
+# remove duplicates
+dupids12 <- evid12 %>% filter(duplicated(voterid) | duplicated(voterid,fromLast = T)) %>% arrange(voterid) %>% data.frame %>% .$voterid %>% unique # 4 duplicates from 2012
+evid12 <- evid12 %>% filter(!voterid %in% dupids12) # because only 4 duplicates, simply drop them
+dupids16 <- evid16 %>% filter(duplicated(voterid) | duplicated(voterid,fromLast = T)) %>% arrange(voterid) %>% data.frame %>% .$voterid %>% unique # 15 duplicates from 2016
+evid16 <- evid16 %>% filter(!voterid %in% dupids16) # because only 15 duplicates, simply drop them
+
 evid <- evid %>%
   mutate(hour = hour(datetime),
          time2 = if_else(hour > 2, make_hour(datetime), 24 + make_hour(datetime)),

@@ -2,12 +2,6 @@ library(rvest)
 library(tidyverse)
 library(stringr)
 
-
-web <- read_html("http://www.voterfocus.com/ws/pfinder/pl_County.php?op=showall&county=broward&name_and_zip=Y")
-tbl <- web %>% html_table(header = T, fill = T)
-df <- tbl[[2]]
-df <- df[,1:2]
-
 colspec <- cols(
   RegNum = col_character(),
   Precinct = col_character(),
@@ -30,3 +24,4 @@ broward <- broward %>%
   select(location, date, time, precinct, voterid)
 
 write.table(broward,"../Data/Parsed/BrowardEarlyVotingEVID2016General-parsed.txt", sep = ";", row.names = F)
+
