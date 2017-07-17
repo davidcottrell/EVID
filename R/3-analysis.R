@@ -364,13 +364,13 @@ plt3over <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13],
                        pct = plogis(p2over$fit), 
                        low = plogis(p2over$fit - 1.96*p2over$se.fit), 
                        high = plogis(p2over$fit + 1.96*p2over$se.fit),
-                       var = "last voter checks-in after 7:30pm", stringsAsFactors = F)
+                       var = "last voter checked-in after 7:30pm", stringsAsFactors = F)
 
 plt3under <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
                         pct = plogis(p2under$fit), 
                         low = plogis(p2under$fit - 1.96*p2under$se.fit), 
                         high = plogis(p2under$fit + 1.96*p2under$se.fit),
-                        var = "last voter checks-in before 7:30pm",stringsAsFactors = F)
+                        var = "last voter checked-in before 7:30pm", stringsAsFactors = F)
 
 plt3overunder <- bind_rows(plt3over, plt3under)
 
@@ -379,7 +379,7 @@ plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour 
   geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
   geom_vline(xintercept = 13, colour ="red") +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
-  scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.75, .9), name = "Predicted probability (%)\n") +
+  scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.75, .9), name = "Predicted probability of voting (%)\n") +
   scale_x_discrete(limits = levels(plt3overunder$hr)[1:14], name = "") +
   scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
   ggtitle("") +
