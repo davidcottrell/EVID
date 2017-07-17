@@ -90,6 +90,8 @@ vte12$day <- factor(vte12$day,
 
 
 
+
+
 xlabs <- c(paste0(c(7:11), ":00am"), paste0(c(12, 1:11), ":00pm"), paste0(c(12,1), ":00am"))
 hst <- vte12 %>% filter(location %in% "Fred B. Karl County Center", day == "SAT 11/03", !is.na(race))
 hst$Race3 <- if_else(hst$race == "White", "White", "Non-White")
@@ -129,6 +131,22 @@ plot2save <- ggplot(hst , aes(time2, fill = Race3)) +
   guides(fill = F)
 ggsave (plot2save, filename = "../Plots/example01.pdf", height = 3, width = 11)
 
+
+listofcount <- vte12 %>%  distinct(county, location) %>% data.frame()
+
+for (i in 1:nrow(listofcount)){
+  pdf(paste0("../Plots/distributions/", paste0("figure", i, "-", listofcount[i,1], ".pdf")), width = 9, height = 16)
+  locdf <- vte12 %>% filter(county == listofcount[i,1], location == listofcount[i,2]) %>% arrange(time2) %>% mutate(count = row_number())
+  forplot <-ggplot(locdf, aes(time2, count)) +
+    geom_point(size = .1) +
+    scale_x_continuous(name = "hour", breaks = c(7:25), labels = xlabs) +
+    theme_bw() +
+    facet_grid(day~.) +
+    ggtitle(paste0(listofcount[i,2], ", ", listofcount[i,1])) +
+    theme(panel.grid.major.x = element_line(colour = "grey"))
+  print(forplot)
+  dev.off()
+}
 
 
 forplot <- vte12 %>%  group_by(hr, day, location) %>% count() %>% count() %>% complete(hr, day, fill = list(nn = 0))
@@ -384,4 +402,4 @@ plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour 
   scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
   ggtitle("") +
   theme(legend.position = c(.3,.2))
-ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under.pdf", height = 5, width = 11)
+ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under.pdf", height = 5, width = 7)
