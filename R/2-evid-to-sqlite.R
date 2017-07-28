@@ -156,13 +156,43 @@ evid16 <- evid16 %>% mutate(day = str_pad(day, pad = "0", width = 2, side = "lef
 evid16 <- evid16 %>% unite(date, month, day, year, remove = T, sep = "/")
 evid16 <- evid16 %>% filter(!date %in% c("11/10/16", "11/14/16", "12/20/16") )
 
+# drop voters with duplicated ids in 2012 or 2016
+dupids12 <- evid12 %>% filter(duplicated(voterid) | duplicated(voterid,fromLast = T)) %>% arrange(voterid) %>% pull(voterid) %>% unique # 5 duplicates from 2012
+evid12 <- evid12 %>% filter(!voterid %in% dupids12) # because only 5 duplicates, simply drop them
+dupids16 <- evid16 %>% filter(duplicated(voterid) | duplicated(voterid,fromLast = T)) %>% arrange(voterid) %>% pull(voterid) %>% unique # 15 duplicates from 2016
+evid16 <- evid16 %>% filter(!voterid %in% dupids16) # because only 15 duplicates, simply drop them
+
 # Store in SQL ------------------------------------------------------------
 
 my_db <- src_sqlite("../Data/evid-db.sqlite3")
-dbRemoveTable(my_db$con, "evid12")
-dbRemoveTable(my_db$con, "evid16")
+
+if (dbExistsTable(my_db$con, "evid12")){dbRemoveTable(my_db$con, "evid12")}
+if (dbExistsTable(my_db$con, "evid16")){dbRemoveTable(my_db$con, "evid16")}
 
 copy_to(my_db, evid12, "evid12", temporary = FALSE, indexes = list("voterid"))
 copy_to(my_db, evid16, "evid16", temporary = FALSE, indexes = list("voterid"))
 
 
+evid <-
+  tbl(
+    my_db,
+    sql(
+      "SELECT x.*, e.gender, e.race, e.birthdate, e.registrationdate, e.partyaffiliation, e.gen_08, e.gen_12, e.gen_16
+      FROM (
+        SELECT *, 2012 AS year FROM evid12
+        UNION ALL
+        SELECT *, 2016 AS year FROM evid16
+      ) x
+      LEFT JOIN (
+        SELECT extract.*, IFNULL(h1.gen08,'N') AS gen_08, IFNULL(h2.gen12,'N') AS gen_12, IFNULL(h3.gen16,'N') AS gen_16
+        FROM (SELECT * FROM extract WHERE voterid IN (SELECT DISTINCT voterid FROM evid12 UNION ALL SELECT DISTINCT voterid FROM evid16)) extract
+        LEFT JOIN history08 AS h1 ON extract.voterid = h1.voterid
+        LEFT JOIN history12 AS h2 ON extract.voterid = h2.voterid
+        LEFT JOIN history16 AS h3 ON extract.voterid = h3.voterid
+      ) e
+      ON x.voterid = e.voterid" 
+    )
+  ) %>% collect(n = Inf)
+
+if (dbExistsTable(my_db$con, "evid")){dbRemoveTable(my_db$con, "evid")}
+copy_to(my_db, evid, "evid", temporary = FALSE, indexes = list("voterid"))
