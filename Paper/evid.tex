@@ -115,7 +115,7 @@
   in the General Elections of 2012 and 2016 to study the times at
   which voters cast their ballots and to estimate the effect of
   waiting in line on future turnout.  Our check-in times---involving
-  879,709 early in-person voters from 2012 and 1,492,350 from
+  942,194 early in-person voters from 2012 and 1,687,304 from
   2016---highlight the disproportionately problematic experiences
   faced by minority voters, although we find many fewer such problems
   in 2016 compared to 2012.  Moreover, we estimate that Florida early
@@ -125,13 +125,15 @@
   and the potential effect they have on future political activity.
 \end{abstract}
 
-% source for numbers in abstract:
+% source for numbers in abstract (run 8/6/2017):
 %
-% > nrow(evid12)
-% [1] 879709
-% > nrow(evid16)
-% [1] 1492350
-% > 
+%  evid %>% group_by(year) %>% count
+%  # A tibble: 2 x 2
+%  # Groups:   year [2]
+%    year       n
+%   <int>   <int>
+%  1  2012  942194
+%  2  2016 1687304
 
 \newpage
 \section*{Introduction}
@@ -489,7 +491,7 @@ voter database.  This can thwart potential double-voting.  More
 importantly for our purposes, EViD machines clock the check-in times
 for all early voters, providing us with effective timestamps that
 specify when a voter began his or her voting process. EViD timestamps
-are recorded to the second, and this allows us, for example, to
+are recorded to the minute, and this allows us, for example, to
 pinpoint early voters who had not checked-in when polls closed at
 7:00pm on a given day of early voting but nonetheless cast ballots.
 Per Florida state law, any elector in line at 7:00pm is allowed to
@@ -502,7 +504,14 @@ Moreover, EViD timestamps include Florida voter identification
 numbers, which we can directly link to the nearly 14 million
 individual voter registration records in Florida's statewide voter
 file.  To this end, we merge our EViD with statewide voter files that
-cove the 2012 and 2016 General Elections.
+cover the 2012 and 2016 General Elections. \footnote{ We recorded 942,242 
+early voters across the six counties in 2012 and 1,687,304 early voters across those
+same counties in 2016.   Of those 2012 early voters, 40,455 could not be matched
+to the registration records we have from the January 2014 voter extract file. 
+Of those 2016 early voters, 969 could not be matched
+to the registration records we have from the January 2016 voter extract file. 
+In any analysis that uses demographic or partisan information about the voters,
+we drop those voters who could not be matched to registration records.}
 
 %%  David: footnote about
 %%  merge.  Did we drop any early
@@ -613,17 +622,18 @@ Supervisors of Elections.
 For the 2012 General Election, we have been able to obtain 2012 EViD
 check-in data from six Florida counties: Alachua, Broward,
 Hillsborough, Miami Dade, Orange, and Palm Beach.  Altogether these
-counties had 82 total early voting locations---akin to precincts,
+counties had 72 total early voting locations---akin to precincts,
 except that voters in a given county may cast early ballots in the
 county---that serviced a total of 879,709 voters in the eight day
 long, 2012 early voting
-period.  % David to-do: insert footnote here about inferring locations
+period. \footnote{Locations where only 2 or fewer individuals recorded votes were dropped.
+EViD data from Orange County and Palm Beach County in 2012 and 2016, from Miami Dade County in 2016, and from Broward County in 2016 did not come with voting locations for each voter.  To determine the location at which these voters case their votes, we match their voterids to a masterfile in florida that records the location of every vote.}
 
 %> unique(evid12$county)
 %[1] "ALA" "BRO" "HIL" "DAD" "ORA" "PAL"
 
 %> length(unique(evid12$location))
-%[1] 82
+%[1] 78
 
 \begin{figure}[!ht]
   \caption{Number of locations where early votes were cast, 2012
