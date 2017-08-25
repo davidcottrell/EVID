@@ -622,9 +622,9 @@ Supervisors of Elections.
 For the 2012 General Election, we have been able to obtain 2012 EViD
 check-in data from six Florida counties: Alachua, Broward,
 Hillsborough, Miami Dade, Orange, and Palm Beach.  Altogether these
-counties had 72 total early voting locations---akin to precincts,
+counties had 78 total early voting locations---akin to precincts,
 except that voters in a given county may cast early ballots in the
-county---that serviced a total of 879,709 voters in the eight day
+county---that serviced a total of 942,194 voters in the eight day
 long, 2012 early voting
 period. \footnote{Locations where only 2 or fewer individuals recorded votes were dropped.
 EViD data from Orange County and Palm Beach County in 2012 and 2016, from Miami Dade County in 2016, and from Broward County in 2016 did not come with voting locations for each voter.  To determine the location at which these voters case their votes, we match their voterids to a masterfile in florida that records the location of every vote.}
@@ -675,35 +675,35 @@ Figure \ref{fig:hist2012} displays the total number of voters who
 voted early by the hour of the day at which they checked-in. Prior to
 7:00pm, voters check-ins were distributed fairly uniformly across the
 day with a small peak before noon.  From 7:00am to 7:00pm, our
-aggregated four counties consistently served approximately 50,000
+aggregated six counties consistently served approximately 70,000
 voters per hour. Then, after 7:00pm, at which point new voters could
 not join voting lines, the number of voters served per hour dropped
-drastically but not entirely.  A total of 54,329 (7.8\%) early voters
+drastically but not entirely.  A total of 83,278 (8.8\%) early voters
 in 2012 cast ballots after 7:00pm. These are individuals who were in
 line at the time the polls closed and were allowed to continue to wait
 to vote.  We know that all of these voters had to wait in this way
 although we do not know precisely how long each waited.  Of this
-group, 24,294 voted after 8:00pm.  These voters waited at least one
-hours to vote, and 9,684 voters, who checked-in after 9:00pm, must
+group, 36,148 voted after 8:00pm.  These voters waited at least one
+hours to vote, and 13,595 voters, who checked-in after 9:00pm, must
 have waited at least two hours to vote.
 
-% > vte %>% filter(time > 19) %>% count()
+% > evid12 %>% filter(time2 > 19) %>% count()
 % # A tibble: 1 × 1
 %       n
 %   <int>
-%   54329
+%   83278
 
-% > vte %>% filter(time > 20) %>% count()
+% > evid12 %>% filter(time2 > 20) %>% count()
 % # A tibble: 1 × 1
 %       n
 %   <int>
-%   24294
+%   36148
 
-% > vte %>% filter(time > 21) %>% count()
+% > evid12 %>% filter(time2 > 21) %>% count()
 % # A tibble: 1 × 1
 %       n
 %   <int>
-%   24294
+%   13595
 
 \begin{figure}[!ht]
 \caption{Racial composition of early voters by hour, 2012 General Election}
@@ -766,7 +766,7 @@ state's early voting period \citep{herronsmith:souls}.
 What is striking in Figure \ref{fig:race2012}, however, is the racial
 composition of the early voting pool immediately before and then after
 7:00pm.  Simply put, the pool becomes rapidly non-white starting
-around 7:00pm and by the 8:00pm-9:00pm window is less than 15 percent
+around 7:00pm and by the 8:00pm-9:00pm window is less than 25 percent
 white.
 
 \begin{figure}[!ht]
@@ -785,14 +785,14 @@ voters in our four counties as well as the partisan breakdown of the
 four aforementioned racial groups.  Partisanship here is measured by
 party registration and is plotted as the percent of early voters in
 each hour of check-in that are registered Democrat.  While Democrats
-made up 56\% of all those who voted early in our set of Florida
+made up 54\% of all those who voted early in our set of Florida
 counties, we can see from the black line in the figure that this
 percentage varied by hour of the day.  Notably, Democrats composed a
 greater share of the voters in both the early hours of voting and the
 hours after 7:00pm.  Hence, Democrats were disproportionately affected
 by voting lines that forced voters to cast their ballots after 7:00pm.
 
-%  XXX Need to check 56% figure above.
+%  XXX Need to check 54% figure above.
 
 If we consider the breakdown of partisanship by race, as in in Figure
 \ref{fig:party2012}, we can see how this effect might largely be due
@@ -804,11 +804,11 @@ throughout the day.  However we do see a slight trend for White and
 Asian early voters, who became increasingly Democratic as time
 progressed.
 
-%> vte %>% summarize(pct = mean(party == "DEM"))
-%# A tibble: 1 × 1
-%       pct
-%     <dbl>
-%1 0.564601
+% > evid12 %>% summarize(pct = mean(party == "DEM"))
+% # A tibble: 1 x 1
+%        pct
+%       <dbl>
+% 1 0.5416475
 
 \subsubsection*{Early voting in 2016}
 
@@ -817,11 +817,11 @@ Florida had increased the number of early voting days from eight to
 14, ostensibly in an effort to reduce congestion. Was this change
 effective?  Figure \ref{fig:nrlocs2016} is analogous to the earlier
 figure that described active early voting locations.  Here we have
-data from the same counties as in 2012.  These six counties had 106
+data from the same counties as in 2012.  These six counties had 104
 early voting stations in place for the 2016 General Election.
 
 % > length(unique(evid16$location))
-% [1] 106
+% [1] 102
 
 \begin{figure}[!ht]
   \caption{Number of locations where early votes were cast, 2016 General
@@ -835,10 +835,10 @@ Compared to its 2012 version, the most important aspect of Figure
 \ref{fig:nrlocs2016} is the pictured dropoff in voter check-ins that
 occurred after 7:00pm.  There were indeed check-ins after this time
 but not nearly as many as in 2012.  On the busiest day in 2012, more
-than half of the polling locations were open past 9:00pm and five were
-open past midnight.  On the busiest day in 2016, though, only two
-locations were open past 8:00pm and only one early voter cast a ballot
-past 9:00pm.  In the introduction we noted the improvements in voter
+than half of the polling locations were open past 9:00pm and more than five were
+open past midnight.  On the busiest day in 2016, though, only six
+locations were open past 9:00pm and not one early voter cast a ballot
+past 10:00pm.  In the introduction we noted the improvements in voter
 wait times that others have found in 2016 compared to 2012, and Figure
 \ref{fig:nrlocs2016} is consistent with national, survey-based
 findings on voter waiting.  Early voting in 2016 appears to represent
@@ -878,14 +878,14 @@ Even though 2016 attracted far more early voters than 2012, the
 changes made to the early voting period appears to have reduced the
 congestion. Although the increased number of days may have helped,
 these three counties still served roughly the same number of early
-voters per day in 2016 (approximately 54,933) as they did in 2012
-(approximately 55,236).  Given reduced prevalence of lines in 2016, it
+voters per day in 2016 (approximately 120,521) as they did in 2012
+(approximately 117,774).  Given reduced prevalence of lines in 2016, it
 is likely that other reforms made the difference for congestion.
 
-%> 441895/8
-%[1] 55236.88
-%> 769063/14
-%[1] 54933.07
+%> 942194/8
+%[1] 117774.2
+%> 1687304/14
+%[1] 120521.7
 
 
 %% Make a plot using all early voters in all sites, but this is
@@ -948,7 +948,7 @@ congested polling location and that the voters who voted just before
 7:00pm did not have to wait in much of a line.  If they did have to
 wait in line to vote, then the line remarkably stopped just in time
 for the final early voter to check-in right before 7:00pm.  While this
-is technically possible, it woud be remarkably coincidental.
+is technically possible, it would be remarkably coincidental.
 
 On the other hand, the second location in Figure
 \ref{fig:nrlocs2012}---the West Kendall Regional Library in Miami Dade

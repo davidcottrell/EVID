@@ -87,9 +87,13 @@ evid %>% group_by(year) %>% count
 # 40,455 in 2012 and 969 in 2016 could not be matched to the voter extract.  
 evid %>% filter(is.na(gender) & is.na(race) & is.na(birthdate)) %>% group_by(year)  %>% count
 
+evid <- evid %>% filter(time != "00:00") # There are spikes at midnight that dont make sense.  So remove 115 with suspicious midnight time
+
 # Plot EVID -------------------------------------------------------------
 
+
 evid12 <- evid %>% filter(year == 2012)
+
 unique(evid12$county)
 length(unique(evid12$location))
 
