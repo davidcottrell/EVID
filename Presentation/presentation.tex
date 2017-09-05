@@ -1,0 +1,242 @@
+\documentclass{beamer}
+\usepackage{graphics}
+\usepackage{beamerthemesplit}
+\setbeamercovered{transparent}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows,shapes,backgrounds}
+\usepackage{multicol}
+
+\title{\small Voting lines and early voting check-in times in Florida}
+\author{David Cottrell\inst{1} \and Michael C.\ Herron\inst{1}
+  \newline \and  Daniel A.\ Smith\inst{2}}
+\institute{\inst{1} Dartmouth College \and %
+  \inst{2} University of Florida}
+\date{\today}
+
+\begin{document}
+	\frame{\titlepage}
+	\section{Background}
+	
+	\begin{frame}
+		\begin{columns}[t]
+			\column{.5\textwidth}			
+			\centering
+			\includegraphics[height=  .7\textwidth]{../Plots/columbus.jpg} \\		
+			\includegraphics[height=  .7\textwidth]{../Plots/miami_line.jpg}\\
+			\column{.5\textwidth}
+			\includegraphics[height=  .5\textheight]{../Plots/scottsdale_line.jpg}\\
+			\footnotesize{
+				(Top Left) Columbus, OH during early voting in 2012 General \\ \vspace{3mm}
+				(Bottom Left) Miami, FL on Election Day in 2012 \\ \vspace{3mm}
+				(Top Right)  Scottsdale, AZ during primary on March 22, 2016
+				}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}
+		Most voters vote in person (75\% in 2016).  \\~\\
+	
+		The existence of voting lines is a major concern \ldots
+			\begin{itemize}
+				\item[1.]<1-> Opportunity costs - essentially a time tax {\tiny (Mukherjee 2009)}
+				\item[2.]<1-> Downstream consequences  {\tiny (Pettigrew 2017)}\\~\\
+			\end{itemize} 
+		What we want to know \dots
+			\begin{itemize}
+				\item[1.]<1-> Who bears the burden of this tax? Is it fairly distributed?
+				\item[2.]<1-> Does waiting in line discourage future participation?
+			\end{itemize}
+	\end{frame}
+
+		
+			
+	\begin{frame}
+		Challenge: data availability 
+			\begin{itemize}
+				\item<2-> Need to identify those who waited in line AND link them to future behavior data availability.\\~\\
+			\end{itemize}
+		Researchers have relied on two sources:
+			\begin{itemize}
+				\item[1.]<3-> Election Day exit polls or post-election surveys (SPAE, CCES) {\tiny (Stewart 2013 and 2015)}
+					\begin{itemize}
+						\item<3-> {\small 10\% of voters waited longer than 30 minutes in 2012}
+						\item<3-> {\small Limitation: self-reporting and social desirability bias}
+					\end{itemize}
+				\item[2.]<4-> Closing times of polling location and aggregate demographic data {\tiny (Herron and Smith 2014; Pettigrew 2016)}
+					\begin{itemize}
+						\item<4-> {\small Waiting in line reduced voter turnout by 1\%}
+						\item<4-> {\small Limitation: aggregate data and ecological fallacy}
+					\end{itemize}
+			\end{itemize}
+	\end{frame}
+		
+	
+	\section{Data}
+	\subsection{about the data}
+		\begin{frame}
+		 To overcome this challenge, we turn to a unique data source produced by Electronic Voter iDentification (EViD) machines during the early voting period for Florida's general election. 
+		 	\begin{itemize}
+				\item<2->  Voters can vote at any polling location within a county during early voting in Florida.
+				\item<2-> EViD machines allow pollworkers to check-in and verify registration statuses electronically, then synchronize across locations
+				\item<2-> Used to thwart double voting 
+			\end{itemize}
+		\end{frame}
+		
+		\begin{frame}
+		EViD data:
+			\begin{itemize}
+				\item<2->Time-stamps of individual votes during early voting period in general election in 2012 and 2016
+				\item<2->6 counties in Florida: Alachua, Broward, Hillsborough,  Miami-Dade, Orange, Palm Beach.
+				\item<2->8 days, 78 locations, and 942,194 early voters in 2012 
+				\item<2->14 days, 104 locations, and 1,687,304 early voters in 2016 
+			\end{itemize}
+			\begin{itemize}
+				\item<3->[]Polls start at 7am and end at 7pm.  Anyone in line before 7pm can vote.
+				\begin{itemize}
+					\item This is key!! We know that anyone who voted past 7pm WAITED to voted.
+				\end{itemize} 
+			\end{itemize} 
+		\end{frame}
+			
+		\begin{frame}
+		Pros
+			\begin{itemize}
+				\item[1.]  We can leverage closing times to identify individuals who waited in line to vote during early voting in 2012. 
+				\item[2.]  Individual voters can be linked to the Florida voter file, including
+					\begin{itemize}
+					\item  demographic characteristics (voter extract). 
+					\item  prior and subsequent voting behavior (voter history). 
+					\end{itemize}
+			\end{itemize}
+		Cons
+			\begin{itemize}
+				\item[1.] does not identify arrival time for those who voted
+				\item[2.] does not identify individuals who left before voting
+			\end{itemize}
+		\end{frame}
+		
+		\begin{frame}
+		I will proceed as follows \ldots
+			\begin{itemize}
+				\item[1.] 2012 data
+				\item[2.] How things changed in 2016 
+				\item[3.] Estimate the effect of waiting in line on future turnout
+			\end{itemize}
+		\end{frame}
+		
+		\subsection{2012}
+		
+		\begin{frame}				
+		\centering 2012
+		\end{frame}
+		
+		\begin{frame}
+		 Number of locations where early votes were cast			
+			\centering
+			\includegraphics[height=  .8\textheight]{../Plots/number_of_locations.pdf}
+		\end{frame}
+	
+		\begin{frame}	
+		Distribution of check-in times among early voters by hour			
+			\centering
+			\includegraphics[height=  .8\textheight]{../Plots/histogram_by_hour.pdf}
+		\end{frame}
+		
+
+		\begin{frame}				
+		\centering Lines tend to affect minority voters \ldots
+		\end{frame}
+
+		\begin{frame}			
+			\centering 
+			Racial composition of early voters by hour	\\
+			\includegraphics[height=  .8\textheight]{../Plots/racial_composition.pdf}
+		\end{frame}
+
+		\begin{frame}				
+		Lines tend to affect Democrats \ldots
+		\end{frame}
+
+		\begin{frame}			
+			\centering 
+			Partisan composition of early voters by hour and by race	\\
+			\includegraphics[height=  .8\textheight]{../Plots/partisan_composition_by_race.pdf}
+		\end{frame}
+		
+		
+		
+		\subsection{2016}
+		
+		
+		\begin{frame}				
+			\centering 2016
+		\end{frame}
+		
+		\begin{frame}				
+		\centering 
+		Number of locations where early votes were cast, 2016
+		\includegraphics[height=  .8\textheight]{../Plots/number_of_locations_2016.pdf}
+		\end{frame}
+		
+		\begin{frame}				
+		\centering 
+		Number of locations where early votes were cast, 2012
+		\includegraphics[height=  .8\textheight]{../Plots/number_of_locations.pdf}
+		\end{frame}
+		
+		\begin{frame}				
+			\centering 
+			Distribution of voter check-ins
+		\includegraphics[height=  .7\textheight]{../Plots/histogram_by_hour_by_race_2012_2016}
+		\end{frame}
+
+
+		
+		
+		
+		\section{Results}
+	
+		\begin{frame}
+		Does waiting in line to vote in the current election reduce one's propensity to vote in the future?
+		\end{frame}
+
+		\begin{frame}				
+			\centering 
+			Fred B. Karl County Center, Hillsborough County\\
+			\includegraphics[height=  .35\textheight]{../Plots/example00.pdf} \\
+			West Kendall Regional Library, Miami Dade County\\
+			\includegraphics[height=  .35\textheight]{../Plots/example01.pdf} \\ 
+		\end{frame}
+	
+		\begin{frame}
+		\centering 
+		\includegraphics[height=  .2\textheight]{../Plots/logit}			
+		\end{frame}
+
+		\begin{frame}				
+			\centering
+			Probability of voting in 2016, given 2012 check-in time 
+			\includegraphics[height=  .9\textheight]{../Plots/probability_of_voting_in_2016_over_under.pdf}
+		\end{frame}
+		
+		\section{Conclusion}
+	
+		\begin{frame}
+			Conclusion
+			\begin{itemize}
+				\item[1.] Voting lines were in some location in Florida were severe in 2012.  Line length improved in 2016.
+				\item[2.] Certain voters (specifically minorities and Democrats) are more likely to be affected by long wait times. 
+				\item[3.] Holding all else constant, waiting in line results in about a 1\% decrease in turnout.
+			\end{itemize}
+		\end{frame}
+		
+		\begin{frame}
+		\centering
+			\includegraphics[height=  \textheight]{../Plots/result}
+		\end{frame}
+		
+			
+\end{document}
+
+
