@@ -471,25 +471,10 @@ Election administration in the Sunshine State---from registering
 voters, to determining precinct sizes, to staffing and locating
 polling places, and to setting early voting days and hours---is
 largely controlled at the county level within a framework established
-by the Florida state legislature. The primary data source in our
-analysis is thus gleaned from Florida counties, and it consists of
-early voting check-in times across early voting polling stations
-during the 2012 and 2016 General Elections.  We now explain what these
-times represent.
-
-In 2012, all 67 of Florida's counties offered between six and 12 daily
-hours of early voting over an eight-day period (Saturday through
-Saturday) that ended immediately prior to the General Election,
-November 6, 2012.  In 2016, after long-lines in 2012 had apparently
-convinced the state legislature to grant counties more flexibility in
-offering early voting opportunities, counties were permitted to offer
-up to 12 hours of early voting per day, spread over 14 days, ending
-the final Sunday before the November 8, 2016, General Election.
-Counties were permitted to offer a maximum of 168 total hours of early
-voting.\footnote{See Florida Governor Rick Scott's statement, issued
-  in the aftermath of the 2012 General Election, available at
-  \url{http://www.flgov.com/2013/01/17/governor-rick-scott-statement-on-election-reforms/}
-  (last accessed March 31, 2017).}
+by the Florida state legislature. Our early voting check-in times are
+thus gleaned from Florida counties, and these times cover check-ins
+across a variety of early voting stations during the 2012 and 2016
+General Elections.  
 
 A Florida voter who wishes to cast his or her ballot early may vote at
 any early voting polling location in the county in which he or she is
@@ -525,37 +510,59 @@ pinpoint early voters who had not checked-in when polls closed at
 Per Florida state law, any elector in line at 7:00pm is allowed to
 cast a ballot \citet{FLStatutes:7pm}.
 
-EViD timestamps are not subject to potential self-reporting biases and
-hence are presumably more accurate than surveys of voter times or even
-within-polling place observations of when voters checked-in.
-Moreover, EViD timestamps include Florida voter identification
-numbers, which we can directly link to the nearly 14 million
-individual voter registration records in Florida's statewide voter
-file.  To this end, we merge our EViD with statewide voter files that
-cover the 2012 and 2016 General Elections. \footnote{ We recorded 942,242 
-early voters across the six counties in 2012 and 1,687,304 early voters across those
-same counties in 2016.   Of those 2012 early voters, 40,455 could not be matched
-to the registration records we have from the January 2014 voter extract file. 
-Of those 2016 early voters, 969 could not be matched
-to the registration records we have from the January 2016 voter extract file. 
-In any analysis that uses demographic or partisan information about the voters,
-we drop those voters who could not be matched to registration records.}
+EViD timestamps, one per early voter, are not subject to potential
+self-reporting biases and hence are presumably more accurate than
+surveys of voter times or even within-polling place observations of
+when voters checked-in.  Moreover, EViD timestamps as associated with
+Florida voter identification numbers, which we can link to the nearly
+14 million individual voter registration records in Florida's
+statewide voter file.  To this end, we merge our EViD timestamps with
+statewide voter files that cover the 2012 and 2016 General
+Elections.\footnote{ We recorded 942,242 early voters across the six
+  counties in 2012 and 1,687,304 early voters across those same
+  counties in 2016.  Of those 2012 early voters, 40,455 could not be
+  matched to the registration records we have from the January 2014
+  voter extract file.  Of those 2016 early voters, 969 could not be
+  matched to the registration records we have from the January 2016
+  voter extract file.  In any analysis that uses demographic or
+  partisan information about the voters, we drop those voters who
+  could not be matched to registration records.}
 
-%%  David: footnote about
-%%  merge.  Did we drop any early
-%%  voters?  How many early voters do
-%%  note appear in the voter file?
 
-Despite their advantages, EViD check-in times are not a panacea in the
-quest to understand voting lines and their consequences.  We
-ultimately care about voter wait times, and in this sense our use of
-EViD check-in times has limitations.  An individual check-in time
-indicates when a given voter finished waiting in a line, if there were
-a line to begin with.  However, such a time does not specify how long
-an individual waited to vote, if at all. As such, our analysis of
-check-in times serves as a complement to studies using survey and
-other observational methods to explain who waits in line and for how
-long.
+In 2012, all 67 of Florida's counties offered between six and 12 daily
+hours of early voting over an eight-day period (Saturday through
+Saturday) that ended immediately prior to the General Election,
+November 6, 2012.  In 2016, after long-lines in 2012 had apparently
+convinced the state legislature to grant counties more flexibility in
+offering early voting opportunities, counties were permitted to offer
+up to 12 hours of early voting per day, spread over 14 days, ending
+the final Sunday before the November 8, 2016, General Election.
+Counties were permitted to offer a maximum of 168 total hours of early
+voting.\footnote{See Florida Governor Rick Scott's statement, issued
+  in the aftermath of the 2012 General Election, available at
+  \url{http://www.flgov.com/2013/01/17/governor-rick-scott-statement-on-election-reforms/}
+  (last accessed March 31, 2017).}
+
+We have EVID check-in times from six counties in Florida, and these
+times are described in Table XXX.  The table also lists the number of
+EVID timestamps we have from each county.  In the 2012 General
+Election, there was XXX total ballots cast in Florida, and in 2016
+there were XXX ballots.  Our EVID data thus cover XXX percent and XXX
+percent of the ballot cast Florida in the 2012 and 2016 General
+Elections, respectively.
+
+%% XXX Insert table here.
+
+% Despite their advantages in , EViD check-in times are not a panacea in the
+% quest to understand voting lines and their consequences.  We
+% ultimately care about voter wait times, and in this sense our use of
+% EViD check-in times has limitations.  An individual check-in time
+% indicates when a given voter finished waiting in a line, if there were
+% a line to begin with.  However, such a time does not specify how long
+% an individual waited to vote, if at all. As such, our analysis of
+% check-in times serves as a complement to studies using survey and
+% other observational methods to explain who waits in line and for how
+% long.
 
 Figure \ref{fig:tenminhist} displays the distribution of EViD check-in
 times on the last Saturday (November 3) of the 2012 General Election
@@ -653,7 +660,7 @@ Hillsborough, Miami-Dade, Orange, and Palm Beach.  Altogether these
 counties had 78 total early voting locations---akin to precincts,
 except that voters in a given county may cast early ballots in the
 county---that serviced a total of 942,194 voters in the eight day
-long, 2012 early voting period. \footnote{Locations where two or fewer
+long, 2012 early voting period.\footnote{Locations where two or fewer
   individuals had recorded votes were dropped from our analysis.  The
   EViD data from Orange County and Palm Beach County in 2012 and 2016,
   from Miami-Dade County in 2016, and from Broward County in 2016 was
