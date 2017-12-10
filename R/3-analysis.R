@@ -374,3 +374,66 @@ plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour 
   ggtitle("") +
   theme(legend.position = c(.3,.2))
 ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under.pdf", height = 5, width = 7)
+
+
+
+
+newdata <-  data.frame(
+  hr = factor(levels(vte$hr), levels(vte$hr)),
+  location = c("Bloomingdale Regional Public Library"),
+  day = "SAT 10/27",
+  gender = "M",
+  race = "White",
+  age = mean(vte$age, na.rm = T),
+  agegroup = "[50,60)",
+  party = "DEM",
+  voted_08 = 0,
+  over = TRUE
+)
+
+p2over <- predict(mn, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
+
+newdata <-  data.frame(
+  hr = factor(levels(vte$hr), levels(vte$hr)),
+  location = c("Bloomingdale Regional Public Library"),
+  day = "SAT 10/27",
+  gender = "M",
+  race = "White",
+  age = mean(vte$age, na.rm = T),
+  agegroup = "[50,60)",
+  party = "DEM",
+  voted_08 = 0,
+  over = FALSE
+)
+
+p2under <- predict(mn, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
+
+
+plt3over <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
+                       pct = plogis(p2over$fit), 
+                       low = plogis(p2over$fit - 1.96*p2over$se.fit), 
+                       high = plogis(p2over$fit + 1.96*p2over$se.fit),
+                       var = "last voter checked-in after 7:30pm", stringsAsFactors = F)
+
+plt3under <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
+                        pct = plogis(p2under$fit), 
+                        low = plogis(p2under$fit - 1.96*p2under$se.fit), 
+                        high = plogis(p2under$fit + 1.96*p2under$se.fit),
+                        var = "last voter checked-in before 7:30pm", stringsAsFactors = F)
+
+plt3overunder <- bind_rows(plt3over, plt3under)
+
+
+plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) + 
+  geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
+  geom_vline(xintercept = 13, colour ="red") +
+  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
+  scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.75, .9), name = "Predicted probability of voting (%)\n") +
+  scale_x_discrete(limits = levels(plt3overunder$hr)[1:14], name = "") +
+  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
+  ggtitle("") +
+  theme(legend.position = c(.3,.2))
+ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under_white.pdf", height = 5, width = 7)
+
+
+
