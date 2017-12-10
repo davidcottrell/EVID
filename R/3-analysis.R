@@ -150,9 +150,9 @@ hst$time2[hst$time2 <= 7] <- 7 + .000001
 clse <- hst %>% group_by(day) %>% summarize( close = max(time2))
 plot2save <- ggplot(hst , aes(time2, fill = race2)) + 
   geom_histogram(binwidth = 10/60, colour = "black", boundary = 0) + 
-  geom_vline(xintercept = 19, colour = "red") +
-  geom_vline(data = clse, aes(xintercept = close), colour = "red", linetype = "dashed") +
-  scale_fill_manual(values = c("grey", "green"), name = "Race") +
+  geom_vline(xintercept = 19, colour = "black", size = 1.25) +
+  #geom_vline(data = clse, aes(xintercept = close), colour = "red", linetype = "dashed") +
+  scale_fill_manual(values = c("grey", "white"), name = "Race") +
   theme_bw() +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
   scale_x_continuous(breaks = 7:25, labels = xlabs, limits = c(7,25), name = "") +
@@ -170,9 +170,9 @@ hst$time2[hst$time2 <= 7] <- 7 + .000001
 clse <- hst %>% group_by(day) %>% summarize( close = max(time2))
 plot2save <- ggplot(hst , aes(time2, fill = race2)) + 
   geom_histogram(binwidth = 10/60, colour = "black", boundary = 0) + 
-  geom_vline(xintercept = 19, colour = "red") +
-  geom_vline(data = clse, aes(xintercept = close), colour = "red", linetype = "dashed") +
-  scale_fill_manual(values = c("grey", "green"), name = "Race") +
+  geom_vline(xintercept = 19, colour = "black", size = 1.25) +
+  #geom_vline(data = clse, aes(xintercept = close), colour = "red", linetype = "dashed") +
+  scale_fill_manual(values = c("grey", "white"), name = "Race") +
   theme_bw() +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
   scale_x_continuous(breaks = 7:25, labels = xlabs, limits = c(7,25), name = "") +
@@ -184,19 +184,23 @@ ggsave (plot2save, filename = "../Plots/example01.pdf", height = 3, width = 11)
 
 listofcount <- evid12 %>%  distinct(county, location, day) %>% data.frame()
 
-for (i in 1:nrow(listofcount)){
-  pdf(paste0("../Plots/distributions/", paste0("figure", i, "-", listofcount[i,1], ".pdf")), width = 11, height = 5)
-  locdf <- evid12 %>% filter(county == listofcount[i,1], location == listofcount[i,2], day == listofcount[i,3]) %>% arrange(time2) %>% mutate(count = row_number())
-  forplot <-ggplot(locdf, aes(time2, count)) +
-    geom_point(size = .1) +
-    scale_x_continuous(name = "hour", breaks = c(7:25), labels = xlabs, limits = c(6,26)) +
-    theme_bw() +
-    #facet_grid(day~.) +
-    ggtitle(paste0(listofcount[i,2], ", ", listofcount[i,1], " (", listofcount[i,3], ")")) +
-    theme(panel.grid.major.x = element_line(colour = "grey"))
-  print(forplot)
-  dev.off()
+rundist <- "no"
+if (rundist == "yes"){
+  for (i in 1:nrow(listofcount)){
+    pdf(paste0("../Plots/distributions/", paste0("figure", i, "-", listofcount[i,1], ".pdf")), width = 11, height = 5)
+    locdf <- evid12 %>% filter(county == listofcount[i,1], location == listofcount[i,2], day == listofcount[i,3]) %>% arrange(time2) %>% mutate(count = row_number())
+    forplot <-ggplot(locdf, aes(time2, count)) +
+      geom_point(size = .1) +
+      scale_x_continuous(name = "hour", breaks = c(7:25), labels = xlabs, limits = c(6,26)) +
+      theme_bw() +
+      #facet_grid(day~.) +
+      ggtitle(paste0(listofcount[i,2], ", ", listofcount[i,1], " (", listofcount[i,3], ")")) +
+      theme(panel.grid.major.x = element_line(colour = "grey"))
+    print(forplot)
+    dev.off()
+  }
 }
+
 # 
 # evid12 %>% 
 #   arrange(county, location, day, time2) %>%
@@ -207,7 +211,7 @@ for (i in 1:nrow(listofcount)){
 forplot <- evid12 %>%  distinct(hr, day, location) %>% count(hr, day) %>% complete(hr, day, fill = list(n = 0))
 
 plot2save <- ggplot(forplot, aes(hr, n, colour = day, group = day)) + geom_line(position = position_nudge(.5)) + theme_bw() + scale_colour_grey(start = 0.8, end = 0.2, name = "Day") +
-  geom_vline(xintercept = 13, colour ="red") + geom_point( position = position_nudge(.5)) + xlab("") + xlim(lim) +
+  geom_vline(xintercept = 13, colour = "black", size = 1.25) + geom_point( position = position_nudge(.5)) + xlab("") + xlim(lim) +
   scale_y_continuous(breaks = seq(0, 100, 5), name = "") +
   #ggtitle("Number of locations where votes are being cast") +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5),
@@ -216,7 +220,7 @@ plot2save <- ggplot(forplot, aes(hr, n, colour = day, group = day)) + geom_line(
 ggsave (plot2save, filename = "../Plots/number_of_locations.pdf", height = 4, width = 7)
 
 
-plot2save <- ggplot(evid12, aes(x=hr)) +  geom_bar(stat="count", position = position_nudge(.5)) + geom_vline(xintercept = 13, colour ="red") +
+plot2save <- ggplot(evid12, aes(x=hr)) +  geom_bar(stat="count", position = position_nudge(.5), fill = "lightgrey", colour = "black") + geom_vline(xintercept = 13, colour = "black", size = 1.25) +
   scale_y_continuous(breaks = seq(0, 100000, 10000), labels = seq(0, 100, 10), name = "Count in thousands\n") + theme_bw() +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) + xlab("")  + xlim(lim) 
 #ggtitle("Distribution of Voters by Hour Voted")
@@ -229,16 +233,16 @@ plt1 <- evid12 %>% filter(!is.na(race), race != "Other") %>% count(hr, race) %>%
 rc <- c("White", "Black", "Hispanic", "Asian")
 plt1$race <- factor(plt1$race, rc)
 
-plot2save <- ggplot(plt1, aes(hr, pct, colour = race, group = race, ymin = low, ymax = high)) + 
-  geom_line(position = position_nudge(.5)) + geom_point(position = position_nudge(.5)) + 
+plot2save <- ggplot(plt1, aes(hr, pct, shape = race, group = race, ymin = low, ymax = high)) + 
+  geom_line(position = position_nudge(.5), colour = "grey60") + geom_point(position = position_nudge(.5)) + 
   #geom_errorbar(width = 0)  + 
   theme_bw() + ylab("Percent") +  xlab("") +
-  geom_vline(xintercept = 13, colour ="red") +
+  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
   scale_y_continuous(breaks = seq(0, 1, .05), labels = seq(0, 100, 5), name = "Percent of total voters\n") +
   scale_x_discrete(limits = c(levels(plt1$hr), "1:00am") ) +
   #ggtitle("Racial Composition of Early Voters by Hour") +
-  scale_colour_discrete(name = "Race")  
+  scale_shape_discrete(name = "Race")  
 ggsave(plot2save, filename = "../Plots/racial_composition.pdf", height = 4, width = 7)
 
 
@@ -249,15 +253,15 @@ plt1.35 <- evid12 %>% group_by(hr) %>% summarize(pct = mean(party == "DEM", na.r
 rc <- c("White", "Black", "Hispanic", "Asian", "All")
 plt1.35$race <- factor(plt1.35$race, rc)
 pt <- bind_rows(plt1.3, plt1.35)
-plot2save <- ggplot(pt, aes(hr, pct, group = interaction(party, race), colour = race)) + 
-  geom_line(position = position_nudge(.5)) + geom_point(position = position_nudge(.5)) +
+plot2save <- ggplot(pt, aes(hr, pct, shape = race, group = race)) + 
+  geom_line(position = position_nudge(.5), colour = "grey60") + geom_point(position = position_nudge(.5)) +
   theme_bw() + ylab("Percent") +  xlab("") +
-  geom_vline(xintercept = 13, colour ="red") +
+  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
   geom_hline(yintercept = .5, colour ="grey") +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
   scale_y_continuous(breaks = seq(0, 1, .05), labels = seq(0, 100, 5), name = "Percent Democratic\n", limits = c(.3,1)) +
   scale_x_discrete(limits = lim) +
-  scale_colour_manual(values = c("#F8766D", "#7CAE00", "#00BFC4", "#C77CFF", "black"),  name = "Race")  
+  scale_shape_discrete(name = "Race")  
 #ggtitle("Partisan Composition of Early Voters by Hour (Whites)")
 ggsave(plot2save, file = "../Plots/partisan_composition_by_race.pdf", height = 4, width = 7)
 
@@ -271,14 +275,14 @@ lim <- c(levels(evid16$hr), "1:00am")
 
 forplot <- evid16 %>%  distinct(hr, day, location) %>% count(hr, day) %>% complete(hr, day, fill = list(n = 0))
 plot2save <-  ggplot(forplot, aes(hr, n, colour = day, group = day)) + geom_line(position = position_nudge(.5)) + theme_bw() + scale_colour_grey(start = 0.8, end = 0.2, name = "Day") +
-  geom_vline(xintercept = 13, colour ="red") + geom_point( position = position_nudge(.5)) + xlab("")  +
+  geom_vline(xintercept = 13, colour ="black", size = 1.25) + geom_point( position = position_nudge(.5)) + xlab("")  +
   scale_y_continuous(breaks = seq(0, 125, 5), name = "") +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5),
         legend.text = element_text(size = 8),
         legend.key.height = unit(.8,"line"))
 ggsave (plot2save, file = "../Plots/number_of_locations_2016.pdf", height = 4, width = 7)
 
-plot2save <- ggplot(filter(evid, race != "Asian",race != "Other"), aes(x=hr)) +  geom_bar(stat="count", position = position_nudge(.5)) + facet_grid(race~year) + geom_vline(xintercept = 13, colour ="red") +
+plot2save <- ggplot(filter(evid, race != "Asian",race != "Other"), aes(x=hr)) +  geom_bar(stat="count", position = position_nudge(.5), colour = "black", fill = "grey") + facet_grid(race~year) + geom_vline(xintercept = 13, colour ="black", size = 1.25) +
   scale_y_continuous(breaks = seq(0, 100000, 10000), labels = seq(0, 100, 10), name = "Count in thousands\n") + theme_bw() +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) + xlab("") +
   scale_x_discrete(breaks = hrs,limits = hrs)  
@@ -404,7 +408,7 @@ plt3overunder <- bind_rows(plt3over, plt3under)
 
 plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) + 
   geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
-  geom_vline(xintercept = 13, colour ="red") +
+  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
   scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.75, .9), name = "Predicted probability of voting (%)\n") +
   scale_x_discrete(limits = levels(plt3overunder$hr)[1:14], name = "") +
@@ -464,7 +468,7 @@ plt3overunder <- bind_rows(plt3over, plt3under)
 
 plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) + 
   geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
-  geom_vline(xintercept = 13, colour ="red") +
+  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
   scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.75, .9), name = "Predicted probability of voting (%)\n") +
   scale_x_discrete(limits = levels(plt3overunder$hr)[1:14], name = "") +
