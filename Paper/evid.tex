@@ -480,7 +480,9 @@ voters, to determining precinct sizes, to staffing and locating
 polling places, and to setting early voting days and hours---is
 largely controlled at the county level within a framework established
 by the Florida state legislature. Our early voting check-in times are
-thus gleaned from Florida counties.
+thus gleaned from Florida counties.\footnote{We made public records
+  requests  to individual county Supervisors of Elections, and the
+  data use in this paper is based on these requests.}
 
 % , and these times cover check-ins
 % across a variety of early voting stations during the 2012 and 2016
@@ -533,7 +535,7 @@ Elections, respectively.\footnote{The numbers in Table
   2012 and 87 from 2016) that are listed as midnight.  We are
   suspicious that these times are not accurate and hence drop them.
   Given the total number of EVID votes cast, dropping 115 cases is
-  negligible.}
+  negligible.\label{fn:midnight}}
 
 \input{county_evid_counts.tex}
 
@@ -594,7 +596,6 @@ voting.\footnote{See Florida Governor Rick Scott's statement, issued
   \url{http://www.flgov.com/2013/01/17/governor-rick-scott-statement-on-election-reforms/}
   (last accessed March 31, 2017).}
 
-
 Figure \ref{fig:tenminhist} displays the distribution of EViD check-in
 times on the last Saturday (November 3) of the 2012 General Election
 early voting period for two different polling locations in Florida,
@@ -638,67 +639,64 @@ at West Kendall Regional Library waited at least almost six hours to
 vote.
 
 Figure \ref{fig:tenminhist} also includes information on voter
-self-reported race/ethnicity, and racial/ethnic details are depicted via bar colors.
-Early voters at the Fred B.\ Karl County Center were primarily white,
-although there were periods on November 3 when the fraction of
-non-white votes was disproportionately high, e.g., toward the end of
-the day.  At the West Kendall Regional Library, though, the vast
-majority of early voters were non-white.  The fraction of non-white
-voters appears roughly consistent across November 3.
+self-reported race/ethnicity, and racial/ethnic details are depicted
+via bar colors.  Early voters at the Fred B.\ Karl County Center were
+primarily white, although there were periods on November 3 when the
+fraction of non-white votes was disproportionately high, e.g., toward
+the end of the day.  At the West Kendall Regional Library, though, the
+vast majority of early voters were non-white.  The fraction of
+non-white voters appears roughly consistent across November 3.
 
 Lastly, and very roughly speaking, we observe a flatter or
 more-uniform distribution of check-in times at Fred B.\ Karl County
 Center than in West Kendall Regional Library.  We will draw on this
-fact later, when we try to determine which voters waited in line, and
-here we provide some intuition.  Overall, and as illustrated in Figure
-\ref{fig:tenminhist}, it appears that early voting locations in
-Florida that shut down very late had flatter distributions of check-in
-times.  We suspect that this is evidence of persistent lines.  In
-contrast, the non-uniformity of check-in times that we observe in
-Figure \ref{fig:karlexample} is consistent with more of an ebb and
-flow of early voters.  We know that there was not a line to vote at
-Fred B.\ Karl County Center at 7:00pm on Saturday, November 3, this
-despite the fact that, per check-in times, the Center was regularly
-processing voters.
+fact later, when we try to determine which early voters in our six
+counties waited in line, and here we provide some intuition.  Overall,
+and as illustrated in Figure \ref{fig:tenminhist}, it appears that
+early voting locations in Florida that shut down very late had flatter
+distributions of check-in times.  We suspect that this is evidence of
+persistent lines.  In contrast, the non-uniformity of check-in times
+that we observe in Figure \ref{fig:karlexample} is consistent with
+more of an ebb and flow of early voters.  We know that there was not a
+line to vote at Fred B.\ Karl County Center at 7:00pm on Saturday,
+November 3, this despite the fact that, per check-in times, the Center
+was regularly processing voters.
 
 Figure \ref{fig:tenminhist} highlights the value of EViD check-in
-times (timestamps, association with race/ethnicity, and so forth) as well as
-their limitations (check-ins are not linked to arrivals).  All data
-sources have advantages and disadvantages, and we will draw on the
-former and attempt to work with the latter as we turn to results.
+times (timestamps, association with race/ethnicity, and so forth) as
+well as their limitations (check-ins are not linked to arrivals).  All
+data sources have advantages and disadvantages, and we will draw on
+the former and attempt to work with the latter as we turn to results.
 
 \section*{Results}
 
 We present results in two sections.  First, we describe patterns in
 check-in times across the 2012 and 2016 General Elections with
-particular attention to race/ethnicity and partisanship.  Second we consider the
-consequences of extensive early voting wait times based on a
-identifying assumption we use to characterize individuals who waited
-before voting.
+particular attention to race/ethnicity and partisanship.  Second we
+consider the consequences of extensive early voting wait times based
+on a identifying assumption we use to characterize individuals who
+waited before voting.
 
 \subsection*{Who waits?}
 
-The election participation history data included in Florida statewide
-voter files do not contain EViD check-in times.  For these times we
-have to rely on public records requests made to individual county
-Supervisors of Elections.
+Our analysis of who waits to vote turns in large part on check-in
+times that occurred after 7:00pm on a day of early voting.  Any voter
+with such a late check-in must have waited to vote.
 
 \subsubsection*{Early voting in 2012}
 
-For the 2012 General Election, we have been able to obtain 2012 EViD
-check-in data from six Florida counties: Alachua, Broward,
-Hillsborough, Miami-Dade, Orange, and Palm Beach.  Altogether these
-counties had 78 total early voting locations---akin to precincts,
-except that voters in a given county may cast early ballots in the
-county---that serviced a total of 942,194 voters in the eight day
-long, 2012 early voting period.\footnote{Locations where two or fewer
-  individuals had recorded votes were dropped from our analysis.  The
-  EViD data from Orange County and Palm Beach County in 2012 and 2016,
-  from Miami-Dade County in 2016, and from Broward County in 2016 was
-  not accompanied with voting locations for each early voter.  To
+Across our six counties of interest, there were 78 early voting
+stations in 2012.  These serviced a total of 942,166 voters in the
+eight day long, 2012 early voting period.\footnote{This ignores the
+  small number of EVID check-in times that look suspicious to us; see
+  fn.\ \ref{fn:midnight} In addition, locations where two or fewer
+  individuals recorded votes were dropped from our analysis.  The EViD
+  data from Orange County and Palm Beach County in 2012 and 2016, from
+  Miami-Dade County in 2016, and from Broward County in 2016 was not
+  accompanied with voting locations for each early voter.  To
   determine the location at which these voters case their ballots, we
   match their voterids to a masterfile in Florida that records the
-  location of every vote.}
+  location of every vote.}  % XXX fix masterfile
 
 %> unique(evid12$county)
 %[1] "ALA" "BRO" "HIL" "DAD" "ORA" "PAL"
@@ -744,13 +742,14 @@ voters at midnight.
 
 Figure \ref{fig:hist2012} displays the total number of voters who
 voted early by the hour of the day at which they checked-in. Prior to
-7:00pm, voters check-ins were distributed fairly uniformly across the
+7:00pm, EVID check-ins were distributed fairly uniformly across the
 day with a small peak before noon.  From 7:00am to 7:00pm, our
 aggregated six counties consistently served approximately 70,000
-voters per hour. Then, after 7:00pm, at which point new voters could
-not join voting lines, the number of voters served per hour dropped
-drastically but not entirely.  A total of 83,278 (8.8\%) early voters
-in 2012 across the six counties cast ballots after 7:00pm. These are individuals who were in
+Florida early voters per hour. Then, after 7:00pm, at which point new
+voters could not join existing voting lines, the number of voters
+served per hour dropped drastically---albeit but not entirely.  A
+total of 83,278 (8.8\%) early voters in 2012 across the six counties
+cast ballots after 7:00pm. These represent individuals who were in
 line at the time the polls closed and were allowed to continue to wait
 to vote.  We know that all of these voters had to wait in this way
 although we do not know precisely how long each waited.  Of this
@@ -784,15 +783,15 @@ have waited at least two hours to vote.
 \end{figure}
 
 Aggregating across locations, Figure \ref{fig:race2012} describes the
-composition of the 2012 early voting pool by race/ethnicity and by hour of
-check-in.  For most of the day, whites were the majority racial group,
-followed by blacks, Hispanics, and Asians.  This ranking is similar
-to, but does not mirror, Florida's registered voter pool.  In the
-Florida voter file as of December, 2012, which contains 12,580,602
-individuals, approximately 66.4 percent are white, 13.9 percent
-Hispanic, 13.6 percent black, and 1.63 percent Asian.  As in years
-prior, blacks in Florida in 2012 were disproportionate users of the
-state's early voting period \citep{herronsmith:souls}.
+composition of the 2012 early voting pool by race/ethnicity and by
+hour of check-in.  For most of the day, whites were the majority
+racial group, followed by blacks, Hispanics, and Asians.  This ranking
+is similar to, but does not mirror, Florida's registered voter pool.
+In the Florida voter file as of December, 2012, which contains
+12,580,602 individuals, approximately 66.4 percent are white, 13.9
+percent Hispanic, 13.6 percent black, and 1.63 percent Asian.  As in
+years prior, blacks in Florida in 2012 were disproportionate users of
+the state's early voting period \citep{herronsmith:souls}.
 
 % mysql> select count(*) from fLvoterfile_dec_2012_extract;
 % +----------+
@@ -834,11 +833,11 @@ state's early voting period \citep{herronsmith:souls}.
 % 7	Multi-racial
 % 9	Unknown
 
-What is striking in Figure \ref{fig:race2012}, however, is the racial/ethnic
-composition of the early voting pool immediately before and then after
-7:00pm.  Simply put, the pool becomes rapidly non-white starting
-around 7:00pm and by the 8:00pm-9:00pm window is less than 25 percent
-white.
+What is striking in Figure \ref{fig:race2012}, however, is the
+racial/ethnic composition of the early voting pool immediately before
+and then after 7:00pm.  Simply put, the pool becomes rapidly non-white
+starting around 7:00pm; by the 8:00pm-9:00pm window, the pool is less
+than 25 percent white.
 
 \begin{figure}[!ht]
 \caption{Partisan composition of early voters by hour and by race, 2012
@@ -848,12 +847,12 @@ white.
     \centering\includegraphics[scale = 0.8]{partisan_composition_by_race.pdf}
 \end{figure}
 
-The party registration of the early voting pool varies slightly with time
-although not nearly as starkly as its racial/ethnic composition.  Evolution
-in party registration is illustrated in Figure \ref{fig:party2012}, which
-describes by early voting hour the partisan breakdown of all early
-voters in our six counties as well as the party breakdown of the
-four aforementioned racial/ethnic groups.  We plot party registration as the percent of early voters in
+The party registration of the early voting pool varies slightly with
+time although not nearly as starkly as its racial/ethnic composition.
+This is illustrated in Figure \ref{fig:party2012}, which describes by
+hour the partisan breakdown of all early voters in our six counties as
+well as the party breakdown of the four aforementioned racial/ethnic
+groups.  We plot party registration as the percent of early voters in
 each hour of check-in who are registered Democrats.  While Democrats
 made up 54\% of all those who voted early in our set of Florida
 counties, we can see from the black line in the figure that this
@@ -883,13 +882,14 @@ progressed.
 
 \subsubsection*{Early voting in 2016}
 
-We now turn to early voting in 2016.  By the General Election in 2016,
-Florida had increased the number of early voting days from eight to
-14, ostensibly in an effort to reduce congestion. Was this change
-effective?  Figure \ref{fig:nrlocs2016} is analogous to the earlier
-figure that described active early voting locations.  Here we have
-data from the same counties as in 2012.  These six counties had 104
-early voting stations in place for the 2016 General Election.
+We now turn to early voting in the 2016 General Election.  By the time
+this election had occurred, Florida had increased it number of early
+voting days from eight to 14, ostensibly in an effort to reduce
+congestion. Was this change effective?  Figure \ref{fig:nrlocs2016} is
+analogous to the earlier figure that described active early voting
+locations.  Here we have data from the same counties as in 2012.
+These six counties had 104 early voting stations in place for the 2016
+General Election.
 
 % > length(unique(evid16$location))
 % [1] 102
@@ -909,19 +909,26 @@ after this time but not nearly as many as in 2012.  On the busiest day
 in 2012, more than half of the polling locations were open past 9:00pm
 and more than five were open past midnight.  On the busiest day in
 2016, though, only six locations were open past 9:00pm and not one
-early voter cast a ballot after 10:00pm.  In the introduction we
-commented on improvements in voter wait times that others have found
-in 2016 compared to 2012, and Figure \ref{fig:nrlocs2016} is
-consistent with national, survey-based findings on voter waiting.
-Early voting in 2016---at least in the six Florida counties---appears
-to represent a major improvement over 2012 in terms of reducing
-congestion, which is presumably tied not only to the expanded number
-of sites but also to the number of days and hours of operation during
-which voters could cast an early ballot.\footnote{We use the verb
-  ``appears'' here because of voting-level sorting that may affect
-  with individuals cast their ballots.  When the Florida state
-  legislature changed the state's early voting period between 2012 and
-  2016, voters may have altered their most preferred voting times.}
+early voter cast a ballot after 10:00pm.
+
+In the introduction, we commented on improvements in voter wait times
+that others have found in 2016 compared to 2012, and Figure
+\ref{fig:nrlocs2016} is consistent with findings in the 2012
+\citep{spae2012} and 2016 \citep{spae2016} versions of the SPAE.  See
+Table \ref{tab:floridaspae}.  Early voting in 2016---at least in the
+six Florida counties---appears to represent a major improvement over
+2012 in terms of reducing congestion, which is presumably tied not
+only to the expanded number of sites but also to the number of days
+and hours of operation during which voters could cast an early
+ballot.\footnote{We use the verb ``appears'' here because of
+  voting-level sorting that may affect the types of individuals in
+  Florida who cast their ballots prior to a given Election Day.  When
+  the Florida state legislature changed the state's early voting
+  period between 2012 and 2016, voters may have altered their most
+  preferred voting times.}
+
+\input{spae_florida.tex}
+
 
 \subsubsection*{Late voting in 2012 versus 2016}
 
@@ -930,13 +937,6 @@ perspective on the 2012 versus 2016 comparison for our six counties.
 For three key racical/ethnic groups in Florida, black, Hispanic, and
 white, the figure shows the total number of check-ins by time,
 aggregated across all days in the 2012 and 2016 early voting periods.
-
-\begin{figure}[!ht]
-  \caption{Distribution of voter check-ins, 2012 General Election versus 2016 General Election}
-  \label{fig:race2012and2016}
-  \centering
-  \centering\includegraphics[scale = 0.8]{histogram_by_hour_by_race_2012_2016.pdf}
-\end{figure}
 
 Figure \ref{fig:race2012and2016} shows clearly that, not only did more
 voters check-in for early voting in 2016 compared to 2012, but fewer
@@ -947,6 +947,15 @@ evidence of this, but Figure \ref{fig:race2012and2016} shows as well
 how this problem did not appear in 2016.  There were slightly more
 non-whites with late check-ins in 2016, but the magnitude of the white
 versus non-white gap shrunk between the two years.
+
+\begin{figure}[!ht]
+  \caption{Distribution of voter check-ins, 2012 General Election versus 2016 General Election}
+  \label{fig:race2012and2016}
+  \centering
+  \centering\includegraphics[scale = 0.8]{histogram_by_hour_by_race_2012_2016.pdf}
+\end{figure}
+
+
 
 Even though 2016 attracted far more early voters than 2012, the
 changes made to the early voting period appears to have reduced the
@@ -965,7 +974,7 @@ is likely that these and other reforms made the difference for congestion.
 %% Make a plot using all early voters in all sites, but this is
 %% post-midwest!  XXX
 
-\input{spae_florida.tex}
+
 
 
 \subsection*{Effects of waiting to vote}
@@ -1208,7 +1217,6 @@ may affect future turnout decisions.
 
 \bibliographystyle{apsr}
 \bibliography{evid-cites}
-
 
 \newpage
 \appendix

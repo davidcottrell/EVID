@@ -34,10 +34,18 @@ table2print <- xtable(t(rbind(table2use2012, table2use2016)),
                       caption = "Wait times of Florida respondents in the SPAE, 2012 and 2016 General Elections",
                       label = "tab:floridaspae",
                       hline.after = TRUE,
+                      align = "lrr",
                       type = "latex")
 names(table2print) <- c("2012", "2016")
+comment          <- list()
+comment$pos      <- list()
+comment$pos[[1]] <- c(nrow(table2print))
+comment$command  <- c(paste("\\hline\n", 
+                            "\\multicolumn{3}{l}{\\emph{Note: ignores individuals with missing responses to the SPAE wait time question, which was}}\n",
+                            "\\multicolumn{3}{l}{\\emph{\"Approximately, how long did you have to wait in line to vote?\"}\n}",
+                            sep = ""))
 
-latex2print <- print(table2print, caption.placement = "top")
+latex2print <- print(table2print, caption.placement = "top", add.to.row = comment, hline.after = c(-1, 0))
 
 cat(latex2print,
     file = "../Paper/spae_florida.tex", sep="\n")
