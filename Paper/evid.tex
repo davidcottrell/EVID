@@ -498,26 +498,26 @@ paper-based pollbooks to check-in these individuals, as is the case
 for Election Day in many Florida counties, the 67 county Supervisors
 of Elections in Florida use electronic pollbooks to check-in voters
 during the state's early voting period.  These pollbooks are for the
-most part known as Electronic Voter iDentification machines, or EViDs
+most part known as Electronic Voter iDentification machines, or EVIDs
 for short.  Although there is variance across Florida counties in
 electronic pollbook implementation, for simplicity we refer to all
-electronic pollbooks as EViD machines.\footnote{For example, Sarasota
+electronic pollbooks as EVID machines.\footnote{For example, Sarasota
   County uses a different electronic voting system for its early
   voters (phone call with Cathy Fowler, office of the Sarasota
   Supervisor of Elections, on March 31, 2017).}
 
 %% Cathy Fowler:  cfowler@sarasotavotes.com
 
-EViD machines allow county pollworkers to check-in and verify the
+EVID machines allow county pollworkers to check-in and verify the
 registration statuses and identities of Floridians casting early,
-in-person ballots. The EViD system is designed to reduce the time it
+in-person ballots. The EVID system is designed to reduce the time it
 takes to process early voters, and it fosters synchronization across a
 county's early voting centers (important because early voters in
 Florida can choose where to cast their ballots) as well as with the
 Florida statewide voter database.  More importantly for our purposes,
-EViD machines record the check-in times for all early voters, and this
+EVID machines record the check-in times for all early voters, and this
 provides us with timestamps that specify when a voter began his or her
-voting process. EViD timestamps are recorded to the minute, and using
+voting process. EVID timestamps are recorded to the minute, and using
 these timestamps we can, for example, identify early voters who had
 not checked-in when polls closed at 7:00pm on a given day of early
 voting but nonetheless cast ballots.  Per Florida state law, any
@@ -525,27 +525,41 @@ elector in line at 7:00pm is allowed to cast a ballot
 \citet{FLStatutes:7pm}.
 
 We have EVID check-in times from six Florida counties: Alachua,
-Broward, Hillsborough, Miami-Dade, Orange, and Palm Beach.  Table XXX
-lists the number of EVID timestamps we have from each.  In the 2012
-General Election, there were XXX total ballots cast in Florida, and in
-2016, XXX ballots.  Our EVID data thus cover XXX percent and XXX
-percent of total ballots cast Florida in the 2012 and 2016 General
-Elections, respectively.\footnote{The numbers in Table
-  \ref{tab:evidcounts} do not include 115 EVID check-in times (28 from
-  2012 and 87 from 2016) that are listed as midnight.  We are
-  suspicious that these times are not accurate and hence drop them.
-  Given the total number of EVID votes cast, dropping 115 cases is
-  negligible.\label{fn:midnight}}
+Broward, Hillsborough, Miami-Dade, Orange, and Palm Beach.  Table
+\ref{tab:evidcounts} lists the number of EVID timestamps we have from
+each.  In the 2012 General Election, there were 2,409,097 total early
+ballots cast in Florida, and in 2016, 3,876,753 early
+ballots.\footnote{2012 General Election turnout statistics are located
+  at \url{http://dos.myflorida.com/media/693340/2012ballotscast.pdf}
+  (last accessed December 10, 2017), and comparable 2016 General
+  Election statistics at
+  \url{http://dos.myflorida.com/media/697842/2016-ge-summaries-ballots-by-type-activity.pdf}
+  (last accessed December 10, 2017).}  Our EVID data thus cover
+approximately 39 percent and 44 percent of total ballots cast
+Florida in the 2012 and 2016 General Elections,
+respectively.\footnote{The numbers in Table \ref{tab:evidcounts} do
+  not include 115 EVID check-in times (28 from 2012 and 87 from 2016)
+  that are listed as midnight.  We are suspicious that these times are
+  not accurate and hence drop them.  Given the total number of EVID
+  votes cast, dropping 115 cases is negligible.\label{fn:midnight}}
+
+% > 942166 / 2409097 * 100
+% [1] 39.10868
+% > 
+
+% > 1687217 / 3876753 * 100
+% [1] 43.5214
+% > 
 
 \input{county_evid_counts.tex}
 
-EViD timestamps, one per early voter, are not subject to potential
+EVID timestamps, one per early voter, are not subject to potential
 self-reporting biases and hence are presumably more accurate than
 surveys of voter times or even within-polling place observations of
-when voters checked-in.  Moreover, EViD timestamps as associated with
+when voters checked-in.  Moreover, EVID timestamps as associated with
 official Florida voter identification numbers, which we can link to
 the nearly 14 million individual voter registration records in
-Florida's statewide voter file.  To this end, we merge our EViD
+Florida's statewide voter file.  To this end, we merge our EVID
 timestamps with statewide voter files that cover the 2012 and 2016
 General Elections.\footnote{Per Table \ref{tab:evidcounts}, we
   recorded 942,166 early voters across our six counties in 2012 and
@@ -571,10 +585,10 @@ General Elections.\footnote{Per Table \ref{tab:evidcounts}, we
 % > 
 
 
-% Despite their advantages, EViD check-in times are not a panacea in the
+% Despite their advantages, EVID check-in times are not a panacea in the
 % quest to understand voting lines and their consequences.  We
 % ultimately care about voter wait times, and in this sense our use of
-% EViD check-in times has limitations.  An individual check-in time
+% EVID check-in times has limitations.  An individual check-in time
 % indicates when a given voter finished waiting in a line, if there were
 % a line to begin with.  However, such a time does not specify how long
 % an individual waited to vote, if at all. As such, our analysis of
@@ -596,7 +610,7 @@ voting.\footnote{See Florida Governor Rick Scott's statement, issued
   \url{http://www.flgov.com/2013/01/17/governor-rick-scott-statement-on-election-reforms/}
   (last accessed March 31, 2017).}
 
-Figure \ref{fig:tenminhist} displays the distribution of EViD check-in
+Figure \ref{fig:tenminhist} displays the distribution of EVID check-in
 times on the last Saturday (November 3) of the 2012 General Election
 early voting period for two different polling locations in Florida,
 one at the Fred B.\ Karl County Center in Hillsborough County and the
@@ -662,7 +676,7 @@ line to vote at Fred B.\ Karl County Center at 7:00pm on Saturday,
 November 3, this despite the fact that, per check-in times, the Center
 was regularly processing voters.
 
-Figure \ref{fig:tenminhist} highlights the value of EViD check-in
+Figure \ref{fig:tenminhist} highlights the value of EVID check-in
 times (timestamps, association with race/ethnicity, and so forth) as
 well as their limitations (check-ins are not linked to arrivals).  All
 data sources have advantages and disadvantages, and we will draw on
@@ -690,7 +704,7 @@ stations in 2012.  These serviced a total of 942,166 voters in the
 eight day long, 2012 early voting period.\footnote{This ignores the
   small number of EVID check-in times that look suspicious to us; see
   fn.\ \ref{fn:midnight} In addition, locations where two or fewer
-  individuals recorded votes were dropped from our analysis.  The EViD
+  individuals recorded votes were dropped from our analysis.  The EVID
   data from Orange County and Palm Beach County in 2012 and 2016, from
   Miami-Dade County in 2016, and from Broward County in 2016 was not
   accompanied with voting locations for each early voter.  To
@@ -955,8 +969,6 @@ versus non-white gap shrunk between the two years.
   \centering\includegraphics[scale = 0.8]{histogram_by_hour_by_race_2012_2016.pdf}
 \end{figure}
 
-
-
 Even though 2016 attracted far more early voters than 2012, the
 changes made to the early voting period appears to have reduced the
 congestion outside of the polls. The increased number of days and hours may have helped,
@@ -974,56 +986,54 @@ is likely that these and other reforms made the difference for congestion.
 %% Make a plot using all early voters in all sites, but this is
 %% post-midwest!  XXX
 
-
-
-
 \subsection*{Effects of waiting to vote}
 
-We now consider the effects on future political participation of
-waiting in line to vote, in particular waiting in an early voting line
-in the 2012 General Election.  The future participation we have in
-mind is voting in the 2016 General Election.
+We now consider the effects on future electoral political
+participation of waiting in line to vote.  In particular, we focus
+here on the consequences of waiting in an early voting line in the
+2012 General Election on turnout in the 2016 General Election.
 
-We have already noted that the individual-level EViD files we have
+We have already noted that the individual-level EVID files we have
 include Florida voter identification numbers, and this enables us to
 link these files with statewide Florida voter files.  These latter
 files specify the elections in which voters participated and, if so,
-whether they voted absentee, early in-person, or on Election Day.  Thus, for any
-early voter in 2012 we can determine whether the individual voted in
-the 2016 General Election, assuming that this individual still lived
-in Florida as of November, 2016.\footnote{When a registered voter
-  moves within Florida, the voter maintains the same voter
-  identification number.  Our estimates in this section are thus not
-  confounded by the possibility of 2012 early voters moving across
-  county lines within Florida, for example.}  
+whether they voted absentee, early in-person, or on Election Day.
+Thus, for any early voter in 2012 we can determine whether the
+individual voted in the 2016 General Election, assuming that this
+individual still lived in Florida as of November, 2016.\footnote{When
+  a registered voter moves within Florida, the voter maintains the
+  same voter identification number.  Our estimates in this section are
+  thus not confounded by the possibility of 2012 early voters moving
+  across county lines within Florida.}
 
 The difficulty in our exercise here is twofold.  First, while we know
-voter check-in times from our EViD data, we do not know associated
+voter check-in times from our EVID data, we do not know associated
 voter wait times \emph{per se}.  To determine wait times precisely we
 would have to know early voter arrival times, which are not collected
-by election officials.  Hence, distinguishing those early voters in
-2012 who waited in line from those who did not is a challenge and
-requires an alternative method along with some assumptions.  Second,
-early voters who voted at, say, 9:00am on a given day of early voting
-may be systematically different from those who voted at
-6:00pm. Consequently, estimating the effect of voting after closing
-time---when we know voters have waited in line---is potentially
-confounded by voter-level selection effects.  Hence, we need to ensure
-that we control for differences across early voters as best as we can
-so that voter selection into time of early voting does not confound
-our estimates of the effect of waiting on future participation.
+by election officials or anyone else for that matter.  Hence,
+distinguishing those early voters in 2012 who waited in line from
+those who did not is a challenge and requires an alternative method
+along with some assumptions.  Second, early voters who voted at, say,
+9:00am on a given day of early voting may be systematically different
+from those who voted at 6:00pm. Consequently, estimating the effect of
+voting after closing time---when we know voters have waited in
+line---is potentially confounded by voter-level selection.  Hence, we
+need to ensure that we control for differences across early voters as
+best as we can so that voter selection into time of early voting does
+not confound our estimates of the effect of waiting on future
+participation.
 
 Our approach is as follows.  We condition on race/ethnicity,
 partisanship (as before, measured by party registration), gender, age,
 and previous voting history.  And, we make the following assumption:
-those who voted at early voting locations which stayed open well past
-the 7:00pm cutoff time are more likely to have waited in line than
-those who voted in voting locations that closed before 7:00pm or at
-this time exactly.  Moreover, we assume that those who voted just
-before the 7:00pm cutoff in early voting locations that stayed open
-late are more likely to have waited in line than those who voted
-earlier in the day.  We cannot know for sure if these assumptions
-hold, but there is reason to believe that it does.
+individuals who voted at Florida early voting locations which stayed
+open well past the 7:00pm cutoff time are more likely to have waited
+in line than those who voted in voting locations that closed before
+7:00pm or at this time exactly.  Moreover, we assume that those who
+voted just before the 7:00pm cutoff in early voting locations that
+stayed open late are more likely to have waited in line than those who
+voted earlier in the day.  We cannot know for sure if these
+assumptions hold, but there are reasons to believe that they do.
 
 Take, for example, the two polling locations in Figure
 \ref{fig:nrlocs2012}.  The first location---the Fred B.\ Karl County
@@ -1051,27 +1061,26 @@ to have been caught up in a long voting line.
 
 With the above assumptions as background, our strategy for
 distinguishing voters who waited in line from voters who did not wait
-in line is first to distinguish those who voted in an an early voting polling place
-that closed well past 7:00pm from those who voted in a polling place
-that closed on time.  In other words, we attempt to compare voters who
-cast their ballots in places like the Fred B.\ Karl County Center to
-voters who voted in places like the West Kendall Regional Library.
-More specifically, we want to compare those individuals who voted
-closest to the 7:00pm cutoff, since those are the individuals who we
-are most confident were affected by the congestion that caused polling
-locations to close late.
+in line is first to identify those who voted in an an early voting
+polling place that closed well past 7:00pm from those who voted in a
+polling place that closed on time.  In other words, we attempt to
+compare voters who cast their ballots in places like the Fred B.\ Karl
+County Center to voters who voted in places like the West Kendall
+Regional Library.  More specifically, we want to compare those
+individuals who voted closest to the 7:00pm cutoff, since those are
+the individuals who we are most confident were affected by the
+congestion that caused polling locations to close late.
  
 Therefore, we identify all early voters who voted at a polling
 location on a day where the last voter checked-in past 7:30pm.  These
 are voters who cast ballots at locations where we know the line at the
-end of the day was at least a half-hour long.  In what follows we call
-this variable \emph{Over}.  Conditioning on race/ethnicity, partisanship,
-gender, age, and previous voting record (whether the voter voted in
-the 2008 election) we estimate the effect of voting at a polling
-location that is congested in 2012---one that goes ``over''
-7:30pm---on the probability of voting in 2016.  We employ a logistic
-regression as follows:
-
+end of the day was at least 30 minutes long.  In what follows we call
+this variable \emph{Over}.  Conditioning on race/ethnicity,
+partisanship, gender, age, and previous voting record (whether the
+voter voted in the 2008 General Election), we estimate the effect of
+voting at a polling location that is congested in 2012---one that goes
+``over'' 7:30pm---on the probability of voting in 2016.  To do this we
+employ a logistic regression as follows:
 \begin{equation*}
   \begin{aligned}
     \textup{Pr}\left(\mathrm{Voted16}_{i} = yes\right) =  \textup{logit}^{-1}&(\beta + \alpha_{Over} + \gamma_{Hour} +
@@ -1079,18 +1088,22 @@ regression as follows:
       \tau_{Age Group} + \psi_{Party} + \pi_{Voted\emph{08}})
   \end{aligned}
 \end{equation*}
-
+%
 In the above model, $i$ denotes our collection of 2012 early voters
 who appear in the history of Florida voting in 2008; $Hour$ indicates
-the hour of the day at which each voter checked-in, between 7:00am and
-7:00pm; $Gender$ indicates whether the voter identifies as male or
-female; $Race/Ethnicity$ indicates if the voter self-identifies as white, black,
-Hispanic, or Asian; $AgeGroup$ classifies voters according to their
-2016 age and bins them into 10-year age groups (20-29, 30-39, 40-49,
-50-59, 60-69, and 70+); and, $Voted08$ and $Voted16$ are indicators
-for participation in the 2008 and 2016 General Elections.  All told we
-estimate our logistic regression based on 709,956 individuals, and
-coefficient estimates appear in Table \ref{tab:reg} in the appendix.
+the hour of the day in 2012 at which each voter checked-in, between
+7:00am and 7:00pm; $Gender$ indicates whether the voter identifies as
+male or female; $Race/Ethnicity$ indicates if the voter
+self-identifies as white, black, Hispanic, or Asian; $AgeGroup$
+classifies voters according to their 2016 age and bins them into
+10-year age groups (20-29, 30-39, 40-49, 50-59, 60-69, and 70+); and,
+$Voted08$ and $Voted16$ are indicators for participation in the 2008
+and 2016 General Elections.  All told we estimate our logistic
+regression based on 709,956 individuals, and coefficient estimates
+appear in Table \ref{tab:reg} in the
+appendix.\footnote{Our regression drops individuals who have no
+  recorded genders.}  %%% XXX Besides gender, need to say where we got
+%%% this 709,956 number??
 
 Regression results are displayed graphically in Figure
 \ref{fig:prvoting2016}. In this figure, we have estimated the
@@ -1100,14 +1113,15 @@ estimates are conditioned on each hour of the early voting day in
 2012. The black points in the figure are the estimated probabilities
 of voting in 2016 conditional on voting at a polling location that
 closed before 7:30pm.  Based on our discussion above, these estimates
-reflect individuals who likely did not wait in line.  The grey points
-are the estimated probabilities of voting in 2016 conditional on
-casting an early ballot at a polling location that closed \emph{after}
-7:30pm.  These estimates reflect individuals who likely did wait in
-line to vote.  Hence, the difference between these two sets of
-estimates should reflect the effect of waiting in line.  Moreover, the
-effect should be most isolated as one compares voters casting ballots
-closer to 7:00pm.
+reflect individuals who likely did not wait in line.  In contrast, the
+grey points in Figure \ref{fig:prvoting2016} are the estimated
+probabilities of voting in 2016 conditional on casting an early ballot
+at a polling location that closed \emph{after} 7:30pm.  These
+estimates reflect individuals who likely did wait in line to vote.
+Hence, the difference between the figure's two sets of estimates
+should reflect the effect of waiting in line.  Moreover, the effect
+should be most isolated as one compares voters casting ballots closer
+to 7:00pm.
 
 \begin{figure}[!ht]
 \caption{Probability of voting in 2016, given 2012 check-in time}
@@ -1117,18 +1131,58 @@ closer to 7:00pm.
 \end{figure}
 
 One can see that, beginning at around 2:00pm, there is a small albeit
-negative difference between those who voted in congested polling
+negative difference between individuals who voted in congested polling
 places compared to those in non-congested polling places.  This might
 suggest that the lines started in the early afternoon and this is why
 a difference is induced so early.  Hence, the reason there is no
 difference between congested and non-congested polling places earlier
-in the day might be because lines have yet to form. As congested
+in the day is plausibly because lines have yet to form. As congested
 polling places become congested in the afternoon, we begin to see the
 small but significant effect on future participation.  This result
 suggests that voting lines have a negative effect on future
 participation.  However, the effect is very small, amounting to no
-more than a percentage point difference in turnout.  Our results are
-similar to those in \citet{pettigrew:longlinesminorityprecincts}.
+more than a percentage point difference in future turnout.
+
+This result is similar to the conclusions in
+\citet{pettigrew:longlinesminorityprecincts}.  In particular,
+\citeauthor{pettigrew:longlinesminorityprecincts} finds that each hour
+an in-person voters spends waiting in line to vote is associated with
+a one percentage point drop in future turnout.  To the best of our
+knowledge, \citeauthor{pettigrew:longlinesminorityprecincts} is the
+first scholar to try to estimate the effect of waiting in line to vote
+on the later propensity to vote, and our findings in this section are
+qualitatively similar to his.
+
+Studying the effects of waiting in line on future turnout is
+complicated by the fact that lines are not randomly assigned to
+voters.  With this as background, we note that we estimated our model
+using individuals who were registered to vote in Florida in 2008,
+2012, and 2016.  This means that our analysis excludes very young
+registrants in, say, 2012, who were not legally permitted to be
+registered in Florida as of the 2008 General Election; individuals who
+moved to Florida from out of state between the years of 2008 and 2016;
+registered Floridians who died between 2008 and 2016; and, individuals
+who moved out of Florida between 2008 and 2016.
+
+Are young voters more variable re: turnout?  I think so---but maybe I
+am wrong.  Cites?  If so, this means that we may be underestimating
+the effects of lines, to the extent to young voters were caught in
+them in 2012.  What can we say about new registrants in 2012?  Dan,
+you have a paper on this?
+
+With respect to the other categories of excluded voters, it is
+difficult to imagine that they are have any systematic biases
+although, in principle, sensitivity to lines could be correlated with
+the willingness to live in Florida.  
+
+% XXX  Add something about early voting use in 2016?  Same model as
+% before but different dependent variable?
+
+% XXX Comment on intercept shifts.  That is, what if we plotted
+% something else?  Nothing would change re: differences.  Need to say
+% this.
+
+% Also need to say something about what our model says about 
 
 \section*{Conclusion}
 

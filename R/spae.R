@@ -41,8 +41,8 @@ comment          <- list()
 comment$pos      <- list()
 comment$pos[[1]] <- c(nrow(table2print))
 comment$command  <- c(paste("\\hline\n", 
-                            "\\multicolumn{3}{l}{\\emph{Note: ignores individuals with missing responses to the SPAE wait time question, which was}}\n",
-                            "\\multicolumn{3}{l}{\\emph{\"Approximately, how long did you have to wait in line to vote?\"}\n}",
+                            "\\multicolumn{3}{l}{\\emph{Note: ignores individuals with missing responses to the SPAE wait time question, which was}}\\\\\n",
+                            "\\multicolumn{3}{l}{\\emph{\"Approximately, how long did you have to wait in line to vote?\"}}\n",
                             sep = ""))
 
 latex2print <- print(table2print, caption.placement = "top", add.to.row = comment, hline.after = c(-1, 0))

@@ -5,6 +5,7 @@ library(stringr)
 library(RSQLite)
 library(stargazer)
 library(dbplyr)
+library(xtable)
 
 ## Set working directory
 if (length(grep("herron", Sys.info()["user"]))) {
@@ -82,6 +83,7 @@ evid <- evid %>%
   )
 
 # 942,194 early voters in 2012 and 1,687,304 early voters in 2016
+cat ("EVID counts before dropping midnight votes\n")
 evid %>% group_by(year) %>% count
 
 # 40,455 in 2012 and 969 in 2016 could not be matched to the voter extract.  
@@ -89,7 +91,9 @@ evid %>% filter(is.na(gender) & is.na(race) & is.na(birthdate)) %>% group_by(yea
 
 evid <- evid %>% filter(time != "00:00") # There are spikes at midnight that dont make sense.  So remove 115 with suspicious midnight time
 
-stop()
+# Total counts after dropping suspicious midnight votes
+cat ("EVID counts after dropping midnight votes\n")
+evid %>% group_by(year) %>% count
 
 ## Make evid count summary table for our six counties
 
@@ -103,23 +107,24 @@ colnames(table2use)[match("DAD", colnames(table2use))] <- "Miami-Dade"
 colnames(table2use)[match("HIL", colnames(table2use))] <- "Hillsborough"
 colnames(table2use)[match("ORA", colnames(table2use))] <- "Orange"
 colnames(table2use)[match("PAL", colnames(table2use))] <- "Palm Beach"
+table2use <- table2use[, order(colnames(table2use))]
 
-table2use <- table2use[,order(colnames(table2use))]
+Total <- apply(table2use, 1, sum)
+table2use <- cbind(table2use, Total)
 
-table2print <- xtable(table2use,
+table2print <- xtable(t(table2use),
                       row.names =  TRUE,
                       caption = "EVID check-ins by county, 2012 and 2016 General Elections",
                       label = "tab:evidcounts",
                       hline.after = TRUE,
+                      align = "lrr",
                       type = "latex")
 names(table2print) <- c("2012", "2016")
 
-latex2print <- print(table2print, caption.placement = "top")
+latex2print <- print(table2print,format.args = list(big.mark = ","), caption.placement = "top")
 
 cat(latex2print,
-    file = "../Paper/spae_florida.tex", sep="\n")
-
-
+    file = "../Paper/county_evid_counts.tex", sep="\n")
 
 
 # Plot EVID -------------------------------------------------------------
