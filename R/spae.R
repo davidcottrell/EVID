@@ -31,7 +31,7 @@ names(table2use2012) <- names(table2use2016)
 
 table2print <- xtable(t(rbind(table2use2012, table2use2016)),
                       row.names =  names(table2use2016),
-                      caption = "Wait times of Florida respondents in the 2012 and 2016 SPAE",
+                      caption = "Wait times of Florida respondents in the SPAE, 2012 and 2016 General Elections",
                       label = "tab:floridaspae",
                       hline.after = TRUE,
                       type = "latex")
