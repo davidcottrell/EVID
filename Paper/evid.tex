@@ -113,32 +113,32 @@
 
 \begin{abstract}
   \noindent 
-  Lines can constitute meaningful, albeit unfortunate, aspects of
-  individuals' voting experiences. The causes and consequences of
-  lines are the subject of ongoing research in the field of election
-  administration, and we use early voter check-in times from Florida
-  in the General Elections of 2012 and 2016 to study the times at
-  which voters cast their ballots and to estimate the effect of
-  waiting in line on future turnout.  Our check-in times---involving
-  942,194 early in-person voters from 2012 and 1,687,304 from
-  2016---highlight the disproportionately problematic experiences
-  faced by minority voters, although we find far fewer such problems
-  in 2016 compared to 2012.  Moreover, we estimate that Florida early
-  in-person voters who waited excessively in 2012 had a very slightly
-  lower probability of voting in 2016, \emph{ceteris paribus}.  Our
-  results draw attention to the continued importance of voting lines
-  and the potential effect they have on future political activity.
+  How an election is administered affects the cost of voting in it and
+  the extent to which the election is fair in the sense of treating
+  all voters equally.  When voting lines are long, the cost of voting
+  is raised.  This can have distributional consequences if some voters
+  have to wait in line longer than others, and potential downstream
+  effects, if waiting decreases future electoral participation.  We
+  use voter check-in times from Florida---involving 942,166 early
+  in-person voters from 2012 and 1,687,217 from 2016---that highlight
+  disproportionately problematic experiences faced by minority voters,
+  although we find far fewer such problems in 2016 compared to 2012.
+  We estimate that Florida early in-person voters who waited
+  excessively in 2012 had a very slightly lower probability of voting
+  in 2016, \emph{ceteris paribus}, and this result draws attention to
+  the ongoing importance of voting lines and their potential for
+  affecting future political activity.
+
 \end{abstract}
 
-% source for numbers in abstract (run 8/6/2017):
-%
-%  evid %>% group_by(year) %>% count
-%  # A tibble: 2 x 2
-%  # Groups:   year [2]
+
+% > evid %>% group_by(year) %>% count
+% # A tibble: 2 x 2
+% # Groups:   year [2]
 %    year       n
 %   <int>   <int>
-%  1  2012  942194
-%  2  2016 1687304
+% 1  2012  942166
+% 2  2016 1687217
 
 \newpage
 \section*{Introduction}
@@ -148,11 +148,11 @@ the legitimacy of which can suffer in the face of perceptions of
 unfairness \citep{norris2014electoral}.  But what is an unfair
 election?  Elections affected by fraud certainly fall in this
 category, as \citet{cottrelletal:fraud2016} argue, and elections
-conducted in the midst of acrimonious debates concerning over the
-nature of the franchise risk being thought of as unfair
-\citet{hasen:votingwars}.  Fairness can also be in the eye of the
-beholder: \citet{sancesstewart:confidence} show how confidence in a
-given election outcome can be a function of whether an individual's
+conducted in the midst of acrimonious debates over the nature of the
+franchise risk being thought of as unfair \citet{hasen:votingwars}.
+Fairness can also be in the eye of the beholder:
+\citet{sancesstewart:confidence} show how confidence in a given
+election outcome can be a function of whether an individual's
 preferred candidate won.
 
 Here we consider the contribution of election administration practices
@@ -167,20 +167,23 @@ election were fair, we must consider the extent to which selected
 groups if voters who participated in it were subjected to long lines
 and hence had a relatively high cost of voting compared to others.
 
-The majority---over 75\% in 2016---of voters in the United States who
-cast ballots in presidential elections do so in-person, either on an
+Voting lines are potential issues wherever voters cast their ballots
+\emph{in-person}, as opposed to voting remotely via mail.  The vast
+majority---over 75\% in 2016---of voters in the United States who cast
+ballots in presidential elections do so in-person, either on an
 Election Day itself or during a corresponding early voting period
-whose duration depends on relevant local laws.\footnote{For
-  details on this figure and the composition of the 2016 electorate,
-  see \citet{eac:2016}} As opposed to voting remotely via mail,
-casting a ballot in-person requires traveling to a voting precinct;
-possibly spending time in a line prior to voting; authenticating
-oneself in some fashion to election officials; physically registering
-candidate and ballot measure preferences; and, submitting a ballot for
-tabulation.  An in-person voting experience thus has a number of
-facets whose precise nature depends on local conditions, and our
-interest here is the second of the steps noted above, namely, the act
-of waiting in line before being processed to vote.
+whose duration depends on relevant local laws.\footnote{For details on
+  this figure and the composition of the 2016 electorate, see
+  \citet{eac:2016}.} In-person voting experiences have a number of
+features that are distinct from the experiences of those who vote by
+mail, and our interest here is the act of waiting in line.
+
+% Casting an in-person ballot requires traveling to
+% a voting precinct; possibly spending time in a line prior to voting;
+% authenticating oneself in some fashion to election officials;
+% physically registering candidate and ballot measure preferences; and,
+% submitting a ballot for tabulation.  
+
 
 %% 2016 EAC is from p. 10
 
@@ -197,26 +200,34 @@ associated with all forms of taxation: is the time tax fair and, in
 particular, is the burden of this tax spread uniformly across voters
 or concentrated on certain types of individuals?
 
-Second, waiting in line is an experience that in principle can have 
+Second, waiting in line is an experience that in principle can have
 ``downstream'' effects, as characterized by
 \citet{pettigrew:longlinesminorityprecincts}. When an individual is
-compelled to ``pay'' a relatively high tax in order to participate in a
+compelled to pay a relatively high tax in order to participate in a
 social or political activity, a natural response might be to avoid the
 activity, or substitute for it, in the future. To make matters
 concrete, if a line in front of a particular restaurant is long, some
 individuals may substitute an alternative eatery for the restaurant in
 question, one without an imposing line.\footnote{Alternatively, a line
   in front of a restaurant might be a quality signal, in which case
-  the presence of a line might be an incentive to eat at said
-  restaurant.}  While it is not \emph{a priori} clear that voting is
-substitutable in the way that selecting a restaurant might be, we
-should not dismiss outright the possibility that the effect of waiting
-in line to vote, which raises the cost of voting, might decrease the
-likelihood of voting in the future.  Given the relatively low rate of
-voter participation in American presidential elections
-\citep{IDEA:turnout}, any aspect of the voting experience that might
-have a depressive effect on turnout should be considered a matter
-worthy of study.
+  the presence of a line might be an incentive to wait in it.  The
+  same could be said for voting, and here we ignore the possibility
+  that lines form due to potential voters using the presence of lines
+  as a means to gather information on whether voting is valuable.}
+While it is not \emph{a priori} clear that voting is substitutable in
+the way that selecting a restaurant might be, we should not dismiss
+outright the possibility that the effect of waiting in line to vote,
+which raises the cost of voting, might decrease the likelihood of
+voting in the future.  Given the relatively low rate of voter
+participation in American presidential elections---approximately 58
+percent in 2012 and 60 percent in 2016---any aspect of the voting
+experience that might have a depressive effect on turnout should be
+considered a matter worthy of study.\footnote{The national turnout
+  rate for a general election depends on the way that the number of
+  eligible voters in the country is calculated.  The figures cited
+  here are from the United States Election Project, available at
+  \url{http://www.electproject.org/home} (last accessed December 11,
+  2017).\label{fn:uselectionproject}}
 
 These two features of voting lines---time tax and potential downstream
 consequences---are conceptually distinct. The time tax for voting
@@ -226,56 +237,57 @@ line on future electoral participation, which might be less so. Or,
 the time tax could be concentrated on certain types of voters, which
 most would argue is not fair regardless of whether there are
 downstream consequences of waiting to vote. With this in mind, our
-analysis here of voting lines during early in-person voting periods in
-Florida is divided into two sections. First, with respect to the notion 
-that waiting in line constitutes a time tax, we assess which voters are more likely to wait and whether all voters face equal waiting 
-times when checking in. Second, with respect to the downstream consequences of waiting in line, we assess whether individuals who wait 
-to vote are less likely to vote in a subsequent election.
+empirical analysis of voting lines during early in-person voting in
+Florida is divided into two sections. First, with respect to the
+notion that waiting in line constitutes a time tax, we assess which
+voters are more likely to wait and whether all voters face equal
+waiting times when checking in. Second, with respect to the downstream
+consequences of waiting in line, we assess whether individuals who
+wait to vote are less likely to vote in a subsequent election.
 
-One of the difficulties in studying voting lines in the United States
-is data availability: it is not easy to determine precisely how long
-voters waited in line at the polls.  It is accordingly difficult to
-study if there are consequences for subsequent voting behavior of
-waiting in line.  Some researchers have dealt with this hurdle by
-using surveys---either Election Day exit polls or post-election
-questionnaires---which integrate responses to waiting time questions
-with other survey items, namely socioeconomic and partisan queries
-\citep{stewart:waitingtovote2012}.  Post-election surveys on voting
-experiences can foster access to wide swaths of voters, and this is
-valuable.  A limitation of surveys regarding electoral experiences,
-though, is that they rely on self-reports of wait times, which may not
-be accurate, and in addition it is known that self-reporting of
-turnout in general can suffer from over-reporting
-\citep{karpbrockington:overreport,bellietal:overreport}.
+% One of the difficulties in studying voting lines in the United States
+% is data availability: it is not easy to determine precisely how long
+% voters waited in line at the polls.  It is accordingly difficult to
+% study if there are consequences for subsequent voting behavior of
+% waiting in line.  Some researchers have dealt with this hurdle by
+% using surveys---either Election Day exit polls or post-election
+% questionnaires---which integrate responses to waiting time questions
+% with other survey items, namely socioeconomic and partisan queries
+% \citep{stewart:waitingtovote2012}.  Post-election surveys on voting
+% experiences can foster access to wide swaths of voters, and this is
+% valuable.  A limitation of surveys regarding electoral experiences,
+% though, is that they rely on self-reports of wait times, which may not
+% be accurate, and in addition it is known that self-reporting of
+% turnout in general can suffer from over-reporting
+% \citep{karpbrockington:overreport,bellietal:overreport}.
 
-In light of potential concern with survey-based evidence on voting
-lines, we turn here to a relatively untapped source of information on
-lines, namely, voter check-in times. Specifically, we draw on data
-collected by several Florida counties that recorded check-in times
-from early voting sites in the 2012 and 2016 General Elections.  As
-will be clear shortly, the hundreds of thousands of check-in times
-which form the basis of our research are not subject to biases
-involving voluntary self-reporting.  This is advantageous, as is our
-ability to link a voter's check-in time with her race/ethnicity, party
-registration, and electoral participation history, all of which are
-part of every Florida voter's registration file.  However, in the
-interests of being transparent about limitations in our research
-design, a voter's check-in time is not directly connected to the amount
-of time she spent waiting in line.  We describe below how we associate
-voter check-in times with corresponding waiting times, but the
-connection is not perfect.  Our use of early voting check-in times
-thus complements the literature's reliance on survey data, and we
-believe that researchers engaged in election administration projects
-benefit when multiple sources of data are used in line-based research.
+%In light of potential concern with survey-based evidence on voting
+%lines,
 
-Briefly, our results are as follows.  Regarding the time tax
-associated with waiting to vote, we find disproportionate
-concentration of this tax on minority voters.  The situation was worse
-in Florida in 2012 than in 2016, and in general our collection of
-check-in times highlights fewer troubling issues in the latter.  This
-is consistent with national, survey-based evidence on voting lines in
-the 2012 and 2016 General Elections.\footnote{For a national 2012
-  versus 2016 comparison, see
+In contrast to much of the literature on voting lines, which relies on
+surveys, we turn here to a relatively untapped source of information
+on voting lines, namely, voter check-in times collected by Florida
+counties that recorded check-ins from early voting sites in the 2012
+and 2016 General Elections.  The hundreds of thousands of check-in
+times which form the basis of our results are not subject to potential
+biases arising in self-reports of time spent in line.  Moreover, we
+can associate a voter's check-in time with her race/ethnicity, party
+registration, and electoral participation, pieces of information
+available in Florida's statewide voter file.  Still, in the interests
+of being transparent about limitations in our research design, a
+voter's check-in time is not directly connected to the amount of time
+she spent waiting in line.  We describe below how we link voter
+check-in times with corresponding waiting times, but the connection is
+not perfect.  Our use of early voting check-in times thus complements
+the literature's reliance on survey results.
+
+Regarding the time tax associated with waiting to vote, we find
+disproportionate concentration of this tax on minority voters.  The
+situation was worse in Florida in 2012 than in 2016, and in general
+our collection of check-in times highlights fewer troubling issues in
+the latter.  This is consistent with national, survey-based evidence
+on voting lines in the 2012 and 2016 General Elections.\footnote{For a
+  national 2012 versus 2016 comparison, see
   \url{http://electionupdates.caltech.edu/2016/12/14/this-just-in-lines-at-the-polls-shorter-in-2016-than-in-2012}
   (last accessed March 30, 2017), as well as
   \url{http://www.richmond.com/opinion/their-opinion/guest-columnists/fortier-and-palmer-column-who-waits-the-longest-to-vote/article_81efabad-aa23-577b-83d1-0e524cf844ef.html}
@@ -303,9 +315,14 @@ times in Florida and explain what these times mean and how they can be
 interpreted.  Our results, which leverage check-in times, are divided
 into two sections: first we describe the distribution of the voting
 time tax across our set of Florida voters, and second we analyze the
-downstream effects of the tax.  We conclude with some broader observations.
+downstream effects of the tax.  We conclude with some broader
+observations.
 
 \section*{Voting lines in American elections}
+
+%  Why do we care about lines?  Fairness.  Why is fairness important?
+%  Why are elections important?  Need a few paragraphs on this.
+
 
 ``To me,'' Cynthia Perez complained in March 2016 after seeing a long
 line wending its way around an early voting center in Maricopa County,
@@ -349,7 +366,7 @@ opportunity to vote'' \citep[p.\ 13,][]{pcea:2014}.\footnote{The
   \url{https://obamawhitehouse.archives.gov/the-press-office/2013/03/28/executive-order-establishment-presidential-commission-election-administr}
   (last accessed July 12, 2017).}
 
-\subsection*{Survey data in election line research}
+\subsection*{The use of surveys in election line research}
 
 These anecdotes are striking, and they raise questions about voting
 lines in general---in particular, how long voters have to wait, how
@@ -359,16 +376,16 @@ line.
 
 With few exceptions \citep[e.g.,][]{spencermarkovits:renege,
   herronsmith:hanoverstudy, pettigrew:longlinesminorityprecincts},
-much of what we know about congestion at the polls and associated wait
-times for voters is derived from survey data. Most notably,
-\citet{stewart:waitingtovote2012} and his coauthors have conducted
-post-election, Internet-based surveys in the United States following
-the last three general elections.  These surveys query voters about
-their experiences at the polls, and the surveys include items on
-estimated wait times.  \citeauthor{stewart:waitingtovote2012}'s
-\emph{Survey of the Performance of American Elections} (SPAE), which
-surveys 200 individuals in each state and Washington, D.C., along with
-the Cooperative Congressional Election Study (CCES), have been used to
+much of what we know about wait times for voters is derived from
+survey data. Most notably, \citet{stewart:waitingtovote2012} and his
+coauthors have conducted post-election, Internet-based surveys in the
+United States following the last three general elections.  These
+surveys query voters about their experiences at the polls, and the
+surveys include items on estimated wait times.
+\citeauthor{stewart:waitingtovote2012}'s \emph{Survey of the
+  Performance of American Elections} (SPAE), which surveys 200
+individuals in each state and Washington, D.C., along with the
+Cooperative Congressional Election Study (CCES), have been used to
 gauge relative wait times across states the as well as overall wait
 times for different sub-populations of voters.  According to
 \citeauthor{stewart:waitingtovote2012}, wait times across the United
@@ -413,27 +430,27 @@ these differences in wait times could be ``due to factors associated
 with where minority voters live, rather than with minority voters as
 individuals'' (pp.\ 457-458).
 
-As mentioned earlier, there are several
-limitations with survey data when used to estimate voter wait times at
-the polls. First, surveys by construction draw on voter self-reports.
-There are a variety of reasons that respondents might not recall
-accurately how long they waited in line before voting
-\citep[e.g.,][]{sackettetal:timeflies}, and social desirability may
-confound accurate reporting on what has become a controversial, and at
-times political, issue.  Second, surveys often do not distinguish
-among the various wait times that voters may experience when parking,
-queuing up to check-in, filling out ballots, or processing completed
-ballots. Third, not all surveys have access to tens of thousands of
-respondents.  Given variability across states and even local
-jurisdictions in election administration practices, national surveys
-may not be not particularly well-suited for assessing variation in
-wait times across polling places within a state.
+There are several limitations with the use of survey results to
+estimate voter wait times at the polls. First, surveys by construction
+draw on voter self-reports.  There are a variety of reasons that
+respondents might not recall accurately how long they waited in line
+before voting \citep[e.g.,][]{sackettetal:timeflies}, and social
+desirability may confound accurate reporting on turnout, leading to
+overreporting \citep{ansolhersh:bigdata}.  Second, surveys often do
+not distinguish among the various wait times that in-person voters can
+experience when parking, queuing up to check-in, filling out ballots,
+or processing completed ballots. Third, not all surveys have access to
+tens of thousands of respondents.  Given variability across states and
+even local jurisdictions in election administration practices,
+national surveys may not be not particularly well-suited for assessing
+variation in wait times across types of voters and polling places
+within a state.
 
 \subsection*{Moving beyond voter line surveys}
 
-In light of limitations with survey data, our approach to the voting
-lines draws on an alternative source of information: actual check-in times of
-voters in Florida who cast their ballots at early in-person polling
+In light of limitations with survey data, our approach to voting lines
+draws on an alternative source of information: observed check-in times
+of voters in Florida who cast their ballots at early in-person polling
 sites prior to the 2012 and 2016 General Elections.  In 2016, more
 Florida voters---3.88 million---cast early in-person ballots than
 voters who mailed in their absentee ballots (2.76 million) or who
@@ -446,40 +463,39 @@ their consequences see \citet{neelyrichardson:earlyvoting},
 \citet{gronketoffey:psychological}, \citet{gronkebaum:growth}, and
 \citet{burdenetal:unanticipated}.  Although there are debates in the
 literature about the extent to which early voting has changed the
-electorate, if at all, here we take this mode of voting as
-given. 
+electorate, if at all, here we take this mode of voting as given.
 
 Florida notwithstanding, there is good reason to focus on wait times
 during early in-person voting.  Michael P.\ McDonald, on his Election
 Project website, estimates that over 23 million voters cast early
 in-person ballots in ``advance'' of the November 8, 2016, General
-Election, some 17 percent of the 137 million votes cast.\footnote{The
-  2016 estimates are drawn from
-  \url{http://www.electproject.org/home/voter-turnout/voter-turnout-data}
-  (last accessed March 31, 2017).}  If one were to be concerned that
-our focus on early voters in Florida limits our scope, these
-statistics imply that our results apply to millions of Americans.
+Election, some 17 percent of the 137 million votes
+cast.\footnote{These numbers are drawn from the United States Election
+  Project; see fn.\ \ref{fn:uselectionproject}.}  If one were to be
+concerned that our focus on early voters in Florida limits our scope,
+these statistics imply that our results apply to millions of
+Americans.
 
 Florida's open records laws make the state an excellent laboratory for
-the study of election administration, including wait times. For
-example, in their study of congestion at the polls in Florida in the
-2012 General Election, \cite{herronsmith:closingtimes} obtained
-precinct-level data detailing when the last voter in a precinct
-checked in to vote, when the final voter in a precinct cast a ballot,
-or when the last voting optical scan machine in a precinct was shut
-down. They find significant differences in the closing times of
-precincts within counties, contingent on a precinct's racial and
-ethnic composition.  In addition, Florida's laws provide a wealth of
-information not only about who votes, but when and how voters cast
-ballots.  Drawing on publicly available voter demographic and vote
-history data in Florida, \cite{amos_etal2017} find differences in
-individual-level turnout across political party and racial and ethnic
-categories among registered voters whose precincts were eliminated or
-relocated by local election administrators.  Similarly, by linking
-multiple statewide voter files and individual-level early voting
-files, \cite{herron_smith2014} are able to demonstrate how reductions
-in the number of early voting days following the 2008 General Election
-are associated with a drop in early voting in 2012, especially among
+the study of election administration. For example, in their study of
+congestion at the polls in Florida in the 2012 General Election,
+\cite{herronsmith:closingtimes} obtained precinct-level data detailing
+when the last voter in a precinct checked in to vote, when the final
+voter in a precinct cast a ballot, or when the last voting optical
+scan machine in a precinct was shut down. They find significant
+differences in the closing times of precincts within counties,
+contingent on a precinct's racial and ethnic composition.  Florida's
+laws also provide a wealth of information not only about who votes,
+but when and how voters cast ballots.  Drawing on publicly available
+voter demographic and vote history data in Florida,
+\cite{amos_etal2017} find differences in individual-level turnout
+across political party and racial and ethnic categories among
+registered voters whose precincts were eliminated or relocated by
+local election administrators.  Similarly, by linking multiple
+statewide voter files and individual-level early voting files,
+\cite{herron_smith2014} are able to demonstrate how reductions in the
+number of early voting days following the 2008 General Election were
+associated with a drop in early voting in 2012, especially among
 minority voters who had cast ballots on the final Sunday of early
 voting in 2008, a day of early voting that was eliminated by the state
 legislature ahead of the 2012 election.
@@ -497,14 +513,16 @@ voter activities in the vein of
 
 \section*{Florida early voting check-in times}
 
-Election administration in the Sunshine State---from registering
-voters, to determining precinct sizes, to staffing and locating
-polling places, and to setting early voting days and hours---is
-largely controlled at the county level within a framework established
-by the Florida state legislature. Our early voting check-in times are
-thus gleaned from Florida counties.\footnote{We made public records
-  requests  to individual county Supervisors of Elections, and the
-  data use in this paper is based on these requests.}
+Election administration in the Florida---from registering voters, to
+determining precinct sizes, to staffing and locating polling places,
+and to setting early voting days and hours---is largely controlled at
+the county level within a framework established by the Florida state
+legislature. Our early voting check-in times are thus gleaned from
+Florida counties.\footnote{We made public records requests to
+  individual Florida county Supervisors of Elections, and the data use
+  in this paper is based on these requests.  Most counties that we
+  contacted were not able to provide us with early voter check-in
+  times.}
 
 % , and these times cover check-ins
 % across a variety of early voting stations during the 2012 and 2016
@@ -520,35 +538,35 @@ paper-based pollbooks to check-in these individuals, as is the case
 for Election Day in many Florida counties, the 67 county Supervisors
 of Elections in Florida use electronic pollbooks to check-in voters
 during the state's early voting period.  These pollbooks are for the
-most part known as Electronic Voter iDentification machines, or EVIDs
+most part known as Electronic Voter iDentification machines, or EViDs
 for short.  Although there is variance across Florida counties in
 electronic pollbook implementation, for simplicity we refer to all
-electronic pollbooks as EVID machines.\footnote{For example, Sarasota
+electronic pollbooks as EViD machines.\footnote{For example, Sarasota
   County uses a different electronic voting system for its early
   voters (phone call with Cathy Fowler, office of the Sarasota
   Supervisor of Elections, on March 31, 2017).}
 
 %% Cathy Fowler:  cfowler@sarasotavotes.com
 
-EVID machines allow county pollworkers to check-in and verify the
+EViD machines allow county pollworkers to check-in and verify the
 registration statuses and identities of Floridians casting early,
-in-person ballots. The EVID system is designed to reduce the time it
+in-person ballots. The EViD system is designed to reduce the time it
 takes to process early voters, and it fosters synchronization across a
 county's early voting centers (important because early voters in
 Florida can choose where to cast their ballots) as well as with the
 Florida statewide voter database.  More importantly for our purposes,
-EVID machines record the check-in times for all early voters, and this
+EViD machines record the check-in times for all early voters, and this
 provides us with timestamps that specify when a voter began his or her
-voting process. EVID timestamps are recorded to the minute, and using
+voting process. EViD timestamps are recorded to the minute, and using
 these timestamps we can, for example, identify early voters who had
 not checked-in when polls closed at 7:00pm on a given day of early
 voting but nonetheless cast ballots.  Per Florida state law, any
 elector in line at 7:00pm is allowed to cast a ballot
 \citet{FLStatutes:7pm}.
 
-We have EVID check-in times from six Florida counties: Alachua,
+We have EViD check-in times from six Florida counties: Alachua,
 Broward, Hillsborough, Miami-Dade, Orange, and Palm Beach.  Table
-\ref{tab:evidcounts} lists the number of EVID timestamps we have from
+\ref{tab:evidcounts} lists the number of EViD timestamps we have from
 each.  In the 2012 General Election, there were 2,409,097 total early
 ballots cast in Florida, and in 2016, 3,876,753 early
 ballots.\footnote{2012 General Election turnout statistics are located
@@ -556,13 +574,13 @@ ballots.\footnote{2012 General Election turnout statistics are located
   (last accessed December 10, 2017), and comparable 2016 General
   Election statistics at
   \url{http://dos.myflorida.com/media/697842/2016-ge-summaries-ballots-by-type-activity.pdf}
-  (last accessed December 10, 2017).}  Our EVID data thus cover
-approximately 39 percent and 44 percent of total ballots cast
+  (last accessed December 10, 2017).}  Our EViD data thus cover
+approximately 39 percent and 44 percent of total ballots cast in
 Florida in the 2012 and 2016 General Elections,
 respectively.\footnote{The numbers in Table \ref{tab:evidcounts} do
-  not include 115 EVID check-in times (28 from 2012 and 87 from 2016)
+  not include 115 EViD check-in times (28 from 2012 and 87 from 2016)
   that are listed as midnight.  We are suspicious that these times are
-  not accurate and hence drop them.  Given the total number of EVID
+  not accurate and hence drop them.  Given the total number of EViD
   votes cast, dropping 115 cases is negligible.\label{fn:midnight}}
 
 % > 942166 / 2409097 * 100
@@ -575,13 +593,13 @@ respectively.\footnote{The numbers in Table \ref{tab:evidcounts} do
 
 \input{county_evid_counts.tex}
 
-EVID timestamps, one per early voter, are not subject to potential
+EViD timestamps, one per early voter, are not subject to potential
 self-reporting biases and hence are presumably more accurate than
 surveys of voter times or even within-polling place observations of
-when voters checked-in.  Moreover, EVID timestamps as associated with
+when voters checked-in.  Moreover, EViD timestamps as associated with
 official Florida voter identification numbers, which we can link to
 the nearly 14 million individual voter registration records in
-Florida's statewide voter file.  To this end, we merge our EVID
+Florida's statewide voter file.  To this end, we merge our EViD
 timestamps with statewide voter files that cover the 2012 and 2016
 General Elections.\footnote{Per Table \ref{tab:evidcounts}, we
   recorded 942,166 early voters across our six counties in 2012 and
@@ -607,16 +625,16 @@ General Elections.\footnote{Per Table \ref{tab:evidcounts}, we
 % > 
 
 
-% Despite their advantages, EVID check-in times are not a panacea in the
-% quest to understand voting lines and their consequences.  We
+% Despite their advantages, EViD check-in times are not a panacea in
+% the quest to understand voting lines and their consequences.  We
 % ultimately care about voter wait times, and in this sense our use of
-% EVID check-in times has limitations.  An individual check-in time
-% indicates when a given voter finished waiting in a line, if there were
-% a line to begin with.  However, such a time does not specify how long
-% an individual waited to vote, if at all. As such, our analysis of
-% check-in times serves as a complement to studies using survey and
-% other observational methods to explain who waits in line and for how
-% long.
+% EViD check-in times has limitations.  An individual check-in time
+% indicates when a given voter finished waiting in a line, if there
+% were a line to begin with.  However, such a time does not specify
+% how long an individual waited to vote, if at all. As such, our
+% analysis of check-in times serves as a complement to studies using
+% survey and other observational methods to explain who waits in line
+% and for how long.
 
 In 2012, all 67 of Florida's counties offered between six and 12 daily
 hours of early voting over an eight-day period (Saturday through
@@ -632,9 +650,9 @@ voting.\footnote{See Florida Governor Rick Scott's statement, issued
   \url{http://www.flgov.com/2013/01/17/governor-rick-scott-statement-on-election-reforms/}
   (last accessed March 31, 2017).}
 
-Figure \ref{fig:tenminhist} displays the distribution of EVID check-in
+Figure \ref{fig:tenminhist} displays the distribution of EViD check-in
 times on the last Saturday (November 3) of the 2012 General Election
-early voting period for two different polling locations in Florida,
+early voting period in two different polling locations in Florida,
 one at the Fred B.\ Karl County Center in Hillsborough County and the
 other at the West Kendall Regional Library in Miami-Dade County.  The
 histograms in this figure describe in ten minute blocks the number of
@@ -662,21 +680,20 @@ deadline for poll closing).
 \end{figure}
 
 Several features of Figure \ref{fig:tenminhist} are notable.  First,
-both panels in the figure contain horizontal red lines at 7:00pm.
+both panels in the figure contain vertical black lines at 7:00pm.
 This is the time beyond which additional voters were not allowed to
 join a (possibly existing) voting line.  In the Hillsborough County
 location (Figure \ref{fig:karlexample}), no check-ins occurred after
 7:00pm, and from this it follows that, at 7:00pm, where was no voting
 line.  In contrast, the Miami-Dade location (Figure
 \ref{fig:kendallexample}) had many post-7:00pm check-ins, the last one
-of which occurred around 1:00am on Sunday, November 4.  This time is
-noted with a dashed red line.  We thus know that the last-voting voter
-at West Kendall Regional Library waited at least almost six hours to
-vote.
+of which occurred around 1:00am on Sunday, November 4.  We thus know
+that the last-voting voter at West Kendall Regional Library waited at
+least almost six hours to vote.
 
-Figure \ref{fig:tenminhist} also includes information on voter
-self-reported race/ethnicity, and racial/ethnic details are depicted
-via bar colors.  Early voters at the Fred B.\ Karl County Center were
+Figure \ref{fig:tenminhist} incorporates information on voter
+self-reported race/ethnicity, and corresponding details are depicted
+via bar shading.  Early voters at the Fred B.\ Karl County Center were
 primarily white, although there were periods on November 3 when the
 fraction of non-white votes was disproportionately high, e.g., toward
 the end of the day.  At the West Kendall Regional Library, though, the
@@ -698,7 +715,7 @@ line to vote at Fred B.\ Karl County Center at 7:00pm on Saturday,
 November 3, this despite the fact that, per check-in times, the Center
 was regularly processing voters.
 
-Figure \ref{fig:tenminhist} highlights the value of EVID check-in
+Figure \ref{fig:tenminhist} highlights the value of EViD check-in
 times (timestamps, association with race/ethnicity, and so forth) as
 well as their limitations (check-ins are not linked to arrivals).  All
 data sources have advantages and disadvantages, and we will draw on
@@ -724,9 +741,9 @@ with such a late check-in must have waited to vote.
 Across our six counties of interest, there were 78 early voting
 stations in 2012.  These serviced a total of 942,166 voters in the
 eight day long, 2012 early voting period.\footnote{This ignores the
-  small number of EVID check-in times that look suspicious to us; see
+  small number of EViD check-in times that look suspicious to us; see
   fn.\ \ref{fn:midnight} In addition, locations where two or fewer
-  individuals recorded votes were dropped from our analysis.  The EVID
+  individuals recorded votes were dropped from our analysis.  The EViD
   data from Orange County and Palm Beach County in 2012 and 2016, from
   Miami-Dade County in 2016, and from Broward County in 2016 was not
   accompanied with voting locations for each early voter.  To
@@ -778,7 +795,7 @@ voters at midnight.
 
 Figure \ref{fig:hist2012} displays the total number of voters who
 voted early by the hour of the day at which they checked-in. Prior to
-7:00pm, EVID check-ins were distributed fairly uniformly across the
+7:00pm, EViD check-ins were distributed fairly uniformly across the
 day with a small peak before noon.  From 7:00am to 7:00pm, our
 aggregated six counties consistently served approximately 70,000
 Florida early voters per hour. Then, after 7:00pm, at which point new
@@ -1015,7 +1032,7 @@ participation of waiting in line to vote.  In particular, we focus
 here on the consequences of waiting in an early voting line in the
 2012 General Election on turnout in the 2016 General Election.
 
-We have already noted that the individual-level EVID files we have
+We have already noted that the individual-level EViD files we have
 include Florida voter identification numbers, and this enables us to
 link these files with statewide Florida voter files.  These latter
 files specify the elections in which voters participated and, if so,
@@ -1029,7 +1046,7 @@ individual still lived in Florida as of November, 2016.\footnote{When
   across county lines within Florida.}
 
 The difficulty in our exercise here is twofold.  First, while we know
-voter check-in times from our EVID data, we do not know associated
+voter check-in times from our EViD data, we do not know associated
 voter wait times \emph{per se}.  To determine wait times precisely we
 would have to know early voter arrival times, which are not collected
 by election officials or anyone else for that matter.  Hence,
