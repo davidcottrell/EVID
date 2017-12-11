@@ -741,8 +741,8 @@ with such a late check-in must have waited to vote.
 Across our six counties of interest, there were 78 early voting
 stations in 2012.  These serviced a total of 942,166 voters in the
 eight day long, 2012 early voting period.\footnote{This ignores the
-  small number of EViD check-in times that look suspicious to us; see
-  fn.\ \ref{fn:midnight} In addition, locations where two or fewer
+  small number of EViD check-in times that look suspicious; see fn.\
+  \ref{fn:midnight}.  In addition, locations where two or fewer
   individuals recorded votes were dropped from our analysis.  The EViD
   data from Orange County and Palm Beach County in 2012 and 2016, from
   Miami-Dade County in 2016, and from Broward County in 2016 was not
@@ -965,14 +965,14 @@ and more than five were open past midnight.  On the busiest day in
 early voter cast a ballot after 10:00pm.
 
 In the introduction, we commented on improvements in voter wait times
-that others have found in 2016 compared to 2012, and Figure
-\ref{fig:nrlocs2016} is consistent with findings in the 2012
+that others, using surveys, have found in 2016 compared to 2012, and
+Figure \ref{fig:nrlocs2016} is consistent with findings in the 2012
 \citep{spae2012} and 2016 \citep{spae2016} versions of the SPAE.  See
 Table \ref{tab:floridaspae}.  Early voting in 2016---at least in the
-six Florida counties---appears to represent a major improvement over
-2012 in terms of reducing congestion, which is presumably tied not
-only to the expanded number of sites but also to the number of days
-and hours of operation during which voters could cast an early
+six Florida counties---appears to represent an improvement over 2012
+in terms of reducing congestion, which is presumably tied not only to
+the expanded number of sites but also to the number of days and hours
+of operation during which voters could cast an early
 ballot.\footnote{We use the verb ``appears'' here because of
   voting-level sorting that may affect the types of individuals in
   Florida who cast their ballots prior to a given Election Day.  When
@@ -981,7 +981,6 @@ ballot.\footnote{We use the verb ``appears'' here because of
   preferred voting times.}
 
 \input{spae_florida.tex}
-
 
 \subsubsection*{Late voting in 2012 versus 2016}
 
@@ -1010,11 +1009,14 @@ versus non-white gap shrunk between the two years.
 
 Even though 2016 attracted far more early voters than 2012, the
 changes made to the early voting period appears to have reduced the
-congestion outside of the polls. The increased number of days and hours may have helped,
-as these six counties still served roughly the same number of early
-voters per day in 2016 (approximately 120,521) as they did in 2012
-(approximately 117,774).  Given reduced prevalence of lines in 2016, it
-is likely that these and other reforms made the difference for congestion.
+congestion outside of the polls. The increased number of days and
+hours may have helped, as these six counties still served roughly the
+same number of early voters per day in 2016 (approximately 120,521) as
+they did in 2012 (approximately 117,774). 
+
+%  Given reduced prevalence of
+% lines in 2016, it is likely that these and other reforms made the
+% difference for congestion.
 
 %> 942194/8
 %[1] 117774.2
@@ -1144,23 +1146,34 @@ appendix.\footnote{Our regression drops individuals who have no
   recorded genders.}  %%% XXX Besides gender, need to say where we got
 %%% this 709,956 number??
 
-Regression results are displayed graphically in Figure
-\ref{fig:prvoting2016}. In this figure, we have estimated the
-probability of voting in 2016 for a male Floridian who is 50 years
-old, black, registered Democratic, and who also voted in 2008.  The
-estimates are conditioned on each hour of the early voting day in
-2012. The black points in the figure are the estimated probabilities
-of voting in 2016 conditional on voting at a polling location that
-closed before 7:30pm.  Based on our discussion above, these estimates
-reflect individuals who likely did not wait in line.  In contrast, the
-grey points in Figure \ref{fig:prvoting2016} are the estimated
-probabilities of voting in 2016 conditional on casting an early ballot
-at a polling location that closed \emph{after} 7:30pm.  These
-estimates reflect individuals who likely did wait in line to vote.
-Hence, the difference between the figure's two sets of estimates
-should reflect the effect of waiting in line.  Moreover, the effect
-should be most isolated as one compares voters casting ballots closer
-to 7:00pm.
+Per Table \ref{tab:reg}, having voted in 2008 is positively associated
+with voting in 2016, and being older is associated with greater
+turnout.  Our age estimates in Table \ref{tab:reg} are presumably
+underestimated; our model excludes the youngest voters in 2016, who
+could not legally register to vote in Florida in 2008, and younger
+registered voters are, \emph{ceteris paribus}, less likely to turnout
+\citep{shinosmith:registrationtiming}.   Table \ref{tab:reg} also
+shows that, \emph{ceteris paribus}, men vote less often than women and
+that whites vote often than non-whites.
+
+Our objective is not exploring the relationship between demographic
+covariates and turnout.  Rather, we want to know about the marginal
+effects of waiting in line, and to this end Figure
+\ref{fig:prvoting2016} displays graphically the probability of voting
+in 2016 for a male Floridian who is 50 years old, black, registered
+Democratic, and who also voted in 2008.  The estimates are conditioned
+on each hour of the early voting day in 2012. The black points in the
+figure are the estimated probabilities of voting in 2016 conditional
+on voting at a polling location that closed before 7:30pm; based on
+our discussion above, these estimates reflect individuals who likely
+did not wait in line.  In contrast, the grey points in Figure
+\ref{fig:prvoting2016} are the estimated probabilities of voting in
+2016 conditional on casting an early ballot at a polling location that
+closed \emph{after} 7:30pm.  These estimates reflect individuals who
+likely did wait in line to vote.  Hence, the difference between the
+figure's two sets of estimates should reflect the effect of waiting in
+line.  Moreover, the effect should be most isolated as one compares
+voters casting ballots closer to 7:00pm.
 
 \begin{figure}[!ht]
 \caption{Probability of voting in 2016, given 2012 check-in time}
@@ -1192,24 +1205,35 @@ first scholar to try to estimate the effect of waiting in line to vote
 on the later propensity to vote, and our findings in this section are
 qualitatively similar to his.
 
-Studying the effects of waiting in line on future turnout is
-complicated by the fact that lines are not randomly assigned to
-voters.  With this as background, we note that we estimated our model
-using individuals who were registered to vote in Florida in 2008,
-2012, and 2016.  This means that our analysis excludes very young
-registrants in, say, 2012, who were not legally permitted to be
-registered in Florida as of the 2008 General Election; individuals who
-moved to Florida from out of state between the years of 2008 and 2016;
-registered Floridians who died, were convicted of committing a felony, or adjudicated mentally incompetent between 2008 and 2016; 
-and, individuals who moved out of the state between 2008 and 2016. 
-Other studies that also draw on Florida's statewide voter file find that younger voters 
-are generally less likely to turn out, irrespective of when they registered to vote \cite{shinosmith:registrationtiming},
-or if their Election Day polling place is relocated \cite{amos_etal2017}. These factors may actually underestimate the 
-effects of long lines in our study, to the extent younger voters were caught in them in 2008 or 2012. 
-With respect to the other categories of excluded voters, it is
-difficult to imagine that they are have any systematic biases
-although, in principle, sensitivity to lines could be correlated with
-the willingness to live in Florida.  
+We have already alluded to the fact that studying the effects of
+waiting in line on future turnout is complicated by the fact that
+lines are not randomly assigned to voters.  With this as background,
+we estimated our logistic regression using individuals who were
+registered to vote in Florida in 2008, 2012, and 2016.  This means
+that our analysis excludes very young registrants in, say, 2012, who
+were not legally permitted to be registered in Florida as of the 2008
+General Election; individuals who moved to Florida from out of state
+between the years of 2008 and 2016; registered Floridians who died,
+were convicted of committing a felony, or adjudicated mentally
+incompetent between 2008 and 2016; and, individuals who moved out of
+the state between 2008 and 2016.  Exclusions like these are common in
+studies of election administration that rely on observational data.
+While there may be idiosyncrasies in the rates at which the above
+types of individuals vote---e.g., young voters tend to have
+disproportionately low turnout rates
+\citep{shinosmith:registrationtiming}---whether these types of
+individuals are unusually sensitive to lines is unclear.
+
+%% XX Below might be wrong...
+Consider our exclusion of the youngest voters, and as context note
+that younger registered voters are \emph{ceteris paribus} less likely
+to turn out \cite{shinosmith:registrationtiming} than older
+counterparts.  This may lead us to underestimate the effects of long
+lines on future turnout, to the extent younger voters were caught in
+lines in 2008 or 2012.  With respect to the other categories of
+excluded voters, it is difficult to imagine that they are have any
+systematic biases although, in principle, sensitivity to lines could
+be correlated with the willingness to live in Florida.
 
 % XXX  Add something about early voting use in 2016?  Same model as
 % before but different dependent variable?
@@ -1218,7 +1242,8 @@ the willingness to live in Florida.
 % something else?  Nothing would change re: differences.  Need to say
 % this.
 
-% Also need to say something about what our model says about 
+%in particular
+%if their Election Day polling place is relocated \cite{amos_etal2017}.
 
 \section*{Conclusion}
 
