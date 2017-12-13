@@ -98,7 +98,8 @@
     Smith\thanks{Professor of Political Science, University of
       Florida, 234 Anderson Hall, Gainesville, FL 32611-7325
       (\texttt{dasmith@ufl.edu}).}}\vspace{1cm}\\\keywords{voting
-    lines, election administration, turnout, early voting}}
+    lines, equal treatment, election administration, turnout, early
+    voting}}
 
 \maketitle \doublespacing 
 
@@ -113,49 +114,45 @@
 
 \begin{abstract}
   \noindent 
-  The extent to which voters must wait in line
-  prior to casting their ballots affects the cost of participating in
-  a given election, thereby affecting whether all voters  
-  are treated equally.  Voting lines may foster unequal treatment if
-  some voters must wait in line longer than others; long lines may also condition 
-  future electoral participation.  We use voter
-  check-in times from Florida---involving 942,166 early in-person
-  voters from 2012 and 1,687,217 from 2016---and highlight
-  disproportionately problematic experiences faced by minority voters, although 
-  we find far fewer such problems in 2016 compared to 2012.
-  We estimate that Florida early in-person voters who waited
-  excessively in 2012 had a very slightly lower probability of voting
-  in 2016, \emph{ceteris paribus}.  This draws attention to the
-  ongoing importance of the administrative features of elections that
-  influence the cost of voting, and ultimately, whether voters in an
-  election are treated equally.
+  The extent to which voters in a given election must wait in line
+  prior to casting their ballots \mbox{affects} the cost of voting, which in
+  principle should be uniformly distributed across voters.  Voting
+  lines can lead to unequal treatment if some voters are compelled to
+  wait in line longer than others.  In addition, long lines can
+  condition future electoral participation.  We use voter check-in
+  times from Florida---involving 942,166 early in-person voters from
+  2012 and 1,687,217 from 2016---and highlight disproportionately
+  problematic experiences faced by minority voters.  We find, however,
+  fewer such problems in 2016 compared to 2012.  We estimate that
+  Florida early in-person voters who waited excessively in 2012 had a
+  very slightly lower probability---approximately one percent---of
+  voting in 2016, \emph{ceteris paribus}.  Our results draw attention
+  to the ongoing importance of the administrative features of
+  elections that influence the cost of voting, and ultimately, whether
+  voters in an election are treated equally.
 \end{abstract}
 
 
 % > evid %>% group_by(year) %>% count
-% # A tibble: 2 x 2
-% # Groups:   year [2]
-%    year       n
-%   <int>   <int>
-% 1  2012  942166
-% 2  2016 1687217
+% # A tibble: 2 x 2 # Groups: year [2] year n <int> <int> 1 2012
+% 942166 2 2016 1687217
 
 \newpage
 \section*{Introduction}
 
 Modern democracies are characterized by regular and free elections,
 the legitimacy of which can suffer in the face of perceptions of
-unfairness and disparate treatment of some groups of voters
+unfairness and disparate treatment of particular groups of voters
 \citep{norris2014electoral}.  An election can fail to treat all voters
-equally if, for example, there are stark differences in vote
-tabulating technologies across groups of voters; if some groups of
-voters must contend with registration hurdles that others do not; if
-some voters face strict photo identification requirements and others
-no such requirements; and, if some voters have to travel much longer
-distances than others to cast their ballots.  Barriers to voting
-successfully in an election contribute to the \emph{cost of voting} in
-said election, which in principle should be distributed uniformly
-across all groups of voters.
+equally if, for example, there are differences in vote tabulating
+technologies across groups of voters
+\citep[e.g.,][]{kimballkropf:tech}; if some groups of voters must
+contend with registration hurdles that others do not; if some voters
+face strict photo identification requirements and others no such
+requirements \citep[e.g.,][]{benteleetal:newjimcrow}; and, if some
+voters have to travel much longer distances than others to cast their
+ballots \citep[e.g.,][]{dyckgimpel:distance}.  Barriers to voting
+successfully in an election contribute to the \emph{cost of voting}.
 
 %   Elections affected by fraud certainly fall in this
 % category, as \citet{cottrelletal:fraud2016} argue, and elections
@@ -166,19 +163,20 @@ across all groups of voters.
 % election outcome can be a function of whether an individual's
 % preferred candidate won.
 
-Here we consider how one aspect of election administration is related
-to the notion of equal treatment of voters, and we focus in particular
-on voting lines.  The lines that develop outside a polling station
-reflect a combination of administrative resource allocations as well
-as the extent of voter turnout
-\citep[e.g.,][]{herronsmith:hanoverstudy}.  Starting with the premise
-that the cost of voting should be distributed uniformly across types
-of voters, if lines adversely affect some voters more than others,
-then this principle will be violated.  Thus, if we want to know
-whether a given election featured equal treatment of voters, we must
-consider the extent to which selected groups of voters who
-participated in it were subjected to long lines, and hence, had a
-relatively high cost of voting.
+
+
+Here we consider how voting lines, an aspect of election
+administration, are related to the principle of equal treatment of
+voters.  If lines adversely affect some voters more than others, then
+this principle is at risk.  Thus, if we want to know whether a given
+election featured equal treatment of voters, we must consider the
+extent to which selected groups of voters who participated in it were
+subjected to long lines, and through them, had a relatively high cost
+of voting.
+
+The lines that develop outside a polling station   reflect
+administrative decisions about resource allocation as well as the
+extent of voter turnout \citep{herronsmith:hanoverstudy}.
 
 Voting lines are potential issues wherever voters cast their ballots
 \emph{in-person}, as opposed to voting remotely via mail.  The vast
@@ -202,8 +200,8 @@ mail, and our interest here is the act of waiting in line.
 %% really think we need to stick with polling station terminology, not precincts, as early voting is not precinct-based.
 
 We draw attention to two important features of voting lines, by which
-we mean lines that form \emph{in front of} polling stations as opposed to
-lines in which voters, already in the act of casting ballots, are
+we mean lines that form \emph{in front of} polling stations as opposed
+to lines in which voters, already in the act of casting ballots, are
 forced to stand.  First, waiting in line to vote constitutes a time
 tax \citep{mukherjee:timetax}.  This tax can be negligible---for
 example, a voter waits a scant number of seconds prior to initiating
@@ -231,25 +229,27 @@ question, one without an imposing line.\footnote{Alternatively, a line
 While it is not \emph{a priori} clear that voting is substitutable in
 the way that selecting a restaurant might be, we should not dismiss
 outright the possibility that the effect of waiting in line to vote,
-which raises the cost of voting, might decrease the likelihood of
-voting in the future.  Given the relatively low rate of voter
-participation in American presidential elections---approximately 58
-percent in 2012 and 60 percent in 2016---any aspect of the voting
-experience that might have a depressive effect on turnout should be
-considered a matter worthy of study.\footnote{The national turnout
-  rate for a general election depends on the way that the number of
-  eligible voters in the country is calculated.  The figures cited
-  here are from the United States Election Project, available at
+which as we have already argued raises the cost of voting, might
+decrease the likelihood of voting in the future.  Given the relatively
+low rate of voter participation in American presidential
+elections---approximately 58 percent in 2012 and 60 percent in
+2016---any aspect of the voting experience that might have a
+depressive effect on turnout should be considered a matter worthy of
+study.\footnote{The national turnout rate for a general election
+  depends on the way that the number of eligible voters in the country
+  is calculated.  The figures cited here are from the United States
+  Election Project, available at
   \url{http://www.electproject.org/home} (last accessed December 11,
   2017).\label{fn:uselectionproject}}
 
 These two features of voting lines---time tax and potential downstream
 consequences---are conceptually distinct. The time tax for voting
 could be uniformly spread across voters, which might be normatively
-pleasing, and yet there could be a significant effect of waiting in
-line on future electoral participation, which might be less so. Or,
-the time tax could be concentrated on certain types of voters, which
-most would argue is not fair regardless of whether there are
+pleasing in the sense of not violating the principle of equal
+treatment of voters, and yet there could be a significant effect of
+waiting in line on future electoral participation. Or, the time tax
+could be concentrated on certain types of voters, which most would
+argue violate equal treatment regardless of whether there are
 downstream consequences of waiting to vote. With this in mind, our
 empirical analysis of voting lines during early in-person voting in
 Florida is divided into two sections. First, with respect to the
@@ -276,24 +276,28 @@ wait to vote are less likely to vote in a subsequent election.
 % \citep{karpbrockington:overreport,bellietal:overreport}.
 
 %In light of potential concern with survey-based evidence on voting
-`<%lines,
+%lines,
 
 In contrast to much of the literature on voting lines, which relies on
-surveys, we turn here to a relatively untapped source of information
-on voting lines, namely, voter check-in times collected by Florida
+surveys, we turn here to a relatively untapped source of electoral
+information, namely, voter check-in times collected by Florida
 counties that recorded check-ins from early voting sites in the 2012
 and 2016 General Elections.  The hundreds of thousands of check-in
 times which form the basis of our results are not subject to potential
 biases arising in self-reports of time spent in line.  Moreover, we
 can associate a voter's check-in time with her race/ethnicity, party
 registration, and electoral participation, pieces of information
-available in Florida's statewide voter file.  Still, in the interests
-of being transparent about limitations in our research design, a
-voter's check-in time is not directly connected to the amount of time
-she spent waiting in line.  We describe below how we link voter
-check-in times with corresponding waiting times, but the connection is
-not perfect.  Our use of early voting check-in times thus complements
-the literature's reliance on survey results.
+available in Florida's statewide voter file.  Our use of early voting
+check-in times complements the literature's reliance on survey
+results.
+ 
+
+% Still, in the interests
+% of being transparent about limitations in our research design, a
+% voter's check-in time is not directly connected to the amount of time
+% she spent waiting in line.  We describe below how we link voter
+% check-in times with corresponding waiting times, but the connection is
+% not perfect.
 
 Regarding the time tax associated with waiting to vote, we find
 disproportionate concentration of this tax on minority voters.  The
@@ -318,10 +322,8 @@ Florida early voters who suffered long waits in 2012, we find small
 yet negative consequences regarding turnout in 2016. The consequences
 are not completely negligible insofar as long lines do appear to be
 associated with lower participation levels; they are, however, small,
-and this is consistent with
-\citet{pettigrew:longlinesminorityprecincts}.  Our results have both
-positive and normative implications, and we discuss these at length in
-the conclusion.
+around one percent. This is consistent with
+\citet{pettigrew:longlinesminorityprecincts}.
 
 The next section situates our study in the literature on voting lines
 and election administration.  We then turn to early voting check-in
@@ -356,14 +358,15 @@ constituting ``a denial or abridgement of the right of any citizen of
 the United States to vote on account of race or color'' (52 U.S.C.\ \S
 10301(a)).
 
-Yet long lines at the polls continue to plague voters across the country. 
-``To me,'' Cynthia Perez complained in March 2016 after seeing a long
-line wending its way around an early voting center in Maricopa County,
-Arizona, with those in line reporting standing in line for more than
-three hours before checking in to vote, ``this is not what democracy
-is about.''\footnote{This quote is drawn from ``Angry Arizona Voters
-  Demand: Why Such Long Lines at Polling Sites?'' \emph{The New York
-    Times}, March 24, 2016, available at
+Notwithstanding this, long lines at the polls continue to plague
+voters across the country.  ``To me,'' Cynthia Perez complained in
+March 2016 after seeing a long line wending its way around an early
+voting center in Maricopa County, Arizona, with those in line
+reporting standing in line for more than three hours before checking
+in to vote, ``this is not what democracy is about.''\footnote{This
+  quote is drawn from ``Angry Arizona Voters Demand: Why Such Long
+  Lines at Polling Sites?'' \emph{The New York Times}, March 24, 2016,
+  available at
   \url{https://www.nytimes.com/2016/03/25/us/angry-arizona-voters-demand-why-such-long-lines-at-polling-sites.html}
   (last accessed July 17, 2017)} Ahead of the state's 2016
 presidential primary, election administrators in Maricopa County had
@@ -492,13 +495,15 @@ voters who mailed in their absentee ballots (2.76 million) or who
 voted in person at their local Election Day precincts (2.96 million)
 \citep{FDOS:2016vote}. The prevalence of early in-person voting is not
 unique to Florida. Across the United States, early voting is
-increasingly popular, and for analyses of early voting reforms and
-their consequences see \citet{neelyrichardson:earlyvoting},
+increasingly popular; for analyses of early voting reforms and
+their consequences, see \citet{neelyrichardson:earlyvoting},
 \citet{gronke:2012}, \citet{gronke:earlyvotingreforms},
 \citet{gronketoffey:psychological}, \citet{gronkebaum:growth}, and
-\citet{burdenetal:unanticipated}.  Although there are debates in the
-literature about the extent to which early voting has changed the
-electorate, if at all, here we take this mode of voting as given.
+\citet{burdenetal:unanticipated}.  
+
+% Although there are debates in the
+% literature about the extent to which early voting has changed the
+% electorate, if at all, here we take this mode of voting as given.
 
 Florida notwithstanding, there is good reason to focus on wait times
 during early in-person voting.  Michael P.\ McDonald, on his Election
@@ -1284,31 +1289,29 @@ be correlated with the willingness to live in Florida.
 
 \section*{Conclusion}
 
-We have argued here that the extent to which an election treats all of
-its voters equally depends on whether the cost of voting in the
-election is distributed uniformly across different types of voters.
-Unequal treatment, writ large, increases to the extent that this
-distribution is not uniform, and administrative aspects of elections
-that affect the cost of elections are thus part of the overall
-calculus of equal treatment or the lack thereof.
+The extent to which all the voters in an election are treated equally
+depends in part on whether the cost of voting in the election is
+distributed uniformly across voters.  Unequal treatment, writ large,
+increases to the extent that this distribution is not uniform, and
+administrative aspects of elections that affect the cost of voting are
+thus part of the overall calculus of whether an election was
+characterized by equal treatment or the lack thereof.
 
 A notable administrative aspect of elections is the presence of voting
 lines, and lengthy voting lines in recent United States General
 Elections have been of concern, both to scholars and election
 officials.  Burdensome wait times not only impose opportunity costs on
-those forced to wait in line, but they might also discourage future
-electoral participation.  This has encouraged researchers to study the
-prevalence of long lines with an eye on who is forced to wait in them
-and the extent to which the burden of waiting might affect future
-turnout.
+those forced to wait in line, but they can also discourage future
+electoral participation. 
 
-Research on voting lines is challenged by the lack of data on wait
-times.  Other than noting the times at which polls officially closed
-and recording information about voters who voted late, there is little
-data collected by election officials that might distinguish between
-those who waited in line to vote from those who did not.
-Notwithstanding a small number of exceptions, nor are there official
-records on how long voters waited.  
+Research on voting lines is challenged by the lack of observational
+data on who waits to vote.  Other than noting the times at which polls
+officially closed and recording information about which voters cast
+their ballots after voting lines were capped, there is little data
+collected by election officials that might distinguish between those
+who waited in line to vote from those who did not.  Notwithstanding a
+limited number of exceptions, nor are there official records on line
+evolution and how long the voters waited.
 
 % Previous research using election
 % records to study lines have thus been limited to examining variables
@@ -1327,23 +1330,23 @@ illuminated important variation in wait times across geographies and
 racial/ethnic groups, but associated with them is the caveat that
 survey responses are subject to biases associated with self-reporting.
 
-With these points in mind, we add to the literature on voting lines
-and election administration by analyzing early voter check-in times in
-Florida's 2012 and 2016 General Elections. Using electronic voting
-check-in time stamps from Alachua, Broward, Hillsborough, Miami-Dade,
-Orange, and Palm Beach Counties, we are able to identify the exact day
-and time at which thousands of voters checked-in to vote.  These
-check-in times not only provide novel insight into voting patterns
-across time but, given some natural assumptions, also allow us to
-characterize individual voters who likely waited in line to vote.
+With these points in mind, we add to the literature on voting lines by
+analyzing early voter check-in times in Florida's 2012 and 2016
+General Elections. Using electronic voting check-in time stamps from
+Alachua, Broward, Hillsborough, Miami-Dade, Orange, and Palm Beach
+Counties, we are able to identify the exact day and time at which many
+thousands of voters checked-in to vote.  These check-in times not only
+provide novel insight into voting patterns across time but, given some
+natural assumptions, also allow us to characterize individual voters
+who likely waited in line to vote.
 
 Florida's early voting period in 2012 had a significant number of
 voters who voted past the official 7:00pm closing time and, therefore,
 must have waited in line to vote.  These voters were
 disproportionately black, Hispanic, and Democrat---a finding that
-coincides with survey results in prior studies of voting lines.  In
-2016, we find that congestion observed in 2012 had all but vanished.
-Voters rarely voted late into the night in 2016, and most early voting
+coincides with survey results that pertain to voting lines.  In 2016,
+we find that congestion observed in 2012 had all but vanished.  Voters
+rarely voted late into the night in 2016, and most early voting
 locations in our Florida counties of interest closed promptly.  Even
 though the counties we study in 2016 served as many individual per day
 as they had in 2012, they appear to have been more prepared to handle
@@ -1360,16 +1363,18 @@ normatively troubling.  Not only are some voters penalized by waiting
 in line, but a small number of these individuals are then dissuaded
 from voting in the future and thus making their voices heard.
 
-What does this say about our notions of electoral fairness?  The 2012
-General Election in Florida could have been more fair to the
-individuals who participated in it.  We showed that certain types of
-2012 voters faced disproportionately long lines---that is,
-disproportionately high costs of voting---and then, in some cases, a
-downstream effect.  Thus, seemingly minor administrative aspects of
-elections, like the resource allocation decisions that affect whether
-an election will have lines or not, should be understood not just as
-administrative in nature but also as relevant to underlying electoral
-fairness.
+We motivated this paper by describing how lines are related to the
+principle of equal treatment of voters.  With this as background, our
+evidence shows that the 2012 General Election in Florida did not treat
+all voters equally with respect to time spent waiting in line.
+Minority voters in 2012 voters faced disproportionately long
+lines---that is, disproportionately high costs of voting---and then,
+in some cases, a small downstream effect of a decreased propensity to
+vote.  Our results illustrate how administrative aspects of elections,
+like the resource allocation decisions that influence whether an
+election will have lines or not, should be understood not just as
+administrative in nature but also as relevant to underlying fairness
+and the extent to which voters are treating equally.
 
 % Except for the few states that require voters to cast ballots by mail
 % (or use drop off boxes), waiting to vote at the polls is likely to
