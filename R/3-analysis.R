@@ -479,3 +479,123 @@ ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under_
 
 
 
+# voted early -------------------------------------------------------------
+
+mn2 <- glm(voted_early_16 ~ hr + over + hr:over +  gender + race + agegroup + party + voted_08, data = vte[vte$voted_16 == 1, ], family = "binomial")
+
+summary(mn2)
+
+orderedvar <- names(mn2$coefficients)[c(1:12, 26:36, 13:25)]
+t <- stargazer(mn2,               
+               title = "Logit regression predicting voter turnout in 2016",
+               label = "tab:reg",
+               dep.var.labels =  c("Voted in 2016"),               
+               omit.stat=c("LL","ser","f"),
+               type = "latex", 
+               order = c(1:12, 26:36, 13:25),
+               notes = "",
+               single.row=TRUE,
+               covariate.labels = c(
+                 "8:00am",
+                 "9:00am",
+                 "10:00am",
+                 "11:00am",
+                 "12:00pm",
+                 "1:00pm",
+                 "2:00pm",
+                 "3:00pm",
+                 "4:00pm",
+                 "5:00pm",
+                 "6:00pm",
+                 "Over",
+                 "8:00am \\& Over",
+                 "9:00am \\& Over",
+                 "10:00am \\& Over",
+                 "11:00am \\& Over",
+                 "12:00pm \\& Over",
+                 "1:00pm \\& Over",
+                 "2:00pm \\& Over",
+                 "3:00pm \\& Over",
+                 "4:00pm \\& Over",
+                 "5:00pm \\& Over",
+                 "6:00pm \\& Over",
+                 "Gender: male",
+                 "Race: Black",
+                 "Race: Hispanic",
+                 "Race: Asian",
+                 "Age group: 30-39",
+                 "Age group: 40-49",
+                 "Age group: 50-59",
+                 "Age group: 60-69",
+                 "Age group: 70+",
+                 "Party: independent",
+                 "Party: none",
+                 "Party: Republican",
+                 "Voted08: yes"),
+               no.space = TRUE,
+               font.size = "scriptsize")
+
+cat(t, file = "../plots/table_out_early.tex", sep = "\n")
+
+
+
+newdata <-  data.frame(
+  hr = factor(levels(vte$hr), levels(vte$hr)),
+  location = c("Bloomingdale Regional Public Library"),
+  day = "SAT 10/27",
+  gender = "M",
+  race = "Black",
+  age = mean(vte$age, na.rm = T),
+  agegroup = "[50,60)",
+  party = "DEM",
+  voted_08 = 0,
+  over = TRUE
+)
+
+p2over <- predict(mn2, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
+
+newdata <-  data.frame(
+  hr = factor(levels(vte$hr), levels(vte$hr)),
+  location = c("Bloomingdale Regional Public Library"),
+  day = "SAT 10/27",
+  gender = "M",
+  race = "Black",
+  age = mean(vte$age, na.rm = T),
+  agegroup = "[50,60)",
+  party = "DEM",
+  voted_08 = 0,
+  over = FALSE
+)
+
+p2under <- predict(mn2, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
+
+
+plt3over <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
+                       pct = plogis(p2over$fit), 
+                       low = plogis(p2over$fit - 1.96*p2over$se.fit), 
+                       high = plogis(p2over$fit + 1.96*p2over$se.fit),
+                       var = "last voter checked-in after 7:30pm", stringsAsFactors = F)
+
+plt3under <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
+                        pct = plogis(p2under$fit), 
+                        low = plogis(p2under$fit - 1.96*p2under$se.fit), 
+                        high = plogis(p2under$fit + 1.96*p2under$se.fit),
+                        var = "last voter checked-in before 7:30pm", stringsAsFactors = F)
+
+plt3overunder <- bind_rows(plt3over, plt3under)
+
+
+plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) + 
+  geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
+  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
+  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
+  scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.7, .77), name = "Predicted probability of voting (%)\n") +
+  scale_x_discrete(limits = levels(plt3overunder$hr)[1:14], name = "") +
+  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
+  ggtitle("") +
+  theme(legend.position = c(.3,.2))
+ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under_early.pdf", height = 5, width = 7)
+
+
+
+
