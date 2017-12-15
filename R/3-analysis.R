@@ -597,5 +597,54 @@ plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour 
 ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under_early.pdf", height = 5, width = 7)
 
 
+## Make combined table
 
+t_combined <- stargazer(mn, mn2,
+                        omit.stat = c("LL","ser","f"),
+                        title = "Regression results predicting voter behavior in 2016",
+                        label = "tab:reg",
+                        type = "latex",
+                        single.row=TRUE,
+                        dep.var.labels =  c("Voted in 2016", "Voted early in 2016"),               
+                        covariate.labels = c(
+                   "8:00am",
+                   "9:00am",
+                   "10:00am",
+                   "11:00am",
+                   "12:00pm",
+                   "1:00pm",
+                   "2:00pm",
+                   "3:00pm",
+                   "4:00pm",
+                   "5:00pm",
+                   "6:00pm",
+                   "Over",
+                   "8:00am \\& Over",
+                   "9:00am \\& Over",
+                   "10:00am \\& Over",
+                   "11:00am \\& Over",
+                   "12:00pm \\& Over",
+                   "1:00pm \\& Over",
+                   "2:00pm \\& Over",
+                   "3:00pm \\& Over",
+                   "4:00pm \\& Over",
+                   "5:00pm \\& Over",
+                   "6:00pm \\& Over",
+                   "Gender: male",
+                   "Race: Black",
+                   "Race: Hispanic",
+                   "Race: Asian",
+                   "Age group: 30-39",
+                   "Age group: 40-49",
+                   "Age group: 50-59",
+                   "Age group: 60-69",
+                   "Age group: 70+",
+                   "Party: independent",
+                   "Party: none",
+                   "Party: Republican",
+                   "Voted08: yes"),
+               no.space = TRUE,
+               font.size = "scriptsize")
+
+cat(t_combined, file = "../Plots/table_out_combined.tex", sep = "\n")
 
