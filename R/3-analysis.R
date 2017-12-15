@@ -152,7 +152,8 @@ plot2save <- ggplot(hst , aes(time2, fill = race2)) +
   geom_histogram(binwidth = 10/60, colour = "black", boundary = 0) + 
   geom_vline(xintercept = 19, colour = "black", size = 1.25) +
   #geom_vline(data = clse, aes(xintercept = close), colour = "red", linetype = "dashed") +
-  scale_fill_manual(values = c("grey", "white"), name = "Race") +
+    # scale_fill_manual(values = c("grey", "white"), name = "Race") +
+    scale_fill_manual(values = c("white", "grey"), name = "Race") +
   theme_bw() +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
   scale_x_continuous(breaks = 7:25, labels = xlabs, limits = c(7,25), name = "") +
