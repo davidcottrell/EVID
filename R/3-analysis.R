@@ -410,7 +410,7 @@ plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour 
   geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
   geom_vline(xintercept = 13, colour ="black", size = 1.25) +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
-  scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.75, .9), name = "Predicted probability of voting (%)\n") +
+  scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.75, .9), name = "Predicted probability of voting\n") +
   scale_x_discrete(limits = levels(plt3overunder$hr)[1:14], name = "") +
   scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
   ggtitle("") +
@@ -589,7 +589,7 @@ plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour 
   geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
   geom_vline(xintercept = 13, colour ="black", size = 1.25) +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
-  scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.7, .77), name = "Predicted probability of voting (%)\n") +
+  scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.7, .77), name = "Predicted probability of voting early\n") +
   scale_x_discrete(limits = levels(plt3overunder$hr)[1:14], name = "") +
   scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
   ggtitle("") +
