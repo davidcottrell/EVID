@@ -842,32 +842,32 @@ aggregated six counties consistently served approximately 70,000
 Florida early voters per hour. Then, after 7:00pm, at which point new
 voters could not join existing voting lines, the number of voters
 served per hour dropped drastically---albeit but not entirely.  A
-total of 83,278 (8.8\%) early voters in 2012 across the six counties
+total of 83,250 (8.8\%) early voters in 2012 across the six counties
 cast ballots after 7:00pm. These represent individuals who were in
 line at the time the polls closed and were allowed to continue to wait
 to vote.  We know that all of these voters had to wait in this way
 although we do not know precisely how long each waited.  Of this
-group, 36,148 voted after 8:00pm.  These voters waited at least one
-hour to vote, and 13,595 voters, who checked-in after 9:00pm, must
+group, 36,120 voted after 8:00pm.  These voters waited at least one
+hour to vote, and 13,567 voters, who checked-in after 9:00pm, must
 have waited at least two hours to vote.
 
 % > evid12 %>% filter(time2 > 19) %>% count()
 % # A tibble: 1 × 1
 %       n
 %   <int>
-%   83278
+%   83250
 
 % > evid12 %>% filter(time2 > 20) %>% count()
 % # A tibble: 1 × 1
 %       n
 %   <int>
-%   36148
+%   36120
 
 % > evid12 %>% filter(time2 > 21) %>% count()
 % # A tibble: 1 × 1
 %       n
 %   <int>
-%   13595
+%   13567
 
 \begin{figure}[!ht]
 \caption{Racial/Ethnic composition of early voters by hour, 2012 General Election}
@@ -954,7 +954,11 @@ hours of voting and the hours after 7:00pm.  Hence, Democrats were
 disproportionately affected by voting lines that forced voters to cast
 their ballots after 7:00pm.
 
-%  XXX Need to check 54% figure above.
+%  XXX Need to check 54% figure above.  
+%table(evid12$party)/nrow(evid12)
+%
+%        DEM         IDP         NPA         OTH         REP 
+%0.541646589 0.002073945 0.163840555 0.057074868 0.235364044 
 
 If we consider the breakdown of party registration by race/ethnicity,
 as in Figure \ref{fig:party2012}, we can see how this effect might
@@ -971,7 +975,7 @@ progressed.
 % # A tibble: 1 x 1
 %        pct
 %       <dbl>
-% 1 0.5416475
+% 1 0.5416466
 
 \subsubsection*{Early voting in 2016}
 
@@ -1048,17 +1052,17 @@ Even though 2016 attracted far more early voters than 2012, the
 changes made to the early voting period appears to have reduced the
 congestion outside of the polls. The increased number of days and
 hours may have helped, as these six counties still served roughly the
-same number of early voters per day in 2016 (approximately 120,521) as
-they did in 2012 (approximately 117,774). 
+same number of early voters per day in 2016 (approximately 120,516) as
+they did in 2012 (approximately 117,771). 
 
 %  Given reduced prevalence of
 % lines in 2016, it is likely that these and other reforms made the
 % difference for congestion.
 
-%> 942194/8
-%[1] 117774.2
-%> 1687304/14
-%[1] 120521.7
+%> 942166/8
+%[1] 117770.8
+%> 1687217/14
+%[1] 120515.5
 
 
 %% Make a plot using all early voters in all sites, but this is
@@ -1178,11 +1182,12 @@ classifies voters according to their 2016 age and bins them into
 10-year age groups (20-29, 30-39, 40-49, 50-59, 60-69, and 70+); and,
 $Voted08$ and $Voted16$ are indicators for participation in the 2008
 and 2016 General Elections.  All told we estimate our logistic
-regression based on 709,956 individuals, and coefficient estimates
-appear in Table \ref{tab:reg} in the appendix.\footnote{Our regression
-  drops individuals who have no recorded
-  genders.}  %%% XXX Besides gender, need to say where we got
-%%% this 709,956 number??
+regression based on 758,266 individuals, and coefficient estimates
+appear in Table \ref{tab:reg} in the appendix.\footnote{Our regression is
+estimated only on individuals who voted before 7pm.   We also drop individuals 
+who belong to minor parties and keep only those who are either Democrat, Republican,
+Independent, or have recorded no party affiliation.  We also drop those
+who have no recorded gender, race, or birthdate.}  
 
 Per the left column of Table \ref{tab:reg}, having voted in 2008 in
 Florida is positively associated with subsequent voting in 2016, and
