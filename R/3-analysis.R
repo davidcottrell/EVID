@@ -173,7 +173,8 @@ plot2save <- ggplot(hst , aes(time2, fill = race2)) +
   geom_histogram(binwidth = 10/60, colour = "black", boundary = 0) + 
   geom_vline(xintercept = 19, colour = "black", size = 1.25) +
   #geom_vline(data = clse, aes(xintercept = close), colour = "red", linetype = "dashed") +
-  scale_fill_manual(values = c("grey", "white"), name = "Race") +
+  #scale_fill_manual(values = c("grey", "white"), name = "Race") +
+  scale_fill_manual(values = c("white", "grey"), name = "Race") +
   theme_bw() +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
   scale_x_continuous(breaks = 7:25, labels = xlabs, limits = c(7,25), name = "") +
@@ -297,15 +298,50 @@ ggsave (plot2save, file = "../Plots/histogram_by_hour_by_race_2012_2016.pdf", he
 # TEST
 #############
 
+library(MASS)
+library(boot)
 
+sum(is.na(evid12$gender) & is.na(evid12$race) & is.na(evid12$birthdate))
+sum(evid12$time2 >= 19)
+sum(!evid12$party %in% c("DEM", "REP", "IDP", "NPA"))
+sum(!evid12$gender %in% c("U", NA))
 
 groups <- c(18, 30, 40, 50, 60, 70, 120)
-vte <- evid12 %>% filter(gender != "U") %>% group_by(location, day) %>% mutate(over = max(time2) >= 19.5, agegroup = cut(age, groups, right = FALSE)) %>% filter(time2 < 19, party %in% c("DEM", "REP", "IDP", "NPA"))
+vte <- evid12  %>% group_by(location, day) %>% mutate(over = max(time2) >= 19.5, agegroup = cut(age, groups, right = FALSE)) %>% filter(time2 < 19, party %in% c("DEM", "REP", "IDP", "NPA"), gender != "U")
+
 rc <- c("White", "Black", "Hispanic", "Asian")
 vte$race <- factor(vte$race, rc)
-mn <- glm(voted_16 ~ hr + over + hr:over +  gender + race + agegroup + party + voted_08, data = vte, family = "binomial")
 
-summary(mn)
+mn <- glm(voted_16 ~ hr + over + hr:over +  gender + race + agegroup + party + voted_08, data = vte, family = "binomial")
+#Define variables
+means <- coef(mn)
+varcov <- vcov(mn)
+over <- c(FALSE, TRUE)
+df <- mn$model
+n <- nrow(df)
+p <- data.frame(noline = rep(NA, n), line = rep(NA, n))
+for (i in 1:n){
+  # Draw a set of beta coefficients for a multivariate normal distribution.
+  betas <- mvrnorm(mu = means, Sigma = varcov)
+  nms <- names(betas)
+  for (j in 1:2){
+    bx <- vector(length = 9)
+    bx[1] <- betas["(Intercept)"]
+    bx[2] <- betas[paste0("hr", df[1,"hr"])]
+    bx[3] <- betas[paste0("over", over[j])]
+    bx[4] <- betas[paste0("hr", df[1,"hr"], ":over", over[j])]
+    bx[5] <- betas[paste0("gender", df[1,"gender"])]
+    bx[6] <- betas[paste0("race", df[1,"race"])]
+    bx[7] <- betas[paste0("agegroup", df[1,"agegroup"])]
+    bx[8] <- betas[paste0("party", df[1,"party"])]
+    bx[9] <- df[1,"voted_08"] * betas["voted_08"]
+    p[i,j] <- inv.logit(sum(bx,na.rm = T))
+  }
+  cat("\r", i, "of", n, "\r") 
+}
+
+p <- data.frame(hr = df$hr, p)
+
 
 orderedvar <- names(mn$coefficients)[c(1:12, 26:36, 13:25)]
 t <- stargazer(mn,               
