@@ -379,17 +379,13 @@ for (hr2use in sort(unique(p$hr))) {
 }
 
 table2print <- xtable(table2use,
-                      include.row.names =  FALSE,
-                      caption = "Average line effect by time of 2012 early vote",
+                      include.rownames =  FALSE,
+                      caption = "Average effect of waiting in line by time of 2012 early vote",
                       label = "tab:ate",
                       hline.after = TRUE,
                       align = "lcr",
                       type = "latex")
 names(table2print) <- c("Time", "Difference in probability")
-
-
-
-
 
 
 ## End another test
