@@ -354,7 +354,7 @@ df_yes$over <- rep(TRUE, times = nrow(df))
 
 p <- data.frame(line_no = rep(0, n), line_yes = rep(0, n))
 
-nsim <- 3
+nsim <- 100
 set.seed(100)
 
 mn_new <- mn 
@@ -378,7 +378,7 @@ p <- data.frame(hr = df$hr, p)
 table2use <- data.frame(nrow = 0, ncol = 2)
 for (hr2use in sort(unique(p$hr))) {
     ate <- mean(p$line_no[p$hr == hr2use] - p$line_yes[p$hr == hr2use]) 
-    cat (hr2use, ":  ", format(ate, digits = 2), "%", "\n", sep = "")
+    cat (hr2use, ":  ", format(100 * ate, digits = 2), "%", "\n", sep = "")
     table2use <- rbind(table2use, c(hr2use, format(ate, digits = 2)))
 }
 
