@@ -313,38 +313,46 @@ rc <- c("White", "Black", "Hispanic", "Asian")
 vte$race <- factor(vte$race, rc)
 
 mn <- glm(voted_16 ~ hr + over + hr:over +  gender + race + agegroup + party + voted_08, data = vte, family = "binomial")
+
+# #Define variables
+# means <- coef(mn)
+# varcov <- vcov(mn)
+# over <- c(FALSE, TRUE)
+# df <- mn$model
+# n <- nrow(df)
+# p <- data.frame(noline = rep(NA, n), line = rep(NA, n))
+# for (i in 1:n){
+#   # Draw a set of beta coefficients for a multivariate normal distribution.
+#   betas <- mvrnorm(mu = means, Sigma = varcov)
+#   nms <- names(betas)
+#   for (j in 1:2){
+#     bx <- vector(length = 9)
+#     bx[1] <- betas["(Intercept)"]
+#     bx[2] <- betas[paste0("hr", df[1,"hr"])]
+#     bx[3] <- betas[paste0("over", over[j])]
+#     bx[4] <- betas[paste0("hr", df[1,"hr"], ":over", over[j])]
+#     bx[5] <- betas[paste0("gender", df[1,"gender"])]
+#     bx[6] <- betas[paste0("race", df[1,"race"])]
+#     bx[7] <- betas[paste0("agegroup", df[1,"agegroup"])]
+#     bx[8] <- betas[paste0("party", df[1,"party"])]
+#     bx[9] <- df[1,"voted_08"] * betas["voted_08"]
+#     p[i,j] <- inv.logit(sum(bx,na.rm = T))
+#   }
+#   cat("\r", i, "of", n, "\r") 
+# }
+# 
+# p <- data.frame(hr = df$hr, p)
+
+####################
+## Another test
+####################
+
 #Define variables
 means <- coef(mn)
 varcov <- vcov(mn)
 over <- c(FALSE, TRUE)
 df <- mn$model
 n <- nrow(df)
-p <- data.frame(noline = rep(NA, n), line = rep(NA, n))
-for (i in 1:n){
-  # Draw a set of beta coefficients for a multivariate normal distribution.
-  betas <- mvrnorm(mu = means, Sigma = varcov)
-  nms <- names(betas)
-  for (j in 1:2){
-    bx <- vector(length = 9)
-    bx[1] <- betas["(Intercept)"]
-    bx[2] <- betas[paste0("hr", df[1,"hr"])]
-    bx[3] <- betas[paste0("over", over[j])]
-    bx[4] <- betas[paste0("hr", df[1,"hr"], ":over", over[j])]
-    bx[5] <- betas[paste0("gender", df[1,"gender"])]
-    bx[6] <- betas[paste0("race", df[1,"race"])]
-    bx[7] <- betas[paste0("agegroup", df[1,"agegroup"])]
-    bx[8] <- betas[paste0("party", df[1,"party"])]
-    bx[9] <- df[1,"voted_08"] * betas["voted_08"]
-    p[i,j] <- inv.logit(sum(bx,na.rm = T))
-  }
-  cat("\r", i, "of", n, "\r") 
-}
-
-p <- data.frame(hr = df$hr, p)
-
-####################
-## Another test
-####################
 
 df_no <- df
 df_no$over <- rep(FALSE, times = nrow(df))
@@ -354,7 +362,7 @@ df_yes$over <- rep(TRUE, times = nrow(df))
 
 p <- data.frame(line_no = rep(0, n), line_yes = rep(0, n))
 
-nsim <- 3
+nsim <- 100
 set.seed(100)
 
 mn_new <- mn 
@@ -375,11 +383,16 @@ p$line_yes <- p$line_yes / nsim
 
 p <- data.frame(hr = df$hr, p)
 
-table2use <- data.frame(nrow = 0, ncol = 2)
+table2use <- data.frame()
 for (hr2use in sort(unique(p$hr))) {
-    ate <- mean(p$line_no[p$hr == hr2use] - p$line_yes[p$hr == hr2use]) 
-    cat (hr2use, ":  ", format(ate, digits = 2), "%", "\n", sep = "")
-    table2use <- rbind(table2use, c(hr2use, format(ate, digits = 2)))
+    diff <- p$line_no[p$hr == hr2use] - p$line_yes[p$hr == hr2use]
+    ate <- mean(diff)
+    ci <- quantile(diff, probs = c(.025, .975))
+    results <- paste0(format(round(c(ate, ci)*100, digits = 2), nsmall = 2), "%")
+    results <- c(hr2use, results)
+    names(results) <- c("Time", "Mean", "Low", "High")
+    cat (results[1:2], "\n")
+    table2use <- bind_rows(table2use, results)
 }
 
 table2print <- xtable(table2use,
@@ -387,10 +400,9 @@ table2print <- xtable(table2use,
                       caption = "Average effect of waiting in line by time of 2012 early vote",
                       label = "tab:ate",
                       hline.after = TRUE,
-                      align = "lcr",
                       type = "latex")
-names(table2print) <- c("Time", "Difference in probability")
 
+cat(table2print, file = "../plots/table_out_ate.tex", sep = "\n")
 
 ## End another test
 
