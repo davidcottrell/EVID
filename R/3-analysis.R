@@ -385,7 +385,6 @@ p <- data.frame(hr = df$hr, p)
 
 table2use <- data.frame()
 for (hr2use in sort(unique(p$hr))) {
-<<<<<<< HEAD
     diff <- p$line_no[p$hr == hr2use] - p$line_yes[p$hr == hr2use]
     ate <- mean(diff)
     ci <- quantile(diff, probs = c(.025, .975))
@@ -394,11 +393,6 @@ for (hr2use in sort(unique(p$hr))) {
     names(results) <- c("Time", "Mean", "Low", "High")
     cat (results[1:2], "\n")
     table2use <- bind_rows(table2use, results)
-=======
-    ate <- mean(p$line_no[p$hr == hr2use] - p$line_yes[p$hr == hr2use]) 
-    cat (hr2use, ":  ", format(100 * ate, digits = 2), "%", "\n", sep = "")
-    table2use <- rbind(table2use, c(hr2use, format(ate, digits = 2)))
->>>>>>> 37e73c9b66b4e07b200a4bf44e796a62fd1f55db
 }
 
 table2print <- xtable(table2use,
