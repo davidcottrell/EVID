@@ -366,15 +366,31 @@ for (sim in 1:nsim) {
     p$line_yes = p$line_yes + predict_yes
 }
 
-p$noline <- p$line_no / nsim
-p$yesline <- p$line_yes / nsim
+p$line_no <- p$line_no / nsim
+p$line_yes <- p$line_yes / nsim
 
 p <- data.frame(hr = df$hr, p)
 
-for (hr2use in unique(p$hr)) {
-    ate <- mean(p$noline[p$hr == hr2use] - p$yesline[p$hr == hr2use]) 
-    cat (hr2use, ":  ", format(100 * ate, digits = 2), "%", "\n", sep = "")
+table2use <- data.frame(nrow = 0, ncol = 2)
+for (hr2use in sort(unique(p$hr))) {
+    ate <- mean(p$line_no[p$hr == hr2use] - p$line_yes[p$hr == hr2use]) 
+    cat (hr2use, ":  ", format(ate, digits = 2), "%", "\n", sep = "")
+    table2use <- rbind(table2use, c(hr2use, ate))
 }
+
+table2print <- xtable(table2use,
+                      include.row.names =  FALSE,
+                      caption = "Average line effect by time of 2012 early vote",
+                      label = "tab:ate",
+                      hline.after = TRUE,
+                      align = "lcr",
+                      type = "latex")
+names(table2print) <- c("Time", "Difference in probability")
+
+
+
+
+
 
 ## End another test
 
