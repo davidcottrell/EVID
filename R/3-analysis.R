@@ -354,14 +354,18 @@ df_yes$over <- rep(TRUE, times = nrow(df))
 
 p <- data.frame(line_no = rep(0, n), line_yes = rep(0, n))
 
-nsim <- 100
+nsim <- 3
+set.seed(100)
+
+mn_new <- mn 
 
 for (sim in 1:nsim) {
     cat(sim,"\n")
     betas <- mvrnorm(mu = means, Sigma = varcov)
-    mn$coef <- betas
-    predict_no <- predict(mn, newdata = df_no, type = "response")
-    predict_yes <- predict(mn, newdata = df_yes, type = "response")
+    mn_new$coefficients <- betas
+    predict_no <- predict(object = mn_new, newdata = df_no, type = "response")
+    predict_yes <- predict(object = mn_new, newdata = df_yes, type = "response")
+
     p$line_no = p$line_no + predict_no
     p$line_yes = p$line_yes + predict_yes
 }
@@ -375,7 +379,7 @@ table2use <- data.frame(nrow = 0, ncol = 2)
 for (hr2use in sort(unique(p$hr))) {
     ate <- mean(p$line_no[p$hr == hr2use] - p$line_yes[p$hr == hr2use]) 
     cat (hr2use, ":  ", format(ate, digits = 2), "%", "\n", sep = "")
-    table2use <- rbind(table2use, c(hr2use, ate))
+    table2use <- rbind(table2use, c(hr2use, format(ate, digits = 2)))
 }
 
 table2print <- xtable(table2use,
