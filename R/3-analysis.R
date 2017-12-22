@@ -342,6 +342,41 @@ for (i in 1:n){
 
 p <- data.frame(hr = df$hr, p)
 
+####################
+## Another test
+####################
+
+df_no <- df
+df_no$over <- rep(FALSE, times = nrow(df))
+
+df_yes <- df
+df_yes$over <- rep(TRUE, times = nrow(df))
+
+p <- data.frame(line_no = rep(0, n), line_yes = rep(0, n))
+
+nsim <- 100
+
+for (sim in 1:nsim) {
+    cat(sim,"\n")
+    betas <- mvrnorm(mu = means, Sigma = varcov)
+    mn$coef <- betas
+    predict_no <- predict(mn, newdata = df_no, type = "response")
+    predict_yes <- predict(mn, newdata = df_yes, type = "response")
+    p$line_no = p$line_no + predict_no
+    p$line_yes = p$line_yes + predict_yes
+}
+
+p$noline <- p$line_no / nsim
+p$yesline <- p$line_yes / nsim
+
+p <- data.frame(hr = df$hr, p)
+
+for (hr2use in unique(p$hr)) {
+    ate <- mean(p$noline[p$hr == hr2use] - p$yesline[p$hr == hr2use]) 
+    cat (hr2use, ":  ", format(100 * ate, digits = 2), "%", "\n", sep = "")
+}
+
+## End another test
 
 orderedvar <- names(mn$coefficients)[c(1:12, 26:36, 13:25)]
 t <- stargazer(mn,               
