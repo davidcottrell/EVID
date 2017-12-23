@@ -1210,15 +1210,7 @@ covariates and turnout in Florida in 2016.  Rather, we want to know
 about the marginal effects of waiting in line, and to this end Figure
 \ref{fig:prvoting2016} displays graphically the probability of voting
 in 2016 of a 50-year old black male who is a registered Democrat and
-voted in 2008.  Were we to plot probabilities for a different
-demographic profile--e.g., a 30-year old Hispanic female---the
-vertical locations of the two sets of points in Figure
-\ref{fig:prvoting2016} would change per the estimates in Table
-\ref{tab:reg}; however, the \emph{differences} between the points
-would not.  As we care about differences only, as will be clear
-shortly, we can without loss of generality consider in our probability
-figure any demographic profile; we have chosen a 50-year old black
-male.
+voted in 2008.
 
 Figure \ref{fig:prvoting2016} estimates are conditioned on each hour
 of the early voting day in 2012. Its black points are the estimated
@@ -1254,15 +1246,35 @@ effect which suggests that voting lines slightly dampen future
 electoral participation.  However, the effect is very small, amounting
 to no more than roughly a percentage point difference.
 
-This finding is similar to the conclusions in
+We now generalize effect sizes to our complete sample.  Table
+\ref{tab:ate} reports estimates, along with 95\% confidence intervals,
+of the change in probability in 2016 of voting based on time of early
+vote in 2012.\footnote{We generated the results in Table \ref{tab:ate}
+  with a simulation.  Our simulation drew from a multivariate normal
+  distribution values of the coefficient vector corresponding to the
+  left-hand column in Table \ref{tab:reg}.}  The numbers in Table
+\ref{tab:ate} are average treatment effects where the treatment on
+individuals in our sample is being forced to wait in a line in 2012.
+
+\input{table_out_ate.tex}
+
+The estimates in Table \ref{tab:ate} are all negative, indicating that
+waiting in line in 2012  led to decreased turnout probabilities in
+2016.  The magnitude of the estimates range from very small (e.g.,
+a 0.06 percentage point difference in turnout probabilities associated
+with waiting to vote at 7:00am) to slightly over one percentage point
+later in the day.  The overage average treatment effect based on
+waiting in line is 0.86.
+
+Our findings on the effects of lines are similar to the conclusions in
 \citet{pettigrew:longlinesminorityprecincts}.  In particular,
-\citeauthor{pettigrew:longlinesminorityprecincts} finds that each hour
-an in-person voters spends waiting in line to vote is associated with
-a one percentage point drop in future turnout.  To the best of our
-knowledge, \citeauthor{pettigrew:longlinesminorityprecincts} is the
-first scholar to try to estimate the effect of waiting in line to vote
-on the later propensity to vote, and our results are qualitatively
-similar to his.
+\citeauthor{pettigrew:longlinesminorityprecincts} argues that each
+hour an in-person voters spends waiting in line to vote is associated
+with a one percentage point drop in future turnout.  To the best of
+our knowledge, \citeauthor{pettigrew:longlinesminorityprecincts} is
+the first scholar to try to estimate the effect of waiting in line to
+vote on the later propensity to vote, and our results are
+qualitatively similar to his.
 
 In the interests of transparency, we want to draw attention to the
 sample of registered Florida voters whose turnout decisions in 2016

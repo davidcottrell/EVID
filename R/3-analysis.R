@@ -344,7 +344,7 @@ mn <- glm(voted_16 ~ hr + over + hr:over +  gender + race + agegroup + party + v
 # p <- data.frame(hr = df$hr, p)
 
 ####################
-## Another test
+## Make ATE table
 ####################
 
 #Define variables
@@ -368,7 +368,7 @@ set.seed(100)
 mn_new <- mn 
 
 for (sim in 1:nsim) {
-    cat(sim,"\n")
+    cat("Simulation ", sim, " of nsim.", "\n", sep = "")
     betas <- mvrnorm(mu = means, Sigma = varcov)
     mn_new$coefficients <- betas
     predict_no <- predict(object = mn_new, newdata = df_no, type = "response")
@@ -388,23 +388,34 @@ for (hr2use in sort(unique(p$hr))) {
     diff <- p$line_no[p$hr == hr2use] - p$line_yes[p$hr == hr2use]
     ate <- mean(diff)
     ci <- quantile(diff, probs = c(.025, .975))
-    results <- paste0(format(round(c(ate, ci)*100, digits = 2), nsmall = 2), "%")
+    results <- paste0(format(round(c(ate, ci)*1, digits = 2), nsmall = 2), "%")
     results <- c(hr2use, results)
     names(results) <- c("Time", "Mean", "Low", "High")
     cat (results[1:2], "\n")
     table2use <- bind_rows(table2use, results)
 }
 
-table2print <- xtable(table2use,
-                      include.rownames =  FALSE,
-                      caption = "Average effect of waiting in line by time of 2012 early vote",
-                      label = "tab:ate",
-                      hline.after = TRUE,
-                      type = "latex")
+diff <- p$line_no - p$line_yes
+ate <- mean(diff)
+ci <- quantile(diff, probs = c(.025, .975))
+results <- paste0(format(round(c(ate, ci)*1, digits = 2), nsmall = 2), "%")
+results <- c("All", results)
+names(results) <- c("Time", "Mean", "Low", "High")
+cat (results[1:2], "\n")
+table2use <- bind_rows(table2use, results)
+
+rownames(table2use) <- NULL
+table2print <- print(xtable(table2use,
+                            include.rownames = FALSE,
+                            caption = "Effect on probability of turnout of waiting in line, by time of 2012 early vote",
+                            label = "tab:ate",
+                            hline.after = TRUE,
+                            hline.after = 2:3,
+                            type = "latex"))
 
 cat(table2print, file = "../plots/table_out_ate.tex", sep = "\n")
 
-## End another test
+## End ATE table
 
 orderedvar <- names(mn$coefficients)[c(1:12, 26:36, 13:25)]
 t <- stargazer(mn,               
