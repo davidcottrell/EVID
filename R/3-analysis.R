@@ -362,7 +362,7 @@ df_yes$over <- rep(TRUE, times = nrow(df))
 
 p <- data.frame(line_no = rep(0, n), line_yes = rep(0, n))
 
-nsim <- 100
+nsim <- 500
 set.seed(100)
 
 mn_new <- mn 
@@ -385,7 +385,7 @@ p <- data.frame(hr = df$hr, p)
 
 table2use <- data.frame()
 for (hr2use in sort(unique(p$hr))) {
-    diff <- p$line_no[p$hr == hr2use] - p$line_yes[p$hr == hr2use]
+    diff <- p$line_yes[p$hr == hr2use] - p$line_no[p$hr == hr2use]
     ate <- mean(diff)
     ci <- quantile(diff, probs = c(.025, .975))
     results <- paste0(format(round(c(ate, ci)*100, digits = 2), nsmall = 2), "%")
@@ -395,16 +395,16 @@ for (hr2use in sort(unique(p$hr))) {
     table2use <- bind_rows(table2use, results)
 }
 
-# diff <- p$line_no - p$line_yes
-# ate <- mean(diff)
-# ci <- quantile(diff, probs = c(.025, .975))
-# results <- paste0(format(round(c(ate, ci)*1, digits = 2), nsmall = 2), "%")
-# results <- c("All", results)
-# names(results) <- c("Time", "Mean", "Low", "High")
-# cat (results[1:2], "\n")
-# table2use <- bind_rows(table2use, results)
+## diff <- p$line_no - p$line_yes
+## ate <- mean(diff)
+## ci <- quantile(diff, probs = c(.025, .975))
+## results <- paste0(format(round(c(ate, ci)*1, digits = 2), nsmall = 2), "%")
+## results <- c("All", results)
+## names(results) <- c("Time", "Mean", "Low", "High")
+## cat (results[1:2], "\n")
+## table2use <- bind_rows(table2use, results)
 
-#rownames(table2use) <- NULL
+
 table2print <- print(xtable(table2use,
                             caption = "Effect on probability of turnout of waiting in line, by time of 2012 early vote",
                             label = "tab:ate",
