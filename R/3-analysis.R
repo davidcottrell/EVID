@@ -314,34 +314,23 @@ vte$race <- factor(vte$race, rc)
 
 mn <- glm(voted_16 ~ hr + over + hr:over +  gender + race + agegroup + party + voted_08, data = vte, family = "binomial")
 
-# #Define variables
-# means <- coef(mn)
-# varcov <- vcov(mn)
-# over <- c(FALSE, TRUE)
 # df <- mn$model
 # n <- nrow(df)
-# p <- data.frame(noline = rep(NA, n), line = rep(NA, n))
-# for (i in 1:n){
-#   # Draw a set of beta coefficients for a multivariate normal distribution.
-#   betas <- mvrnorm(mu = means, Sigma = varcov)
-#   nms <- names(betas)
-#   for (j in 1:2){
-#     bx <- vector(length = 9)
-#     bx[1] <- betas["(Intercept)"]
-#     bx[2] <- betas[paste0("hr", df[1,"hr"])]
-#     bx[3] <- betas[paste0("over", over[j])]
-#     bx[4] <- betas[paste0("hr", df[1,"hr"], ":over", over[j])]
-#     bx[5] <- betas[paste0("gender", df[1,"gender"])]
-#     bx[6] <- betas[paste0("race", df[1,"race"])]
-#     bx[7] <- betas[paste0("agegroup", df[1,"agegroup"])]
-#     bx[8] <- betas[paste0("party", df[1,"party"])]
-#     bx[9] <- df[1,"voted_08"] * betas["voted_08"]
-#     p[i,j] <- inv.logit(sum(bx,na.rm = T))
-#   }
-#   cat("\r", i, "of", n, "\r") 
-# }
-# 
-# p <- data.frame(hr = df$hr, p)
+# betas <- mvrnorm(mu = coef(mn), Sigma =vcov(mn), n = n)
+# # Calculate predicted probabilities manually
+# ivs <- formula(~ hr + over + hr:over +  gender + race + agegroup + party + voted_08)
+# m1 <- model.matrix( ivs, data = mutate(df, over = FALSE))
+# m2 <- model.matrix( ivs, data = mutate(df, over = TRUE))
+# nms <- colnames(betas)
+# p1 <- plogis(rowSums(betas * m1[,nms]))
+# p2 <- plogis(rowSums(betas * m2[,nms]))
+# #  Pr(voted16 | no.line) - Pr(voted16 | line)
+# diff <- p1 - p2
+# Mean <- tapply(diff, INDEX = df$hr, mean)
+# Low <- tapply(diff, INDEX = df$hr, function(x) quantile(x, probs = .025))
+# High <- tapply(diff, INDEX = df$hr, function(x) quantile(x, probs = .975))
+# table2use <- data.frame(Low, Mean, High)
+# table2use <- round(table2use*100, digits = 2)
 
 ####################
 ## Make ATE table
