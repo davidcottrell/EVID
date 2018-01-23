@@ -203,22 +203,50 @@
 		\end{frame}
 
 
-		
-		
-		
-		\section{Results}
+                \section{Results}
 	
 		\begin{frame}
 		Does waiting in line to vote in the current election reduce one's propensity to vote in the future?
 		\end{frame}
 
+		\begin{frame}
+                  How do we identify who waited in line?
+		\end{frame}
+ 
 		\begin{frame}				
 			\centering 
-			Fred B. Karl County Center, Hillsborough County\\
+			Fred B.\ Karl County Center, Hillsborough County\\
 			\includegraphics[height=  .35\textheight]{../Plots/example00.pdf} \\
 			West Kendall Regional Library, Miami Dade County\\
 			\includegraphics[height=  .35\textheight]{../Plots/example01.pdf} \\ 
 		\end{frame}
+
+		\begin{frame}
+                  We use a 7:30pm rule, which is conservative but not perfect.
+		\end{frame}
+
+		\begin{frame}
+                  Voters who waited may be different than voters who
+                  did not wait.  We condition on covariates from the
+                  Florida \emph{voter file}.
+		\end{frame}
+
+		\begin{frame}
+                  Florida voter file
+                  \begin{itemize}
+                    \item <2-> Lists all registered Florida voters.
+                    \item <3-> Contains demographics (``extract'') and
+                      voting history (``history'').
+                    \item <4-> Does not contain any income/wealth
+                      variables.
+                    \item <5-> The party in a voter file is a party of
+                      registration.
+                    \item <6-> Identification numbers allow linking
+                      across years, in our case, from 2008 to 2016.
+                    \end{itemize}
+                  \end{frame}
+
+
 	
 		\begin{frame}
 		\centering 
@@ -240,12 +268,19 @@
 			\includegraphics[height=  .9\textheight]{../Plots/probability_of_voting_in_2016_over_under_white.pdf}
                       \end{frame}
                 
-                
+                      
                       \begin{frame}	
-Average effects
-                  \footnotesize\input{../Paper/table_out_ate.tex}
-              \end{frame}
-              
+                        Average effects in the complete sample
+                        \footnotesize\input{../Paper/table_out_ate.tex}
+                      \end{frame}
+
+                      \begin{frame}	
+                        Young voters excluded\ldots this probably
+                        makes our results conservative.
+                      \end{frame}
+                      
+
+
 
 		\begin{frame}				
                   \centering
@@ -263,7 +298,7 @@ Average effects
 			Conclusion
 			\begin{itemize}
 				\item[1.] Voting lines were in some location in Florida were severe in 2012.  Line lengths improved in 2016.
-				\item[2.] Certain voters (specifically minorities and Democrats) are more likely to be affected by long wait times. 
+				\item[2.] Certain voters---specifically minorities and Democrats---are more likely to be affected by long wait times. 
 				\item[3.] Holding all else constant,
                                   waiting in line results in about a
                                   1\% decrease in turnout.
