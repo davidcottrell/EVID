@@ -292,6 +292,21 @@ ggsave (plot2save, file = "../Plots/histogram_by_hour_by_race_2012_2016.pdf", he
 
 
 
+plt1 <- evid16 %>% filter(!is.na(race), race != "Other") %>% count(hr, race) %>% group_by(hr) %>% mutate(pct = n/sum(n), low = cis(n,1), high = cis(n,2))
+rc <- c("White", "Black", "Hispanic", "Asian")
+plt1$race <- factor(plt1$race, rc)
+
+plot2save <- ggplot(plt1, aes(hr, pct, shape = race, group = race, ymin = low, ymax = high)) + 
+  geom_line(position = position_nudge(.5), colour = "grey60") + geom_point(position = position_nudge(.5)) + 
+  #geom_errorbar(width = 0)  + 
+  theme_bw() + ylab("Percent") +  xlab("") +
+  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
+  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
+  scale_y_continuous(breaks = seq(0, 1, .05), labels = seq(0, 100, 5), name = "Percent of total voters\n") +
+  scale_x_discrete(limits = c(levels(plt1$hr), "1:00am") ) +
+  #ggtitle("Racial Composition of Early Voters by Hour") +
+  scale_shape_discrete(name = "Race")  
+ggsave(plot2save, filename = "../Plots/racial_composition_2016.pdf", height = 4, width = 7)
 
 
 #############
