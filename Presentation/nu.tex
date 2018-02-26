@@ -208,6 +208,68 @@
 		\includegraphics[height=  .7\textheight]{../Plots/histogram_by_hour_by_race_2012_2016}
 		\end{frame}
 
+		\subsection{2016 - CCES results}
+		
+		\begin{frame}
+                  The 2016 Cooperative Congressional Election Study
+                  (CCES) asked a wait time question\ldots
+			\begin{itemize}
+				\item[1.] Does not distinguish between
+                                  types of in-person voting.
+				\item[2.] Contains categories.
+				\item[3.] Subject to biases associated
+                                  with time recall.
+				\item[4.] Sample size of 64600.
+			\end{itemize}
+		\end{frame}
+
+
+
+                \begin{frame}
+                  \textbf{All states}
+                  % latex table generated in R 3.4.3 by xtable 1.8-2 package
+                  % Mon Feb 26 09:10:38 2018
+                  \begin{table}[ht]
+                    \centering
+                    \begin{tabular}{lrr}
+                      \hline
+                  Wait time    & Count & Percentage \\ 
+                      \hline
+                      Not at all & 13160 & 24.88 \\ 
+                      Less than 10 minutes & 11367 & 21.49 \\ 
+                      10 - 30 minutes & 6544 & 12.37 \\ 
+                      31 minutes - 1 hour & 2503 & 4.73 \\ 
+                      More than 1 hour & 719 & 1.36 \\ 
+                      Don't know & 60 & 0.11 \\ 
+                      Skipped & 41 & 0.08 \\ 
+                      Not Asked & 18505 & 34.98 \\ 
+                      \hline
+                    \end{tabular}
+                  \end{table}            
+                \end{frame}
+
+                \begin{frame}
+                  \textbf{Florida}
+                  % latex table generated in R 3.4.3 by xtable 1.8-2 package
+                  % Mon Feb 26 09:16:26 2018
+                  \begin{table}[ht]
+                    \centering
+                    \begin{tabular}{lrr}
+                      \hline
+                      Wait time & Count & Percentage \\ 
+                      \hline
+                      Not at all & 959 & 23.68 \\ 
+                      Less than 10 minutes & 725 & 17.91 \\ 
+                      10 - 30 minutes & 420 & 10.37 \\ 
+                      31 minutes - 1 hour & 131 & 3.24 \\ 
+                      More than 1 hour & 10 & 0.25 \\ 
+                      Don't know & 4 & 0.10 \\ 
+                      Skipped & 2 & 0.05 \\ 
+                      Not Asked & 1798 & 44.41 \\ 
+                      \hline
+                    \end{tabular}
+                  \end{table}
+                \end{frame}
 
                 \section{Results}
 	
@@ -228,14 +290,24 @@
 		\end{frame}
 
 		\begin{frame}
-                  We use a 7:30pm rule, which is conservative but not perfect.
+                  We use a 7:30pm rule, which is conservative but not
+                  perfect.
 		\end{frame}
+
+		\begin{frame}
+                  We use a 7:30pm rule, which is conservative but not
+                  perfect.   We probably classify some people
+                  who waited as not having waited.
+		\end{frame}
+
 
 		\begin{frame}
                   Voters who waited may be different than voters who
                   did not wait.  We condition on covariates from the
                   Florida \emph{voter file}.
 		\end{frame}
+
+
 
 		\begin{frame}
                   Florida voter file
