@@ -177,18 +177,19 @@ evid <-
   tbl(
     my_db,
     sql(
-      "SELECT x.*, e.gender, e.race, e.birthdate, e.registrationdate, e.partyaffiliation, e.gen_08, e.gen_12, e.gen_16
+      "SELECT x.*, e.residencezipcode, e.gender, e.race, e.birthdate, e.registrationdate, e.partyaffiliation, e.gen_08, e.gen_12, e.gen_14, e.gen_16
       FROM (
         SELECT *, 2012 AS year FROM evid12
         UNION ALL
         SELECT *, 2016 AS year FROM evid16
       ) x
       LEFT JOIN (
-        SELECT extract.*, IFNULL(h1.gen08,'N') AS gen_08, IFNULL(h2.gen12,'N') AS gen_12, IFNULL(h3.gen16,'N') AS gen_16
+        SELECT extract.*, IFNULL(h1.gen08,'N') AS gen_08, IFNULL(h2.gen12,'N') AS gen_12, IFNULL(h3.gen14,'N') AS gen_14, IFNULL(h4.gen16,'N') AS gen_16
         FROM (SELECT * FROM extract WHERE voterid IN (SELECT DISTINCT voterid FROM evid12 UNION ALL SELECT DISTINCT voterid FROM evid16)) extract
         LEFT JOIN history08 AS h1 ON extract.voterid = h1.voterid
         LEFT JOIN history12 AS h2 ON extract.voterid = h2.voterid
-        LEFT JOIN history16 AS h3 ON extract.voterid = h3.voterid
+        LEFT JOIN history14 AS h3 ON extract.voterid = h3.voterid
+        LEFT JOIN history16 AS h4 ON extract.voterid = h4.voterid
       ) e
       ON x.voterid = e.voterid" 
     )

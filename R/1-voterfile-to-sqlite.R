@@ -3,6 +3,15 @@ library(lubridate)
 library(stringr)
 library(RSQLite)
 
+## Set working directory
+if (length(grep("herron", Sys.info()["user"]))) {
+  ## Michael
+  setwd("/Users/herron/research/EVID/R")
+} else {
+  ## David
+  setwd("~/Dropbox/EVID/R")
+}
+
 
 # Create file.sqlite3 -----------------------------------------------
 
@@ -18,13 +27,13 @@ names(history) <- tolower(nms_h)
 copy_to( my_db, history, "history", temporary = FALSE, indexes = list("voterid"))                 # create table
 
 
-files  <- list.files("../Data/Parsed/VoterFile-Dec-2014/VoterHistory",full.names =  T)
+#files  <- list.files("../Data/Parsed/VoterFile-Dec-2014/VoterHistory",full.names =  T) #Palm Beach is missing voters in 2014
+files  <- list.files("../Data/Parsed/VoterFile-Apr-2015/VoterHistory",full.names =  T)
 
 for (i in 1:length(files)){
   print(files[i])
   file <-  read_delim(files[i], delim = "\t", col_names = nms_h, col_types = cols("c", "c", "c", "c", "c"), quote = "")
   db_insert_into( con = my_db$con, table = "history", values = file)  #Insert all files into db
-  print("done")
 }
 
 #Create hierarchy to remove duplicates
@@ -38,7 +47,7 @@ dedup <- function (h) {
   return(h)
 }
 
-#Create separate tables for 2008, 2012, and 2016 general elections
+#Create separate tables for 2008, 2012, 2014, and 2016 general elections
 history <- my_db %>% tbl("history")
 history <- history %>% filter(electiontype == "GEN", historycode != "B", historycode != "P")
 
@@ -53,6 +62,12 @@ history12 <- history12 %>% dedup()
 history12 <- history12 %>% rename(gen12 = historycode)
 copy_to( my_db, history12, "history12", temporary = FALSE, indexes = list("voterid"))
 rm(history12)
+
+history14 <- history %>% filter(electiondate == "11/04/2014") %>% select(voterid, historycode) %>% collect(Inf)
+history14 <- history14 %>% dedup()
+history14 <- history14 %>% rename(gen14 = historycode)
+copy_to( my_db, history14, "history14", temporary = FALSE, indexes = list("voterid"))
+rm(history14)
 
 history16 <- history %>% filter(electiondate == "11/08/2016") %>% select(voterid, historycode) %>% collect(Inf)
 history16 <- history16 %>% dedup()

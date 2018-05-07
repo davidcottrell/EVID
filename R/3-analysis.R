@@ -77,6 +77,7 @@ votedabsentee <- function(col) {if_else(col == "A", 1, 0)}
 evid <- evid %>% 
   mutate(
     voted_08 = voted(gen_08),
+    voted_14 = voted(gen_14),
     voted_16 = voted(gen_16),
     voted_early_16 = votedearly(gen_16),
     voted_absentee_16 = votedabsentee(gen_16)
@@ -190,9 +191,11 @@ rundist <- "no"
 if (rundist == "yes"){
   for (i in 1:nrow(listofcount)){
     pdf(paste0("../Plots/distributions/", paste0("figure", i, "-", listofcount[i,1], ".pdf")), width = 11, height = 5)
-    locdf <- evid12 %>% filter(county == listofcount[i,1], location == listofcount[i,2], day == listofcount[i,3]) %>% arrange(time2) %>% mutate(count = row_number())
+    locdf <- evid12 %>% filter(county == listofcount[i,1], location == listofcount[i,2], day == listofcount[i,3]) %>% arrange(time2) %>% mutate(count = row_number(), lagdiff = time2 - lag(time2), smoothdiff = roll_meanr(lagdiff, n = 50, na.rm = T))
+    locdf <- locdf %>% mutate(lagdiff = if_else(is.na(lagdiff), min(time2), lagdiff),  smoothdiff = if_else(is.na(smoothdiff),lagdiff, smoothdiff ), est = cumsum(smoothdiff))
     forplot <-ggplot(locdf, aes(time2, count)) +
       geom_point(size = .1) +
+      geom_point(aes(x = est), size = .01, col = "red") +
       scale_x_continuous(name = "hour", breaks = c(7:25), labels = xlabs, limits = c(6,26)) +
       theme_bw() +
       #facet_grid(day~.) +
@@ -316,6 +319,10 @@ ggsave(plot2save, filename = "../Plots/racial_composition_2016.pdf", height = 4,
 library(MASS)
 library(boot)
 
+zipdata <- read_csv("../Data/aff_download/ACS_14_5YR_S1903_with_ann.csv", na = c("-", "**", NA), col_types = cols(.default = "c"))
+zipdata <- zipdata %>% transmute(residencezipcode = GEO.id2, logincome = log(as.integer(HC02_EST_VC02)))
+evid12  <- left_join(evid12, zipdata, by = "residencezipcode") # evid
+
 sum(is.na(evid12$gender) & is.na(evid12$race) & is.na(evid12$birthdate))
 sum(evid12$time2 >= 19)
 sum(!evid12$party %in% c("DEM", "REP", "IDP", "NPA"))
@@ -324,80 +331,213 @@ sum(!evid12$gender %in% c("U", NA))
 groups <- c(18, 30, 40, 50, 60, 70, 120)
 vte <- evid12  %>% group_by(location, day) %>% mutate(over = max(time2) >= 19.5, agegroup = cut(age, groups, right = FALSE)) %>% filter(time2 < 19, party %in% c("DEM", "REP", "IDP", "NPA"), gender != "U")
 
-rc <- c("White", "Black", "Hispanic", "Asian")
-vte$race <- factor(vte$race, rc)
+ 
+vte$race <- factor(vte$race, c("White", "Black", "Hispanic", "Asian"))
+vte$party <- factor(vte$party, c("DEM", "REP", "IDP", "NPA"))
+vte$hr <- factor(vte$hr, c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm","1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm"))
+vte$gender <- factor(vte$gender, c("F", "M"))
+vte$agegroup <- factor(vte$agegroup, c("[18,30)","[30,40)","[40,50)","[50,60)","[60,70)","[70,120)"))
+mn1 <- glm(voted_16 ~ hr + over + hr:over +  gender + race + agegroup + party + logincome + voted_08, data = vte, family = "binomial")
+mn2 <- glm(voted_early_16 ~ hr + over + hr:over +  gender + race + agegroup + party + logincome + voted_08, data = vte, family = "binomial")
+mn3 <- glm(voted_absentee_16 ~ hr + over + hr:over +  gender + race + agegroup + party + logincome + voted_08, data = vte, family = "binomial")
+mn4 <- glm(voted_14 ~ hr + over + hr:over +  gender + race + agegroup + party + logincome + voted_08, data = vte, family = "binomial")
 
-mn <- glm(voted_16 ~ hr + over + hr:over +  gender + race + agegroup + party + voted_08, data = vte, family = "binomial")
-
-# df <- mn$model
-# n <- nrow(df)
-# betas <- mvrnorm(mu = coef(mn), Sigma =vcov(mn), n = n)
-# # Calculate predicted probabilities manually
-# ivs <- formula(~ hr + over + hr:over +  gender + race + agegroup + party + voted_08)
-# m1 <- model.matrix( ivs, data = mutate(df, over = FALSE))
-# m2 <- model.matrix( ivs, data = mutate(df, over = TRUE))
-# nms <- colnames(betas)
-# p1 <- plogis(rowSums(betas * m1[,nms]))
-# p2 <- plogis(rowSums(betas * m2[,nms]))
-# #  Pr(voted16 | no.line) - Pr(voted16 | line)
-# diff <- p1 - p2
-# Mean <- tapply(diff, INDEX = df$hr, mean)
-# Low <- tapply(diff, INDEX = df$hr, function(x) quantile(x, probs = .025))
-# High <- tapply(diff, INDEX = df$hr, function(x) quantile(x, probs = .975))
-# table2use <- data.frame(Low, Mean, High)
-# table2use <- round(table2use*100, digits = 2)
 
 ####################
 ## Make ATE table
 ####################
 
-#Define variables
-means <- coef(mn)
-varcov <- vcov(mn)
-over <- c(FALSE, TRUE)
-df <- mn$model
-n <- nrow(df)
-
-df_no <- df
-df_no$over <- rep(FALSE, times = nrow(df))
-
-df_yes <- df
-df_yes$over <- rep(TRUE, times = nrow(df))
-
-p <- data.frame(line_no = rep(0, n), line_yes = rep(0, n))
-
-nsim <- 500
-set.seed(100)
-
-mn_new <- mn 
-
-for (sim in 1:nsim) {
-    cat("Simulation ", sim, " of ", nsim, ".\n", sep = "")
-    betas <- mvrnorm(mu = means, Sigma = varcov)
-    mn_new$coefficients <- betas
-    predict_no <- predict(object = mn_new, newdata = df_no, type = "response")
-    predict_yes <- predict(object = mn_new, newdata = df_yes, type = "response")
-
-    p$line_no = p$line_no + predict_no
-    p$line_yes = p$line_yes + predict_yes
+marginfx <- function(fit, sims, samplesize){
+  df <- fit$model
+  betas <- mvrnorm(mu = coef(fit), Sigma =vcov(fit), n = sims)
+  # Calculate predicted probabilities manually
+  ivs <- fit$formula
+  hrs <- levels(df$hr)
+  ybar <- lo <- hi <- rep(NA,length(hrs))
+  j <- sample(1:nrow(df), samplesize, replace = FALSE)
+  for (i in 1:length(hrs)){
+    t1 <- model.matrix( ivs, data = mutate(df[j,], over = TRUE,  hr = factor(hrs[i],levels = hrs)))
+    t0 <- model.matrix( ivs, data = mutate(df[j,], over = FALSE, hr = factor(hrs[i],levels = hrs)))
+    nms <- colnames(betas)
+    yhat1 <- plogis(tcrossprod(t1[,nms], betas))
+    yhat0 <- plogis(tcrossprod(t0[,nms], betas))
+    ate <- colMeans(yhat1 - yhat0) #  Pr(voted16 | no.line) - Pr(voted16 | line)
+    ybar[i] <- mean(ate)*100
+    lo[i] <- quantile(ate, probs = .025)*100
+    hi[i] <- quantile(ate, probs = .975)*100
+  }
+  return(data.frame(hrs,ybar, lo, hi))
 }
 
-p$line_no <- p$line_no / nsim
-p$line_yes <- p$line_yes / nsim
 
-p <- data.frame(hr = df$hr, p)
+marg1 <- marginfx(mn1, 500, 10000)
+margfx <- ggplot(marg1, aes(hrs, ybar, ymin = lo, ymax = hi)) + 
+  geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
+  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
+  geom_hline(yintercept = 0) +
+  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
+  scale_y_continuous(breaks = seq(-6, 2, .5),limits = c(-6, 2), name = "Average Treatment Effect (%)") +
+  scale_x_discrete(limits = 
+                     c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
+                       "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm")) +
+  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
+  ggtitle("Voted in 2016")
+ggsave(margfx, filename = "../Plots/margfx_2016_vote.pdf", height = 5, width = 7)
 
-table2use <- data.frame()
-for (hr2use in sort(unique(p$hr))) {
-    diff <- p$line_yes[p$hr == hr2use] - p$line_no[p$hr == hr2use]
-    ate <- mean(diff)
-    ci <- quantile(diff, probs = c(.025, .975))
-    results <- paste0(format(round(c(ate, ci)*100, digits = 2), nsmall = 2), "%")
-    results <- c(hr2use, results)
-    names(results) <- c("Time", "Mean", "Low", "High")
-    cat (results[1:2], "\n")
-    table2use <- bind_rows(table2use, results)
-}
+marg2 <- marginfx(mn2, 500, 10000)
+margfx2 <- ggplot(marg2, aes(hrs, ybar, ymin = lo, ymax = hi)) + 
+  geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
+  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
+  geom_hline(yintercept = 0) +
+  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
+  scale_y_continuous(breaks = seq(-6, 2, .5),limits = c(-6, 2), name = "Average Treatment Effect (%)") +
+  scale_x_discrete(limits = 
+                     c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
+                       "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm")) +
+  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...")+
+  ggtitle("Voted early in 2016")
+ggsave(margfx2, filename = "../Plots/margfx_2016_vote_early.pdf", height = 5, width = 7)
+
+marg3 <- marginfx(mn3, 500, 10000)
+margfx3 <- ggplot(marg3, aes(hrs, ybar, ymin = lo, ymax = hi)) + 
+  geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
+  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
+  geom_hline(yintercept = 0) +
+  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
+  scale_y_continuous(breaks = seq(-6, 2, .5),limits = c(-6, 2), name = "Average Treatment Effect (%)") +
+  scale_x_discrete(limits = 
+                     c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
+                       "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm")) +
+  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...")+
+  ggtitle("Voted absentee in 2016")
+ggsave(margfx3, filename = "../Plots/margfx_2016_vote_abesentee.pdf", height = 5, width = 7)
+
+marg4 <- marginfx(mn4, 500, 10000)
+margfx4 <- ggplot(marg4, aes(hrs, ybar, ymin = lo, ymax = hi)) + 
+  geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
+  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
+  geom_hline(yintercept = 0) +
+  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
+  scale_y_continuous(breaks = seq(-6, 2, .5),limits = c(-6, 2), name = "Average Treatment Effect (%)") +
+  scale_x_discrete(limits = 
+                     c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
+                       "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm")) +
+  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...")+
+  ggtitle("Voted in 2014")
+ggsave(margfx4, filename = "../Plots/margfx_2014_vote.pdf", height = 5, width = 7)
+
+
+orderedvar <- names(mn1$coefficients)[-1][c(1:12, 27:37, 13:26)]
+t <- stargazer(mn1, mn2, mn3, mn4,               
+               title = "Logit regression predicting voter turnout in 2016",
+               label = "tab:reg",
+               dep.var.labels =  c("Voted in 2016", "Voted early in 2016", "Voted absentee in 2016", "Voted in 2014"),               
+               omit.stat=c("LL","ser","f"),
+               type = "text",
+               order = c(1:12, 27:37, 13:26),
+               notes = "",
+               single.row=TRUE,
+               covariate.labels = c(
+                 "8:00am",
+                 "9:00am",
+                 "10:00am",
+                 "11:00am",
+                 "12:00pm",
+                 "1:00pm",
+                 "2:00pm",
+                 "3:00pm",
+                 "4:00pm",
+                 "5:00pm",
+                 "6:00pm",
+                 "Over",
+                 "8:00am \\& Over",
+                 "9:00am \\& Over",
+                 "10:00am \\& Over",
+                 "11:00am \\& Over",
+                 "12:00pm \\& Over",
+                 "1:00pm \\& Over",
+                 "2:00pm \\& Over",
+                 "3:00pm \\& Over",
+                 "4:00pm \\& Over",
+                 "5:00pm \\& Over",
+                 "6:00pm \\& Over",
+                 "Gender: male",
+                 "Race: Black",
+                 "Race: Hispanic",
+                 "Race: Asian",
+                 "Age group: 30-39",
+                 "Age group: 40-49",
+                 "Age group: 50-59",
+                 "Age group: 60-69",
+                 "Age group: 70+",
+                 "Party: Republican",
+                 "Party: Independent",
+                 "Party: none",
+                 "Log median income",
+                 "Voted08: yes"),
+               no.space = TRUE,
+               font.size = "scriptsize")
+
+cat(t, file = "../plots/table_out.tex", sep = "\n")
+
+
+#############################
+#  OLD CODE
+#############################
+
+# #Define variables
+# means <- coef(mn)
+# varcov <- vcov(mn)
+# over <- c(FALSE, TRUE)
+# df <- mn$model
+# n <- nrow(df)
+# h <- levels(df$hr)
+# 
+# df_no <- df
+# df_no$over <- rep(FALSE, times = nrow(df))
+# 
+# df_yes <- df
+# df_yes$over <- rep(TRUE, times = nrow(df))
+# 
+# nsim <- 50
+# sim_ate <- matrix(nrow = nsim, ncol = length(h))
+# set.seed(100)
+# 
+# mn_new <- mn 
+# 
+# betas <- mvrnorm(mu = means, Sigma = varcov, n = nsim)
+# 
+# 
+# 
+# for (sim in 1:nsim) {
+#     cat("Simulation ", sim, " of ", nsim, ".\n", sep = "")
+#     mn_new$coefficients <- betas[sim,]
+#     predict_no <- predict(object = mn_new, newdata = mutate(df, over = TRUE), type = "response")
+#     predict_yes <- predict(object = mn_new, newdata = mutate(df, over = TRUE), type = "response")
+#     sim_ate[sim,] <- tapply(predict_yes - predict_no, df$hr, mean)
+# }
+
+# 
+# xbar <- colMeans(sim_ate)
+# lo <- apply(sim_ate,2,function(x) quantile(x, .025))
+# hi <- apply(sim_ate,2,function(x) quantile(x, .975))
+# plot(xbar*100, ylim = range(ci))
+# segments(1:length(xbar), lo*100, 1:length(xbar), hi*100)
+# abline(h = 0)
+# 
+# p <- data.frame(hr = df$hr, p)
+# 
+# table2use <- data.frame()
+# for (hr2use in sort(unique(p$hr))) {
+#     diff <- p$line_yes[p$hr == hr2use] - p$line_no[p$hr == hr2use]
+#     ate <- mean(diff)
+#     ci <- quantile(diff, probs = c(.025, .975))
+#     results <- paste0(format(round(c(ate, ci)*100, digits = 2), nsmall = 2), "%")
+#     results <- c(hr2use, results)
+#     names(results) <- c("Time", "Mean", "Low", "High")
+#     cat (results[1:2], "\n")
+#     table2use <- bind_rows(table2use, results)
+# }
 
 ## diff <- p$line_no - p$line_yes
 ## ate <- mean(diff)
@@ -407,359 +547,331 @@ for (hr2use in sort(unique(p$hr))) {
 ## names(results) <- c("Time", "Mean", "Low", "High")
 ## cat (results[1:2], "\n")
 ## table2use <- bind_rows(table2use, results)
-
-
-table2print <- print(xtable(table2use,
-                            caption = "Effect on probability of turnout of waiting in line, by time of 2012 early vote",
-                            label = "tab:ate",
-                            hline.after = TRUE,
-                            hline.after = 2:3,
-                            type = "latex"),
-                     include.rownames=FALSE)
-
-cat(table2print, file = "../plots/table_out_ate.tex", sep = "\n")
+# 
+# 
+# table2print <- print(xtable(table2use,
+#                             caption = "Effect on probability of turnout of waiting in line, by time of 2012 early vote",
+#                             label = "tab:ate",
+#                             hline.after = TRUE,
+#                             hline.after = 2:3,
+#                             type = "latex"),
+#                      include.rownames=FALSE)
+# 
+# cat(table2print, file = "../plots/table_out_ate.tex", sep = "\n")
 
 ## End ATE table
 
-orderedvar <- names(mn$coefficients)[c(1:12, 26:36, 13:25)]
-t <- stargazer(mn,               
-               title = "Logit regression predicting voter turnout in 2016",
-               label = "tab:reg",
-               dep.var.labels =  c("Voted in 2016"),               
-               omit.stat=c("LL","ser","f"),
-               type = "latex", 
-               order = c(1:12, 26:36, 13:25),
-               notes = "",
-               single.row=TRUE,
-               covariate.labels = c(
-                 "8:00am",
-                 "9:00am",
-                 "10:00am",
-                 "11:00am",
-                 "12:00pm",
-                 "1:00pm",
-                 "2:00pm",
-                 "3:00pm",
-                 "4:00pm",
-                 "5:00pm",
-                 "6:00pm",
-                 "Over",
-                 "8:00am \\& Over",
-                 "9:00am \\& Over",
-                 "10:00am \\& Over",
-                 "11:00am \\& Over",
-                 "12:00pm \\& Over",
-                 "1:00pm \\& Over",
-                 "2:00pm \\& Over",
-                 "3:00pm \\& Over",
-                 "4:00pm \\& Over",
-                 "5:00pm \\& Over",
-                 "6:00pm \\& Over",
-                 "Gender: male",
-                 "Race: Black",
-                 "Race: Hispanic",
-                 "Race: Asian",
-                 "Age group: 30-39",
-                 "Age group: 40-49",
-                 "Age group: 50-59",
-                 "Age group: 60-69",
-                 "Age group: 70+",
-                 "Party: independent",
-                 "Party: none",
-                 "Party: Republican",
-                 "Voted08: yes"),
-               no.space = TRUE,
-               font.size = "scriptsize")
 
-cat(t, file = "../plots/table_out.tex", sep = "\n")
-
-
-
-newdata <-  data.frame(
-  hr = factor(levels(vte$hr), levels(vte$hr)),
-  location = c("Bloomingdale Regional Public Library"),
-  day = "SAT 10/27",
-  gender = "M",
-  race = "Black",
-  age = mean(vte$age, na.rm = T),
-  agegroup = "[50,60)",
-  party = "DEM",
-  voted_08 = 0,
-  over = TRUE
-)
-
-p2over <- predict(mn, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
-
-newdata <-  data.frame(
-  hr = factor(levels(vte$hr), levels(vte$hr)),
-  location = c("Bloomingdale Regional Public Library"),
-  day = "SAT 10/27",
-  gender = "M",
-  race = "Black",
-  age = mean(vte$age, na.rm = T),
-  agegroup = "[50,60)",
-  party = "DEM",
-  voted_08 = 0,
-  over = FALSE
-)
-
-p2under <- predict(mn, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
-
-
-plt3over <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
-                       pct = plogis(p2over$fit), 
-                       low = plogis(p2over$fit - 1.96*p2over$se.fit), 
-                       high = plogis(p2over$fit + 1.96*p2over$se.fit),
-                       var = "last voter checked-in after 7:30pm", stringsAsFactors = F)
-
-plt3under <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
-                        pct = plogis(p2under$fit), 
-                        low = plogis(p2under$fit - 1.96*p2under$se.fit), 
-                        high = plogis(p2under$fit + 1.96*p2under$se.fit),
-                        var = "last voter checked-in before 7:30pm", stringsAsFactors = F)
-
-plt3overunder <- bind_rows(plt3over, plt3under)
-
-
-plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) + 
-  geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
-  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
-  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
-  scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.75, .9), name = "Predicted probability of voting\n") +
-  scale_x_discrete(limits = levels(plt3overunder$hr)[1:14], name = "") +
-  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
-  ggtitle("") +
-  theme(legend.position = c(.3,.2))
-ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under.pdf", height = 5, width = 7)
-
-
-
-
-newdata <-  data.frame(
-  hr = factor(levels(vte$hr), levels(vte$hr)),
-  location = c("Bloomingdale Regional Public Library"),
-  day = "SAT 10/27",
-  gender = "M",
-  race = "White",
-  age = mean(vte$age, na.rm = T),
-  agegroup = "[50,60)",
-  party = "DEM",
-  voted_08 = 0,
-  over = TRUE
-)
-
-p2over <- predict(mn, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
-
-newdata <-  data.frame(
-  hr = factor(levels(vte$hr), levels(vte$hr)),
-  location = c("Bloomingdale Regional Public Library"),
-  day = "SAT 10/27",
-  gender = "M",
-  race = "White",
-  age = mean(vte$age, na.rm = T),
-  agegroup = "[50,60)",
-  party = "DEM",
-  voted_08 = 0,
-  over = FALSE
-)
-
-p2under <- predict(mn, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
-
-
-plt3over <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
-                       pct = plogis(p2over$fit), 
-                       low = plogis(p2over$fit - 1.96*p2over$se.fit), 
-                       high = plogis(p2over$fit + 1.96*p2over$se.fit),
-                       var = "last voter checked-in after 7:30pm", stringsAsFactors = F)
-
-plt3under <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
-                        pct = plogis(p2under$fit), 
-                        low = plogis(p2under$fit - 1.96*p2under$se.fit), 
-                        high = plogis(p2under$fit + 1.96*p2under$se.fit),
-                        var = "last voter checked-in before 7:30pm", stringsAsFactors = F)
-
-plt3overunder <- bind_rows(plt3over, plt3under)
-
-
-plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) + 
-  geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
-  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
-  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
-  scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.75, .9), name = "Predicted probability of voting (%)\n") +
-  scale_x_discrete(limits = levels(plt3overunder$hr)[1:14], name = "") +
-  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
-  ggtitle("") +
-  theme(legend.position = c(.3,.2))
-ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under_white.pdf", height = 5, width = 7)
-
-
-
-# voted early -------------------------------------------------------------
-
-mn2 <- glm(voted_early_16 ~ hr + over + hr:over +  gender + race + agegroup + party + voted_08, data = vte[vte$voted_16 == 1, ], family = "binomial")
-
-summary(mn2)
-
-orderedvar <- names(mn2$coefficients)[c(1:12, 26:36, 13:25)]
-t <- stargazer(mn2,               
-               title = "Logit regression predicting voter turnout in 2016",
-               label = "tab:reg",
-               dep.var.labels =  c("Voted in 2016"),               
-               omit.stat=c("LL","ser","f"),
-               type = "latex", 
-               order = c(1:12, 26:36, 13:25),
-               notes = "",
-               single.row=TRUE,
-               covariate.labels = c(
-                 "8:00am",
-                 "9:00am",
-                 "10:00am",
-                 "11:00am",
-                 "12:00pm",
-                 "1:00pm",
-                 "2:00pm",
-                 "3:00pm",
-                 "4:00pm",
-                 "5:00pm",
-                 "6:00pm",
-                 "Over",
-                 "8:00am \\& Over",
-                 "9:00am \\& Over",
-                 "10:00am \\& Over",
-                 "11:00am \\& Over",
-                 "12:00pm \\& Over",
-                 "1:00pm \\& Over",
-                 "2:00pm \\& Over",
-                 "3:00pm \\& Over",
-                 "4:00pm \\& Over",
-                 "5:00pm \\& Over",
-                 "6:00pm \\& Over",
-                 "Gender: male",
-                 "Race: Black",
-                 "Race: Hispanic",
-                 "Race: Asian",
-                 "Age group: 30-39",
-                 "Age group: 40-49",
-                 "Age group: 50-59",
-                 "Age group: 60-69",
-                 "Age group: 70+",
-                 "Party: independent",
-                 "Party: none",
-                 "Party: Republican",
-                 "Voted08: yes"),
-               no.space = TRUE,
-               font.size = "scriptsize")
-
-cat(t, file = "../plots/table_out_early.tex", sep = "\n")
-
-
-
-newdata <-  data.frame(
-  hr = factor(levels(vte$hr), levels(vte$hr)),
-  location = c("Bloomingdale Regional Public Library"),
-  day = "SAT 10/27",
-  gender = "M",
-  race = "Black",
-  age = mean(vte$age, na.rm = T),
-  agegroup = "[50,60)",
-  party = "DEM",
-  voted_08 = 0,
-  over = TRUE
-)
-
-p2over <- predict(mn2, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
-
-newdata <-  data.frame(
-  hr = factor(levels(vte$hr), levels(vte$hr)),
-  location = c("Bloomingdale Regional Public Library"),
-  day = "SAT 10/27",
-  gender = "M",
-  race = "Black",
-  age = mean(vte$age, na.rm = T),
-  agegroup = "[50,60)",
-  party = "DEM",
-  voted_08 = 0,
-  over = FALSE
-)
-
-p2under <- predict(mn2, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
-
-
-plt3over <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
-                       pct = plogis(p2over$fit), 
-                       low = plogis(p2over$fit - 1.96*p2over$se.fit), 
-                       high = plogis(p2over$fit + 1.96*p2over$se.fit),
-                       var = "last voter checked-in after 7:30pm", stringsAsFactors = F)
-
-plt3under <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
-                        pct = plogis(p2under$fit), 
-                        low = plogis(p2under$fit - 1.96*p2under$se.fit), 
-                        high = plogis(p2under$fit + 1.96*p2under$se.fit),
-                        var = "last voter checked-in before 7:30pm", stringsAsFactors = F)
-
-plt3overunder <- bind_rows(plt3over, plt3under)
-
-
-plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) + 
-  geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
-  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
-  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
-  scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.7, .77), name = "Predicted probability of voting early\n") +
-  scale_x_discrete(limits = levels(plt3overunder$hr)[1:14], name = "") +
-  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
-  ggtitle("") +
-  theme(legend.position = c(.3,.2))
-ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under_early.pdf", height = 5, width = 7)
-
-
-## Make combined table
-
-t_combined <- stargazer(mn, mn2,
-                        omit.stat = c("LL","ser","f"),
-                        title = "Regression results predicting voter behavior in 2016",
-                        label = "tab:reg",
-                        type = "latex",
-                        single.row=TRUE,
-                        dep.var.labels =  c("Voted in 2016", "Voted early in 2016"),               
-                        covariate.labels = c(
-                   "8:00am",
-                   "9:00am",
-                   "10:00am",
-                   "11:00am",
-                   "12:00pm",
-                   "1:00pm",
-                   "2:00pm",
-                   "3:00pm",
-                   "4:00pm",
-                   "5:00pm",
-                   "6:00pm",
-                   "Over",
-                   "8:00am \\& Over",
-                   "9:00am \\& Over",
-                   "10:00am \\& Over",
-                   "11:00am \\& Over",
-                   "12:00pm \\& Over",
-                   "1:00pm \\& Over",
-                   "2:00pm \\& Over",
-                   "3:00pm \\& Over",
-                   "4:00pm \\& Over",
-                   "5:00pm \\& Over",
-                   "6:00pm \\& Over",
-                   "Gender: male",
-                   "Race: Black",
-                   "Race: Hispanic",
-                   "Race: Asian",
-                   "Age group: 30-39",
-                   "Age group: 40-49",
-                   "Age group: 50-59",
-                   "Age group: 60-69",
-                   "Age group: 70+",
-                   "Party: independent",
-                   "Party: none",
-                   "Party: Republican",
-                   "Voted08: yes"),
-               no.space = TRUE,
-               font.size = "scriptsize")
-
-cat(t_combined, file = "../Plots/table_out_combined.tex", sep = "\n")
-
+# 
+# newdata <-  data.frame(
+#   hr = factor(levels(vte$hr), levels(vte$hr)),
+#   location = c("Bloomingdale Regional Public Library"),
+#   day = "SAT 10/27",
+#   gender = "M",
+#   race = "Black",
+#   age = mean(vte$age, na.rm = T),
+#   agegroup = "[50,60)",
+#   party = "DEM",
+#   voted_08 = 0,
+#   over = TRUE
+# )
+# 
+# p2over <- predict(mn, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
+# 
+# newdata <-  data.frame(
+#   hr = factor(levels(vte$hr), levels(vte$hr)),
+#   location = c("Bloomingdale Regional Public Library"),
+#   day = "SAT 10/27",
+#   gender = "M",
+#   race = "Black",
+#   age = mean(vte$age, na.rm = T),
+#   agegroup = "[50,60)",
+#   party = "DEM",
+#   voted_08 = 0,
+#   over = FALSE
+# )
+# 
+# p2under <- predict(mn, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
+# 
+# 
+# plt3over <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
+#                        pct = plogis(p2over$fit), 
+#                        low = plogis(p2over$fit - 1.96*p2over$se.fit), 
+#                        high = plogis(p2over$fit + 1.96*p2over$se.fit),
+#                        var = "last voter checked-in after 7:30pm", stringsAsFactors = F)
+# 
+# plt3under <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
+#                         pct = plogis(p2under$fit), 
+#                         low = plogis(p2under$fit - 1.96*p2under$se.fit), 
+#                         high = plogis(p2under$fit + 1.96*p2under$se.fit),
+#                         var = "last voter checked-in before 7:30pm", stringsAsFactors = F)
+# 
+# plt3overunder <- bind_rows(plt3over, plt3under)
+# 
+# 
+# plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) + 
+#   geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
+#   geom_vline(xintercept = 13, colour ="black", size = 1.25) +
+#   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
+#   scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.75, .9), name = "Predicted probability of voting\n") +
+#   scale_x_discrete(limits = levels(plt3overunder$hr)[1:14], name = "") +
+#   scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
+#   ggtitle("") +
+#   theme(legend.position = c(.3,.2))
+# ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under.pdf", height = 5, width = 7)
+# 
+# 
+# 
+# 
+# newdata <-  data.frame(
+#   hr = factor(levels(vte$hr), levels(vte$hr)),
+#   location = c("Bloomingdale Regional Public Library"),
+#   day = "SAT 10/27",
+#   gender = "M",
+#   race = "White",
+#   age = mean(vte$age, na.rm = T),
+#   agegroup = "[50,60)",
+#   party = "DEM",
+#   voted_08 = 0,
+#   over = TRUE
+# )
+# 
+# p2over <- predict(mn, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
+# 
+# newdata <-  data.frame(
+#   hr = factor(levels(vte$hr), levels(vte$hr)),
+#   location = c("Bloomingdale Regional Public Library"),
+#   day = "SAT 10/27",
+#   gender = "M",
+#   race = "White",
+#   age = mean(vte$age, na.rm = T),
+#   agegroup = "[50,60)",
+#   party = "DEM",
+#   voted_08 = 0,
+#   over = FALSE
+# )
+# 
+# p2under <- predict(mn, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
+# 
+# 
+# plt3over <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
+#                        pct = plogis(p2over$fit), 
+#                        low = plogis(p2over$fit - 1.96*p2over$se.fit), 
+#                        high = plogis(p2over$fit + 1.96*p2over$se.fit),
+#                        var = "last voter checked-in after 7:30pm", stringsAsFactors = F)
+# 
+# plt3under <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
+#                         pct = plogis(p2under$fit), 
+#                         low = plogis(p2under$fit - 1.96*p2under$se.fit), 
+#                         high = plogis(p2under$fit + 1.96*p2under$se.fit),
+#                         var = "last voter checked-in before 7:30pm", stringsAsFactors = F)
+# 
+# plt3overunder <- bind_rows(plt3over, plt3under)
+# 
+# 
+# plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) + 
+#   geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
+#   geom_vline(xintercept = 13, colour ="black", size = 1.25) +
+#   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
+#   scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.75, .9), name = "Predicted probability of voting (%)\n") +
+#   scale_x_discrete(limits = levels(plt3overunder$hr)[1:14], name = "") +
+#   scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
+#   ggtitle("") +
+#   theme(legend.position = c(.3,.2))
+# ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under_white.pdf", height = 5, width = 7)
+# 
+# 
+# 
+# # voted early -------------------------------------------------------------
+# 
+# mn2 <- glm(voted_early_16 ~ hr + over + hr:over +  gender + race + agegroup + party + voted_08, data = vte[vte$voted_16 == 1, ], family = "binomial")
+# 
+# summary(mn2)
+# 
+# orderedvar <- names(mn2$coefficients)[-1][c(1:12, 26:36, 13:25)]
+# t <- stargazer(mn2,               
+#                title = "Logit regression predicting voter turnout in 2016",
+#                label = "tab:reg",
+#                dep.var.labels =  c("Voted in 2016"),               
+#                omit.stat=c("LL","ser","f"),
+#                type = "latex", 
+#                order = c(1:12, 26:36, 13:25),
+#                notes = "",
+#                single.row=TRUE,
+#                covariate.labels = c(
+#                  "8:00am",
+#                  "9:00am",
+#                  "10:00am",
+#                  "11:00am",
+#                  "12:00pm",
+#                  "1:00pm",
+#                  "2:00pm",
+#                  "3:00pm",
+#                  "4:00pm",
+#                  "5:00pm",
+#                  "6:00pm",
+#                  "Over",
+#                  "8:00am \\& Over",
+#                  "9:00am \\& Over",
+#                  "10:00am \\& Over",
+#                  "11:00am \\& Over",
+#                  "12:00pm \\& Over",
+#                  "1:00pm \\& Over",
+#                  "2:00pm \\& Over",
+#                  "3:00pm \\& Over",
+#                  "4:00pm \\& Over",
+#                  "5:00pm \\& Over",
+#                  "6:00pm \\& Over",
+#                  "Gender: male",
+#                  "Race: Black",
+#                  "Race: Hispanic",
+#                  "Race: Asian",
+#                  "Age group: 30-39",
+#                  "Age group: 40-49",
+#                  "Age group: 50-59",
+#                  "Age group: 60-69",
+#                  "Age group: 70+",
+#                  "Party: independent",
+#                  "Party: none",
+#                  "Party: Republican",
+#                  "Voted08: yes"),
+#                no.space = TRUE,
+#                font.size = "scriptsize")
+# 
+# cat(t, file = "../plots/table_out_early.tex", sep = "\n")
+# 
+# 
+# 
+# newdata <-  data.frame(
+#   hr = factor(levels(vte$hr), levels(vte$hr)),
+#   location = c("Bloomingdale Regional Public Library"),
+#   day = "SAT 10/27",
+#   gender = "M",
+#   race = "Black",
+#   age = mean(vte$age, na.rm = T),
+#   agegroup = "[50,60)",
+#   party = "DEM",
+#   voted_08 = 0,
+#   over = TRUE
+# )
+# 
+# p2over <- predict(mn2, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
+# 
+# newdata <-  data.frame(
+#   hr = factor(levels(vte$hr), levels(vte$hr)),
+#   location = c("Bloomingdale Regional Public Library"),
+#   day = "SAT 10/27",
+#   gender = "M",
+#   race = "Black",
+#   age = mean(vte$age, na.rm = T),
+#   agegroup = "[50,60)",
+#   party = "DEM",
+#   voted_08 = 0,
+#   over = FALSE
+# )
+# 
+# p2under <- predict(mn2, newdata = newdata[as.integer(newdata$hr)<13,], type = "link", se = TRUE)
+# 
+# 
+# plt3over <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
+#                        pct = plogis(p2over$fit), 
+#                        low = plogis(p2over$fit - 1.96*p2over$se.fit), 
+#                        high = plogis(p2over$fit + 1.96*p2over$se.fit),
+#                        var = "last voter checked-in after 7:30pm", stringsAsFactors = F)
+# 
+# plt3under <- data.frame(hr =newdata$hr[as.integer(newdata$hr)<13], 
+#                         pct = plogis(p2under$fit), 
+#                         low = plogis(p2under$fit - 1.96*p2under$se.fit), 
+#                         high = plogis(p2under$fit + 1.96*p2under$se.fit),
+#                         var = "last voter checked-in before 7:30pm", stringsAsFactors = F)
+# 
+# plt3overunder <- bind_rows(plt3over, plt3under)
+# 
+# 
+# plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) + 
+#   geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
+#   geom_vline(xintercept = 13, colour ="black", size = 1.25) +
+#   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
+#   scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.7, .77), name = "Predicted probability of voting early\n") +
+#   scale_x_discrete(limits = levels(plt3overunder$hr)[1:14], name = "") +
+#   scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
+#   ggtitle("") +
+#   theme(legend.position = c(.3,.2))
+# ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under_early.pdf", height = 5, width = 7)
+# 
+# 
+# ## Make combined table
+# 
+# t_combined <- stargazer(mn, mn2,
+#                         omit.stat = c("LL","ser","f"),
+#                         title = "Regression results predicting voter behavior in 2016",
+#                         label = "tab:reg",
+#                         type = "latex",
+#                         single.row=TRUE,
+#                         dep.var.labels =  c("Voted in 2016", "Voted early in 2016"),               
+#                         covariate.labels = c(
+#                    "8:00am",
+#                    "9:00am",
+#                    "10:00am",
+#                    "11:00am",
+#                    "12:00pm",
+#                    "1:00pm",
+#                    "2:00pm",
+#                    "3:00pm",
+#                    "4:00pm",
+#                    "5:00pm",
+#                    "6:00pm",
+#                    "Over",
+#                    "8:00am \\& Over",
+#                    "9:00am \\& Over",
+#                    "10:00am \\& Over",
+#                    "11:00am \\& Over",
+#                    "12:00pm \\& Over",
+#                    "1:00pm \\& Over",
+#                    "2:00pm \\& Over",
+#                    "3:00pm \\& Over",
+#                    "4:00pm \\& Over",
+#                    "5:00pm \\& Over",
+#                    "6:00pm \\& Over",
+#                    "Gender: male",
+#                    "Race: Black",
+#                    "Race: Hispanic",
+#                    "Race: Asian",
+#                    "Age group: 30-39",
+#                    "Age group: 40-49",
+#                    "Age group: 50-59",
+#                    "Age group: 60-69",
+#                    "Age group: 70+",
+#                    "Party: independent",
+#                    "Party: none",
+#                    "Party: Republican",
+#                    "Voted08: yes"),
+#                no.space = TRUE,
+#                font.size = "scriptsize")
+# 
+# cat(t_combined, file = "../Plots/table_out_combined.tex", sep = "\n")
+# 
+# 
+# history <- my_db %>% 
+#   tbl("history") %>% 
+#   filter(electiontype == "GEN", 
+#          historycode != "B", 
+#          historycode != "P", 
+#          electiondate == "11/04/2014") %>%
+#   #select(voterid, historycode) %>% 
+#   rename(gen14 = historycode) %>%
+#   count(countycode) %>%
+#   collect()
+# 
+# df <- bind_cols(arrange(history, countycode), arrange(fla, X2))
+# pdf("differences.pdf")
+# i <- abs((df$n - df$X3)/df$X3) > .1
+# plot(df$n/1000, df$X3/1000, xlab = "Voterfile", ylab = "Actual", main = "Total Votes (in thousands)")
+# abline(a = 0, b = 1)
+# text(df$n[i]/1000, df$X3[i]/1000, labels = df$countycode[i], pos = 4)
+# dev.off()
+# 
+# df %>%
+#   transmute(county = X1, countycode, X2, voterfile = n, actual = X3, difference = actual - voterfile, percentdiff = round(difference/voterfile*100, 2)) %>% arrange(desc(abs(percentdiff)))
+# 
+# 
