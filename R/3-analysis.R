@@ -379,9 +379,9 @@ margfx <- ggplot(marg1, aes(hrs, ybar, ymin = lo, ymax = hi)) +
   scale_y_continuous(breaks = seq(-6, 2, .5),limits = c(-6, 2), name = "Average Treatment Effect (%)") +
   scale_x_discrete(limits = 
                      c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
-                       "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm")) +
-  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
-  ggtitle("Voted in 2016")
+                       "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm", "7:00pm")) +
+  #ggtitle("Voted in 2016") +
+  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") 
 ggsave(margfx, filename = "../Plots/margfx_2016_vote.pdf", height = 5, width = 7)
 
 marg2 <- marginfx(mn2, 500, 10000)
@@ -393,9 +393,9 @@ margfx2 <- ggplot(marg2, aes(hrs, ybar, ymin = lo, ymax = hi)) +
   scale_y_continuous(breaks = seq(-6, 2, .5),limits = c(-6, 2), name = "Average Treatment Effect (%)") +
   scale_x_discrete(limits = 
                      c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
-                       "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm")) +
-  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...")+
-  ggtitle("Voted early in 2016")
+                       "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm", "7:00pm")) +
+  #ggtitle("Voted early in 2016") +
+  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...")
 ggsave(margfx2, filename = "../Plots/margfx_2016_vote_early.pdf", height = 5, width = 7)
 
 marg3 <- marginfx(mn3, 500, 10000)
@@ -407,9 +407,9 @@ margfx3 <- ggplot(marg3, aes(hrs, ybar, ymin = lo, ymax = hi)) +
   scale_y_continuous(breaks = seq(-6, 2, .5),limits = c(-6, 2), name = "Average Treatment Effect (%)") +
   scale_x_discrete(limits = 
                      c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
-                       "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm")) +
-  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...")+
-  ggtitle("Voted absentee in 2016")
+                       "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm", "7:00pm")) +
+  #ggtitle("Voted absentee in 2016") +
+  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...")
 ggsave(margfx3, filename = "../Plots/margfx_2016_vote_abesentee.pdf", height = 5, width = 7)
 
 marg4 <- marginfx(mn4, 500, 10000)
@@ -421,9 +421,9 @@ margfx4 <- ggplot(marg4, aes(hrs, ybar, ymin = lo, ymax = hi)) +
   scale_y_continuous(breaks = seq(-6, 2, .5),limits = c(-6, 2), name = "Average Treatment Effect (%)") +
   scale_x_discrete(limits = 
                      c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
-                       "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm")) +
-  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...")+
-  ggtitle("Voted in 2014")
+                       "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm", "7:00pm")) +
+  #ggtitle("Voted in 2014") +
+  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...")
 ggsave(margfx4, filename = "../Plots/margfx_2014_vote.pdf", height = 5, width = 7)
 
 
@@ -433,7 +433,7 @@ t <- stargazer(mn1, mn2, mn3, mn4,
                label = "tab:reg",
                dep.var.labels =  c("Voted in 2016", "Voted early in 2016", "Voted absentee in 2016", "Voted in 2014"),               
                omit.stat=c("LL","ser","f"),
-               type = "text",
+               type = "latex",
                order = c(1:12, 27:37, 13:26),
                notes = "",
                single.row=TRUE,
@@ -497,9 +497,7 @@ newdata <-  data.frame(
 )
 
 p2over <- predict(mn1, newdata = newdata, type = "link", se = TRUE)
-
 p2under <- predict(mn1, newdata = mutate(newdata, over = FALSE), type = "link", se = TRUE)
-
 
 plt3over <- data.frame(hr =newdata$hr,
                        pct = plogis(p2over$fit),
