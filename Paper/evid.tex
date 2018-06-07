@@ -803,8 +803,7 @@ the eight day long, 2012 early voting period.\footnote{This ignores
 %[1] 78
 
 \begin{figure}[!ht]
-  \caption{Number of locations where early votes were cast, 2012
-    General Election}
+  \caption{Number of locations where early votes were cast, 2012 General Election}
   \label{fig:nrlocs2012}
   \centering
     \centering\includegraphics[scale = 0.8]{number_of_Locations.pdf}
@@ -830,8 +829,7 @@ early voting, over 30 locations were still open at 9:00pm, and a few
 locations continued processing voters through midnight.
 
 \begin{figure}[!ht]
-\caption{Distribution of check-in times among early voters by hour, 2012
-  General Election}
+\caption{Distribution of check-in times among early voters by hour, 2012 General Election}
   \label{fig:hist2012}
   \centering
     \centering\includegraphics[scale = 0.8]{histogram_by_hour.pdf}
@@ -1163,7 +1161,7 @@ voted at a polling location on a day where the last voter checked-in
 past 7:30pm.  These are voters who cast ballots at locations where we
 know the line at the end of the day was at least 30 minutes long.  We
 call this variable \emph{Over}.  Conditioning on race/ethnicity,
-partisanship, gender, age, and previous voting record (whether the
+partisanship, gender, age, log median income at the zip-code level,  and previous voting record (whether the
 voter voted in the 2008 General Election), we use a logistic
 regression to estimate the effect of voting at a polling location that
 is congested in 2012---one that goes ``over'' 7:30pm---on the
@@ -1211,8 +1209,8 @@ Our objective is not to explore the relationship between demographic
 covariates and turnout in Florida in 2016.  Rather, we want to know
 about the marginal effects of waiting in line, and to this end Figure
 \ref{fig:prvoting2016} displays graphically the probability of voting
-in 2016 of a 50-year old black male who is a registered Democrat and
-voted in 2008.
+in 2016 of a 50-60 year old black male who is a registered Democrat, who voted in 2008, and 
+is living in a zip-code with the median income.
 
 Figure \ref{fig:prvoting2016} estimates are conditioned on each hour
 of the early voting day in 2012. Its black points are the estimated
@@ -1250,22 +1248,30 @@ no more than roughly a percentage point difference.
 
 Voting probability plots for other demographic groups are similar, and
 rather than showing these we generalize effect sizes to our complete
-sample.  Table \ref{tab:ate} reports estimates, along with 95\%
+sample.  Figure \ref{fig:margfx2016} displays estimates, along with 95\%
 confidence intervals, of the change in probability of voting in 2016
 based on time of early vote in 2012.\footnote{We generated the results
-  in Table \ref{tab:ate} with a simulation.  Our simulation (500
+  in Figure \ref{fig:margfx2016} with a simulation.  Our simulation (500
   repetitions) drew from a multivariate normal distribution where the
   mean vector consists of values of the coefficient vector
   corresponding to the left-hand column in Table \ref{tab:reg}.  The
   covariance matrix for the multivariate normal is the estimated
   covariance matrix from our logistic regression.}  The numbers in
-Table \ref{tab:ate} can be thought of as average treatment effects
+Figure \ref{fig:margfx2016} can be thought of as average treatment effects
 where the treatment on individuals in our sample is being forced to
 wait in a line in 2012.
 
-\input{table_out_ate.tex}
+%\input{table_out_ate.tex}
 
-The estimates in Table \ref{tab:ate} are all negative, indicating that
+\begin{figure}[!ht]
+\caption{The effect of waiting in line to vote in 2012 on voting in 2016}
+  \label{fig:margfx2016}
+  \centering
+    \centering\includegraphics[scale = 0.8]{margfx_2016_vote.pdf}
+\end{figure}
+
+
+The estimates in Figure \ref{fig:margfx2016} are all negative, indicating that
 waiting in line in 2012 led to decreased turnout probabilities in
 2016.  The magnitude of the estimates range from very small (e.g., a
 0.03 percentage point difference in turnout probabilities associated
@@ -1337,38 +1343,44 @@ Now restricting attention to 2016 voters only, we consider a second
 logistic regression that analyzes whether these individuals voted
 early in 2016---or, in contrast, voted in another fashion.
 Corresponding regression results are in the right column of Table
-\ref{tab:reg}, and Figure \ref{fig:prvotingearly2016} contains a plot
+\ref{tab:reg}, and Figure \ref{fig:atevotingearly2016} contains a plot
 of early voting probabilities that is structured similarly as our
 earlier probability plot.
 
 \begin{figure}[!ht]
-\caption{Probability of voting early in 2016, given 2012 check-in time
-and conditional on voting in 2016}
-  \label{fig:prvotingearly2016}
-  \centering
-    \centering\includegraphics[scale = 0.8]{probability_of_voting_in_2016_over_under_early.pdf}
+\caption{The effect of waiting in line to vote in 2012 on voting early in 2016 and voting 2014}
+\begin{subfigure}{.5\textwidth}
+    \centering\includegraphics[width = \linewidth]{margfx_2016_vote_early.pdf}
+    \caption{Voting early in 2016}
+     \label{fig:atevotingearly2016}
+ \end{subfigure}
+ \begin{subfigure}{.5\textwidth}
+ \centering\includegraphics[width = \linewidth]{margfx_2014_vote.pdf}
+ \caption{Voting in 2014}
+  \label{fig:prvoting2014}
+\end{subfigure}
 \end{figure}
 
-Figure \ref{fig:prvotingearly2016} shows that the 2016 voters whom we
-identify as having waiting in an early voting line in 2012 were less
+Figure \ref{fig:atevotingearly2016} shows that the 2016 voters whom we
+identify as having waited in an early voting line in 2012 were less
 like to vote early in 2016, \emph{ceteris paribus}.  This is intuitive
 (voters responded to high costs of early voting but choosing an
 alternative way to vote) and highlights a downstream consequence of
 voting lines.  The percentage point gaps (black dot to grey dot) are
 around one to two points, which is small albeit not negligible.  Early
 voting, after all, was designed as a convenience, and Figure
-\ref{fig:prvotingearly2016} suggests that the value of this
+\ref{fig:atevotingearly2016} suggests that the value of this
 convenience can be lost in the shadow of a previous bad experience.
 
 There is a U-shape to the points in Figure
-\ref{fig:prvotingearly2016}, and we can only speculate as to what is
+\ref{fig:atevotingearly2016}, and we can only speculate as to what is
 responsible for this.  We know from the number of post-7:00pm closing
 times that, in 2012, early voting locations were congested in the
 evening.  We suspect that morning early voting hours also suffered
 from congestion albeit from a different source, when individuals
 stopped by to vote, say, before going to work.  If lines discourage
 future early voting, this pattern would yield a U-shape as in Figure
-\ref{fig:prvotingearly2016}.  It is also interesting to note that
+\ref{fig:atevotingearly2016}.  It is also interesting to note that
 early voters in 2012 who voted at locations that closed before 7:30pm
 also have a U-shape in their early voting probabilities.  We suspect
 this is because these locations probably suffered from morning and
@@ -1381,7 +1393,7 @@ evening lines, albeit not very long ones.\footnote{This discussion
   relationship between work opportunities and one's willingness to
   wait in line is worth considering in future research.}
 
-A full analysis of Figure \ref{fig:prvotingearly2016} is beyond our
+A full analysis of Figure \ref{fig:atevotingearly2016} is beyond our
 scope.  But, what is most important about the figure is that it 
 highlights how voting experiences can affect forms of future political
 participation.  Wanting to voting early, but not doing so on account
@@ -1519,7 +1531,7 @@ and the extent to which voters are treated in a like manner.
 \appendix
 \section*{Appendix}
 
-\input{../plots/table_out_combined.tex}
+\input{../plots/table_out.tex}
 
 \end{document}
 

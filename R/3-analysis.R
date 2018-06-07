@@ -481,6 +481,56 @@ t <- stargazer(mn1, mn2, mn3, mn4,
 cat(t, file = "../plots/table_out.tex", sep = "\n")
 
 
+
+newdata <-  data.frame(
+  hr = factor(levels(vte$hr), levels(vte$hr)),
+  location = c("Bloomingdale Regional Public Library"),
+  day = "SAT 10/27",
+  gender = "M",
+  race = "Black",
+  age = mean(vte$age, na.rm = T),
+  agegroup = "[50,60)",
+  party = "DEM",
+  voted_08 = 0,
+  logincome = median(vte$logincome, na.rm = T),
+  over = TRUE
+)
+
+p2over <- predict(mn1, newdata = newdata, type = "link", se = TRUE)
+
+p2under <- predict(mn1, newdata = mutate(newdata, over = FALSE), type = "link", se = TRUE)
+
+
+plt3over <- data.frame(hr =newdata$hr,
+                       pct = plogis(p2over$fit),
+                       low = plogis(p2over$fit - qnorm(.975)*p2over$se.fit),
+                       high = plogis(p2over$fit + qnorm(.975)*p2over$se.fit),
+                       var = "last voter checked-in after 7:30pm", stringsAsFactors = F)
+
+plt3under <- data.frame(hr =newdata$hr,
+                        pct = plogis(p2under$fit),
+                        low = plogis(p2under$fit - qnorm(.975)*p2under$se.fit),
+                        high = plogis(p2under$fit + qnorm(.975)*p2under$se.fit),
+                        var = "last voter checked-in before 7:30pm", stringsAsFactors = F)
+
+plt3overunder <- bind_rows(plt3over, plt3under)
+
+
+plot2save <- ggplot(plt3overunder, aes(hr, pct, ymin = low, ymax = high, colour = var)) +
+  geom_point(position = position_nudge(.5)) + geom_errorbar(width = 0,position = position_nudge(.5))  + theme_bw() +  xlab("") +
+  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
+  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
+  scale_y_continuous(breaks = seq(0, 1, .02), labels = seq(0, 100, 2),limits = c(.75, .9), name = "Predicted probability of voting\n") +
+  scale_x_discrete(limits = c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
+                              "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm", "7:00pm"), name = "") +
+  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...") +
+  ggtitle("") +
+  theme(legend.position = c(.3,.2))
+ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under.pdf", height = 5, width = 7)
+
+
+
+
 #############################
 #  OLD CODE
 #############################
