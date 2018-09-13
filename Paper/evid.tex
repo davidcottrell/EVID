@@ -179,9 +179,10 @@ develop outside a polling station reflect administrative decisions
 about resource allocation as well as the extent of voter turnout
 \citep{herronsmith:hanoverstudy}.  If lines adversely affect some
 voters more than others, then the cost of voting will vary across
-voters.  Thus, if we seek to know whether a given election featured
-equal treatment of voters, we must assess the extent to which the
-voter groups who participated in it were subjected to long lines.
+voters.  Thus, any assessment of the extent to which a given election
+featured equal treatment of voters must include an analysis of voting
+lines and whether certain groups of individuals waited in line longer
+than others.
 
 Voting lines are potential issues wherever voters cast their ballots
 \emph{in-person}, as opposed to voting remotely via mail.  The vast
@@ -191,7 +192,13 @@ elections do so in-person, either on an Election Day itself or during
 a corresponding early voting period whose duration depends on relevant
 local laws.\footnote{For the composition of the 2012 and 2016
   electorates, see \citet{eac:2012} and \citet{eac:2016},
-  respectively.}
+  respectively.}  As of this writing of this paper, there only three
+states---Colorado, Oregon, and Washington---in which almost every
+ballot is cast via mail.\footnote{See ``EAVS DEEP DIVE: EARLY,
+  ABSENTEE AND MAIL VOTING,'' United States Election Assistance
+  Commission, October 17, 2017, available at
+  \url{https://www.eac.gov/documents/2017/10/17/eavs-deep-dive-early-absentee-and-mail-voting-data-statutory-overview}
+  (last accessed September 13, 2018).}
 
 %  In-person voting experiences have a number of
 % features that are distinct from the experiences of those who vote by
@@ -224,7 +231,11 @@ electoral effects, as characterized by
 \citet{pettigrew:longlinesminorityprecincts}. When an individual is
 compelled to pay a relatively high tax in order to participate in a
 social or political activity, a natural response might be to avoid the
-activity, or substitute for it, in the future.  Given the relatively
+activity, or substitute for it, in the future.  If voting lines
+operate in this fashion, then they will effectively depress voter
+turnout.  And if lines affect some voter groups more than others, then
+their associated depressive effect on turnout will not burden all
+voters equally.  Unequal burdens notwithstanding, given the relatively
 low rate of voter participation in American presidential
 elections---approximately 58 percent in 2012 and 60 percent in
 2016---any aspect of the voting experience that might have a
@@ -301,7 +312,6 @@ registration, and electoral participation, pieces of information
 publicly available in Florida's statewide voter file.  Our use of
 early voting check-in times complements the literature's reliance on
 survey results.
- 
 
 % Still, in the interests
 % of being transparent about limitations in our research design, a
@@ -353,11 +363,11 @@ congestion at the polls and equal treatment of voters.
 
 \section*{Voting lines and equal treatment in American elections}
 
-Voting is a fundamental right. As the United States Supreme Court
-ruled in \emph{Reynolds v.\ Sims} (1964), ``[T]he right of suffrage
-can be denied by a debasement or dilution of the weight of a citizen's
-vote just as effectively as by wholly prohibiting the free exercise of
-the franchise.''\footnote{See
+Voting is a fundamental right in the United States. As the United
+States Supreme Court ruled in \emph{Reynolds v.\ Sims} (1964), ``[T]he
+right of suffrage can be denied by a debasement or dilution of the
+weight of a citizen's vote just as effectively as by wholly
+prohibiting the free exercise of the franchise.''\footnote{See
   \url{https://supreme.justia.com/cases/federal/us/377/533/case.html}
   (last accessed December 12, 2017) for the text of the decision.}  In
 assessing the costs that may debase or dilute voting, the high court
@@ -423,7 +433,7 @@ opportunity to vote'' \citep[p.\ 13,][]{pcea:2014}.\footnote{The
   \url{https://obamawhitehouse.archives.gov/the-press-office/2013/03/28/executive-order-establishment-presidential-commission-election-administr}
   (last accessed July 12, 2017).}
 
-\subsection*{Studying voting lines with surveys}
+\subsection*{Survey-based research on voting lines}
 
 These anecdotes above are striking and raise questions about voting
 lines in general---in particular, how long and which voters have to
@@ -579,8 +589,8 @@ and to setting early voting days and hours---is largely controlled at
 the county level within a framework established by the Florida state
 legislature. Our early voting check-in times are thus gleaned from
 Florida counties.\footnote{We made public records requests to
-  individual Florida county Supervisors of Elections, and the data use
-  in this paper is based on these requests.  Most counties that we
+  individual Florida county Supervisors of Elections, and the data we
+  use in this paper is based on these requests.  Most counties that we
   contacted were not able to provide us with early voter check-in
   times.}
 
@@ -602,9 +612,9 @@ known as Electronic Voter iDentification machines, or EViDs for short.
 Although there is variance across Florida counties in electronic
 pollbook implementation, for simplicity we refer to all electronic
 pollbooks as EViD machines.\footnote{For example, Sarasota County uses
-  a different electronic voting system for its early voters (phone
-  call with Cathy Fowler, office of the Sarasota Supervisor of
-  Elections, on March 31, 2017).}
+  a different electronic voting system for its early voters (source
+  for this is a phone call with Cathy Fowler, office of the Sarasota
+  Supervisor of Elections, on March 31, 2017).}
 
 %% Cathy Fowler:  cfowler@sarasotavotes.com
 
@@ -942,7 +952,6 @@ and then after 7:00pm.  Simply put, the pool becomes rapidly non-white
 starting around 7:00pm; by the 8:00pm-9:00pm window, the pool is less
 than 25 percent white.
 
-
 The party registration of the early voting pool varies slightly with
 time although not nearly as starkly as its racial/ethnic composition.
 This is illustrated in Figure \ref{fig:party2012}, which describes by
@@ -1074,10 +1083,6 @@ they did in 2012 (approximately 117,771).
 %> 1687217/14
 %[1] 120515.5
 
-
-%% Make a plot using all early voters in all sites, but this is
-%% post-midwest!  XXX  (MCH: I am not sure what this comment means)
-
 \subsection*{Effects of waiting to vote}
 
 We now consider the effects on future electoral political
@@ -1169,17 +1174,17 @@ voted at a polling location on a day where the last voter checked-in
 past 7:30pm.  These are voters who cast ballots at locations where we
 know the line at the end of the day was at least 30 minutes long.  We
 call this variable \emph{Over}.  Conditioning on race/ethnicity,
-partisanship, gender, age, log median income at the zip-code level,  and previous voting record (whether the
-voter voted in the 2008 General Election), we use a logistic
-regression to estimate the effect of voting at a polling location that
-is congested in 2012---one that goes ``over'' 7:30pm---on the
-probability of voting in 2016:
+partisanship, gender, age, log median income at the zip-code level,
+and previous voting record (whether the voter voted in the 2008
+General Election), we use a logistic regression to estimate the effect
+of voting at a polling location that is congested in 2012---one that
+goes ``over'' 7:30pm---on the probability of voting in 2016:
 \begin{equation*}
   \begin{aligned}
     \textup{Pr}\left(\mathrm{Voted16}_{i} = yes\right) =  \textup{logit}^{-1}&(\beta + \alpha_{Over} + \gamma_{Hour} +
     \sigma_{Over \times Hour} + \upsilon_{Gender}  + \\& \rho_{Race/Ethnicity} +
       \tau_{Age Group} + \psi_{Party} + \pi_{Voted\emph{08}})
-  \end{aligned}
+  \end{aligned}  % XXX add zip code income variable to the above model
 \end{equation*}
 %
 In the above model, $i$ denotes our collection of 2012 early voters
@@ -1198,7 +1203,7 @@ appear in Table \ref{tab:reg} in the appendix.\footnote{Our regression
   addition, we restrict attention to individuals who are registered
   either Democrat, Republican, or Independent, or have recorded no
   party affiliation.  Finally, we drop registered voters who have no
-  recorded gender, race, or birthdate.}
+  recorded gender, race, or birthdate.}  % XXX add income to the above paragraph
 
 Per the left column of Table \ref{tab:reg}, having voted in 2008 in
 Florida is positively associated with subsequent voting in 2016, and
@@ -1207,22 +1212,22 @@ being older is associated with greater turnout, \emph{ceteris
 underestimated; the regression model excludes the youngest voters in
 2016, who could not legally register to vote in Florida in 2008, and
 younger registered voters are, \emph{ceteris paribus}, less likely to
-turnout \citep{shinosmith:registrationtiming}.  Table \ref{tab:reg}
-also shows that, \emph{ceteris paribus}, men vote less often than
-women and that whites vote often than non-whites.  This gender finding
-is consistent with \citet{leighleynagler:whovotesnow} although the
-race result is not.
+turn out to vote \citep{shinosmith:registrationtiming}.  Table
+\ref{tab:reg} also shows that, \emph{ceteris paribus}, registered men
+vote less frequently than women and that registered whites vote often
+than non-whites.  This gender finding is consistent with
+\citet{leighleynagler:whovotesnow} although the race result is not.
 
 Our objective is not to explore the relationship between demographic
-covariates and turnout in Florida in 2016.  Rather, we want to know
-about the marginal effects of waiting in line, and to this end Figure
-\ref{fig:prvoting2016} displays graphically the probability of voting
-in 2016 of a black male between the ages of 50-60 who is a registered
-Democrat, voted in 2008, and is living in a zip-code with the median
-income.
+covariates and voter turnout in Florida in 2016.  Rather, we want to
+know about the marginal effect of waiting in line on future turnout,
+and to this end Figure \ref{fig:prvoting2016} displays graphically the
+probability of voting in 2016 of a black male between the ages of
+50-60 who is a registered Democrat, voted in 2008, and lives in a
+zip-code with median income.  % XXX what type of income?
 
 Figure \ref{fig:prvoting2016} estimates are conditioned on each hour
-of the early voting day in 2012. Its black points are the estimated
+of the early voting day in 2012. Its black points represent estimated
 probabilities of voting in 2016 conditional on voting at a polling
 location that closed \emph{before} 7:30pm; based on our discussion
 above, these estimates reflect individuals who likely did not wait in
@@ -1244,31 +1249,32 @@ closer to 7:00pm.
 
 One can see that, beginning at around 2:00pm, there is a small albeit
 negative difference between individuals who voted in congested polling
-places compared to those in non-congested polling places.  This might
-suggest that the lines started in the early afternoon and why a
-difference is induced so early.  Hence, the reason there is no
-difference between congested and non-congested polling places earlier
-in the day is plausibly because long lines have yet to form. As
-congested polling places become congested in the afternoon, we begin
-to see a small but significant effect on future participation, an
-effect which suggests that voting lines slightly dampen future
-electoral participation.  However, the effect is small, amounting to
-no more than roughly a percentage point difference.
+places compared to those who cast their ballots in non-congested
+places.  This suggests that voting lines may have started in the early
+afternoon, and the reason there is no difference between congested and
+non-congested polling places earlier in the day may be because long
+lines had yet to form then. As congested polling places become
+congested in the afternoon, we begin to see a small but statistically
+significant effect on future political participation, an effect which
+suggests that voting lines slightly dampen future electoral
+participation.  The effect is small, amounting to no more than roughly
+a percentage point difference.
 
-Voting probability plots for other demographic groups are similar, and
-rather than showing these we generalize effect sizes to our complete
-sample.  Figure \ref{fig:margfx2016} displays estimates, along with 95\%
-confidence intervals, of the change in probability of voting in 2016
-based on time of early vote in 2012.\footnote{We generated the results
-  in Figure \ref{fig:margfx2016} with a simulation.  Our simulation (500
-  repetitions) drew from a multivariate normal distribution where the
-  mean vector consists of values of the coefficient vector
-  corresponding to the left-hand column in Table \ref{tab:reg}.  The
-  covariance matrix for the multivariate normal is the estimated
-  covariance matrix from our logistic regression.}  The numbers in
-Figure \ref{fig:margfx2016} can be thought of as average treatment effects
-where the treatment on individuals in our sample is being forced to
-wait in a line in 2012.
+Voting probability plots for other demographic groups are similar to
+the plot in Figure \ref{fig:prvoting2016}, and rather than showing
+many such plots we generalize the marginal effect of waiting in line
+on voting to our complete sample.  Across our sample, Figure
+\ref{fig:margfx2016} displays estimates, along with 95\% confidence
+intervals, of the change in probability of voting in 2016 based on
+time of early vote in 2012.  We generated the results in the Figure
+\ref{fig:margfx2016} with a simulation.  Our simulation (500
+repetitions) drew from a multivariate normal distribution where the
+mean vector consists of values of the coefficient vector corresponding
+to the left-hand column in Table \ref{tab:reg}.  The covariance matrix
+for the multivariate normal is the estimated covariance matrix from
+our logistic regression.  The numbers in Figure \ref{fig:margfx2016}
+can be thought of as average treatment effects where the treatment on
+individuals in our sample is being forced to wait in a line in 2012.
 
 %\input{table_out_ate.tex}
 
@@ -1280,12 +1286,12 @@ wait in a line in 2012.
 \end{figure}
 
 
-The estimates in Figure \ref{fig:margfx2016} are all negative, indicating that
-waiting in line in 2012 led to decreased turnout probabilities in
-2016.  The magnitude of the estimates range from very small (e.g., a
-0.03 percentage point difference in turnout probabilities associated
-with waiting to vote at 7:00am) to slightly over one percentage point
-later in the day.
+The estimates in Figure \ref{fig:margfx2016} are all negative,
+indicating that waiting in line in 2012 led to decreased turnout
+probabilities in 2016.  The magnitude of the estimates range from very
+small (e.g., a 0.03 percentage point difference in turnout
+probabilities associated with waiting to vote at 7:00am) to slightly
+over one percentage point later in the day.
 
 Overall, our findings on the effects of lines---they depress future
 turnout, albeit barely---are similar to the conclusions in
