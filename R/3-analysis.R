@@ -99,8 +99,8 @@ evid %>% group_by(year) %>% count
 ## Make evid count summary table for our six counties
 
 table2use <- 
-    rbind(table(select(evid %>% filter(year == 2012), county)),
-          table(select(evid %>% filter(year == 2016), county))
+    rbind(table(dplyr::select(evid %>% filter(year == 2012), county)),
+          table(dplyr::select(evid %>% filter(year == 2016), county))
           )
 colnames(table2use)[match("ALA", colnames(table2use))] <- "Alachua"
 colnames(table2use)[match("BRO", colnames(table2use))] <- "Broward"

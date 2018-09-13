@@ -24,7 +24,7 @@ nms_h <- c("CountyCode", "VoterID", "ElectionDate", "ElectionType", "HistoryCode
 history <- read_delim("../Data/Parsed/voterfile-history-jan-2016.txt", delim = "\t", col_names = nms_h, col_types = cols("c", "c", "c", "c", "c"), quote = "") # read 2016 history
 history <- history %>% separate(ElectionDate, sep = "-", into = c("y", "m", "d")) %>% unite_("ElectionDate", c("m", "d", "y"), sep = "/")
 names(history) <- tolower(nms_h)
-copy_to( my_db, history, "history", temporary = FALSE, indexes = list("voterid"))                 # create table
+copy_to( my_db, history, "history", overwrite = TRUE, temporary = FALSE, indexes = list("voterid"))                 # create table
 
 
 #files  <- list.files("../Data/Parsed/VoterFile-Dec-2014/VoterHistory",full.names =  T) #Palm Beach is missing voters in 2014
@@ -54,25 +54,25 @@ history <- history %>% filter(electiontype == "GEN", historycode != "B", history
 history08 <- history %>% filter(electiondate == "11/04/2008") %>% select(voterid, historycode) %>% collect(Inf)
 history08 <- history08 %>% dedup()
 history08 <- history08 %>% rename(gen08 = historycode)
-copy_to(my_db, history08, "history08", temporary = FALSE, indexes = list("voterid"))  
+copy_to(my_db, history08, "history08", overwrite = TRUE, temporary = FALSE, indexes = list("voterid"))  
 rm(history08)
 
 history12 <- history %>% filter(electiondate == "11/06/2012") %>% select(voterid, historycode) %>% collect(Inf)
 history12 <- history12 %>% dedup()
 history12 <- history12 %>% rename(gen12 = historycode)
-copy_to( my_db, history12, "history12", temporary = FALSE, indexes = list("voterid"))
+copy_to( my_db, history12, "history12",overwrite = TRUE, temporary = FALSE, indexes = list("voterid"))
 rm(history12)
 
 history14 <- history %>% filter(electiondate == "11/04/2014") %>% select(voterid, historycode) %>% collect(Inf)
 history14 <- history14 %>% dedup()
 history14 <- history14 %>% rename(gen14 = historycode)
-copy_to( my_db, history14, "history14", temporary = FALSE, indexes = list("voterid"))
+copy_to( my_db, history14, "history14", overwrite = TRUE, temporary = FALSE, indexes = list("voterid"))
 rm(history14)
 
 history16 <- history %>% filter(electiondate == "11/08/2016") %>% select(voterid, historycode) %>% collect(Inf)
 history16 <- history16 %>% dedup()
 history16 <- history16 %>% rename(gen16 = historycode)
-copy_to( my_db, history16, "history16", temporary = FALSE, indexes = list("voterid"))
+copy_to( my_db, history16, "history16",overwrite = TRUE,  temporary = FALSE, indexes = list("voterid"))
 rm(history16)
 
 
@@ -89,6 +89,6 @@ extract <- extract %>%
   select(VoterID, NameFirst, NameMiddle, NameLast,CountyCode, Gender, Race, BirthDate, RegistrationDate, PartyAffiliation, VoterStatus, ResidenceZipcode, Precinct, PrecinctSplit) %>%
   mutate(ResidenceZipcode = str_sub(ResidenceZipcode,1,5))
 names(extract) <- tolower(names(extract))
-copy_to( my_db, extract, "extract", temporary = FALSE, indexes = list("voterid"))   
+copy_to( my_db, extract, "extract", overwrite = TRUE, temporary = FALSE, indexes = list("voterid"))   
 
 
