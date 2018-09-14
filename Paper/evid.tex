@@ -1183,27 +1183,37 @@ goes ``over'' 7:30pm---on the probability of voting in 2016:
   \begin{aligned}
     \textup{Pr}\left(\mathrm{Voted16}_{i} = yes\right) =  \textup{logit}^{-1}&(\beta + \alpha_{Over} + \gamma_{Hour} +
     \sigma_{Over \times Hour} + \upsilon_{Gender}  + \\& \rho_{Race/Ethnicity} +
-      \tau_{Age Group} + \psi_{Party} + \pi_{Voted\emph{08}})
-  \end{aligned}  % XXX add zip code income variable to the above model
+      \tau_{Age Group} + \psi_{Party} + \theta_{Income} + \pi_{Voted\emph{08}})
+  \end{aligned}  
 \end{equation*}
 %
 In the above model, $i$ denotes our collection of 2012 early voters
-who appear in the history of Florida voting in 2008; $Hour$ indicates
-the hour of the day in 2012 at which each voter checked-in, between
-7:00am and 7:00pm; $Gender$ indicates whether the voter identifies as
-male or female; $Race/Ethnicity$ indicates if the voter
-self-identifies as white, black, Hispanic, or Asian; $AgeGroup$
+who appear in the history of Florida voting in 2008; $Over$ indicates
+XXX; $Hour$ indicates the hour of the day in 2012 at which each voter
+checked-in, between 7:00am and 7:00pm; $Gender$ indicates whether the
+voter identifies as male or female; $Race/Ethnicity$ indicates if the
+voter self-identifies as white, black, Hispanic, or Asian; $Age Group$
 classifies voters according to their 2016 age and bins them into
-10-year age groups (20-29, 30-39, 40-49, 50-59, 60-69, and 70+); and,
-$Voted08$ and $Voted16$ are indicators for participation in the 2008
-and 2016 General Elections.  All told we estimate our logistic
-regression based on 758,266 individuals, and coefficient estimates
-appear in Table \ref{tab:reg} in the appendix.\footnote{Our regression
-  is estimated only using individuals who voted before 7:00pm.  In
-  addition, we restrict attention to individuals who are registered
-  either Democrat, Republican, or Independent, or have recorded no
-  party affiliation.  Finally, we drop registered voters who have no
-  recorded gender, race, or birthdate.}  % XXX add income to the above paragraph
+10-year age groups (20-29, 30-39, 40-49, 50-59, 60-69, and 70+);
+$Party$ indicates XXX; $Income$ indicates XXX; and, $Voted08$ and
+$Voted16$ are indicators for participation in the 2008 and 2016
+General Elections.  
+
+The covariates that we list, above, are based on findings in the
+literature on turnout in American elections.  This literature is
+extensive, and among other things it considers how age
+\cite{strateetal:age,hightonwolfinger:lifecycle}, gender
+\cite{schlozman:genderdifferentvoice}, party
+\cite{martinezgill:partisanturnout,grofmanetal:turnout}, and race
+\cite{verbaetal:raceparticipation,fraga:raceturnout} are associated
+with individual-level turnout decisions.  All told we estimate our
+logistic regression based on 758,266 individuals, and coefficient
+estimates appear in Table \ref{tab:reg} in the appendix.\footnote{Our
+  regression is estimated only using individuals who voted before
+  7:00pm.  In addition, we restrict attention to individuals who are
+  registered either Democrat, Republican, or Independent, or have
+  recorded no party affiliation.  Finally, we drop registered voters
+  who have no recorded gender, race, or birthdate.}
 
 Per the left column of Table \ref{tab:reg}, having voted in 2008 in
 Florida is positively associated with subsequent voting in 2016, and
