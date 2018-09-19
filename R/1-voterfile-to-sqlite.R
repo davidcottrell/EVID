@@ -13,6 +13,9 @@ if (length(grep("herron", Sys.info()["user"]))) {
 }
 
 
+## If database exists, remove it to build from scratch
+if (file.exists("../Data/evid-db.sqlite3") == TRUE) file.remove("../Data/evid-db.sqlite3")
+
 # Create file.sqlite3 -----------------------------------------------
 
 my_db <- src_sqlite("../Data/evid-db.sqlite3", create = TRUE)              # create src
