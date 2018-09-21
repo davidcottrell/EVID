@@ -492,7 +492,7 @@ newdata <-  data.frame(
   agegroup = "[50,60)",
   party = "DEM",
   voted_08 = 0,
-  logincome = median(vte$logincome, na.rm = T),
+  logincome = mean(vte$logincome, na.rm = T),
   over = TRUE
 )
 
