@@ -215,9 +215,9 @@ if (rundist == "yes"){
 
 forplot <- evid12 %>%  distinct(hr, day, location) %>% count(hr, day) %>% complete(hr, day, fill = list(n = 0))
 
-plot2save <- ggplot(forplot, aes(hr, n, colour = day, group = day)) + geom_line(position = position_nudge(.5)) + theme_bw() + scale_colour_grey(start = 0.8, end = 0.2, name = "Day") +
+plot2save <- ggplot(forplot, aes(hr, n, colour = day, group = day)) + geom_line(position = position_nudge(.5)) + theme_bw() + scale_colour_grey(start = 0.8, end = 0.2, name = "Day") + 
   geom_vline(xintercept = 13, colour = "black", size = 1.25) + geom_point( position = position_nudge(.5)) + xlab("") + xlim(lim) +
-  scale_y_continuous(breaks = seq(0, 100, 5), name = "") +
+  scale_y_continuous(breaks = seq(0, 100, 5), name = "Count") +
   #ggtitle("Number of locations where votes are being cast") +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5),
         legend.text = element_text(size = 8),
@@ -281,7 +281,7 @@ lim <- c(levels(evid16$hr), "1:00am")
 forplot <- evid16 %>%  distinct(hr, day, location) %>% count(hr, day) %>% complete(hr, day, fill = list(n = 0))
 plot2save <-  ggplot(forplot, aes(hr, n, colour = day, group = day)) + geom_line(position = position_nudge(.5)) + theme_bw() + scale_colour_grey(start = 0.8, end = 0.2, name = "Day") +
   geom_vline(xintercept = 13, colour ="black", size = 1.25) + geom_point( position = position_nudge(.5)) + xlab("")  +
-  scale_y_continuous(breaks = seq(0, 125, 5), name = "") +
+  scale_y_continuous(breaks = seq(0, 125, 5), name = "Count") +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5),
         legend.text = element_text(size = 8),
         legend.key.height = unit(.8,"line"))
