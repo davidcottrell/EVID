@@ -1225,7 +1225,7 @@ voted at a polling location on a day where the last voter checked-in
 past 7:30pm.  These are voters who cast ballots at locations where we
 know the line at the end of the day was at least 30 minutes long.  We
 call this variable \emph{Over}.  Conditioning on race/ethnicity,
-partisanship, gender, age, log median income XXX at the zip-code level,
+partisanship, gender, age, log median household income at the zip-code level,
 and previous voting record (whether the voter voted in the 2008
 General Election), we use a logistic regression to estimate the effect
 of voting at a polling location that is congested in 2012---one that
@@ -1248,10 +1248,10 @@ white, black, Hispanic, or Asian; $Age Group$ classifies voters
 according to their 2016 age and bins them into 10-year age groups
 (20-29, 30-39, 40-49, 50-59, 60-69, and 70+); $Party$ indicates party
 registration, either Democratic, Republican, No party affiliation, or
-none of the above; $Income$ indicates median XXX Family? income in a
-voter's zip code ; and, $Voted08$ and $Voted16$ are indicators for
+none of the above; $Income$ indicates median household income in a
+voter's zip code\footnote{U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates}; and, $Voted08$ and $Voted16$ are indicators for
 participation in the 2008 and 2016 General Elections.   % XXX David,
-                                % please review about categories
+                                % please review about categories ...Done
 
 The covariates in our regression are based on findings in the
 literature on turnout in American elections.  This literature is
@@ -1269,7 +1269,7 @@ estimates appear in Table \ref{tab:reg} in the appendix.\footnote{Our
   recorded no party affiliation.  Finally, we drop registered voters
   who have no recorded gender, race, or birthdate.}
 
-%XXX What is the source of our zip code data?  We need to cite it.
+%XXX What is the source of our zip code data?  We need to cite it. Done
 
 Per the left column of Table \ref{tab:reg}, having voted in 2008 in
 Florida is positively associated with subsequent voting in 2016, and
@@ -1292,7 +1292,7 @@ know about the marginal effect of waiting in line on future turnout,
 and to this end Figure \ref{fig:prvoting2016} displays graphically the
 probability of voting in 2016 of a black male between the ages of
 50-60 who is a registered Democrat, voted in 2008, and lives in a
-zip-code with median income.  % XXX what type of income?
+zip-code with the median household income.  % XXX what type of income?
 
 Figure \ref{fig:prvoting2016} estimates are conditioned on each hour
 of the early voting day in 2012. Its black points represent estimated
