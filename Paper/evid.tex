@@ -1138,8 +1138,13 @@ they did in 2012 (approximately 117,771).
 
 We now consider the effects on future electoral political
 participation of waiting in line to vote.  In particular, we focus
-here on the consequences of waiting in an early voting line in the
-2012 General Election on turnout in the 2016 General Election.
+first on the consequences of waiting in an early voting line in the
+2012 General Election on turnout in the 2016 General Election.  We
+then consider how waiting in line to vote early in 2012 affected early
+voting in 2016.  And finally we consider how waiting in 2012 was
+associated with turnout in 2014.
+
+\subsubsection*{Effects of 2012 lines on 2016 turnout}
 
 We have already noted that the individual-level EViD files we have
 include Florida voter identification numbers, and this enables us to
@@ -1249,9 +1254,9 @@ according to their 2016 age and bins them into 10-year age groups
 (20-29, 30-39, 40-49, 50-59, 60-69, and 70+); $Party$ indicates party
 registration, either Democratic, Republican, No party affiliation, or
 none of the above; $Income$ indicates median household income in a
-voter's zip code;\footnote{U.S. Census Bureau, 2010-2014 American Community Survey 5-Year Estimates} and, $Voted08$ and $Voted16$ are indicators for
-participation in the 2008 and 2016 General Elections.   % XXX David,
-                                % please review about categories ...Done
+voter's zip code;\footnote{U.S.\ Census Bureau, 2010-2014 American
+  Community Survey 5-Year Estimates} and, $Voted08$ and $Voted16$ are
+indicators for participation in the 2008 and 2016 General Elections.
 
 The covariates in our regression are based on findings in the
 literature on turnout in American elections.  This literature is
@@ -1269,22 +1274,20 @@ estimates appear in Table \ref{tab:reg} in the appendix.\footnote{Our
   recorded no party affiliation.  Finally, we drop registered voters
   who have no recorded gender, race, or birthdate.}
 
-%XXX What is the source of our zip code data?  We need to cite it. Done
-
-Per the left column of Table \ref{tab:reg}, having voted in 2008 in
-Florida is positively associated with subsequent voting in 2016, and
-being older is associated with greater turnout, \emph{ceteris
-  paribus}.  The latter is consistent with findings on turnout and age
-as discussed in \citet{costaetal:walkingthewalk}.  Our age estimates
-in Table \ref{tab:reg} are presumably underestimated; the regression
-model excludes the youngest voters in 2016, who could not legally
-register to vote in Florida in 2008, and younger registered voters
-are, \emph{ceteris paribus}, less likely to turn out to vote
-\citep{shinosmith:registrationtiming}.  Table \ref{tab:reg} also shows
-that, \emph{ceteris paribus}, registered men vote less frequently than
-women and that registered whites vote often than non-whites.  This
-gender finding is consistent with \citet{leighleynagler:whovotesnow}
-although the race result is not.
+Per the leftmost column (1) of Table \ref{tab:reg}, having voted in
+2008 in Florida is positively associated with subsequent voting in
+2016, and being older is associated with greater turnout,
+\emph{ceteris paribus}.  The latter is consistent with findings on
+turnout and age as discussed in \citet{costaetal:walkingthewalk}.  Our
+age estimates in Table \ref{tab:reg} are presumably underestimated;
+the regression model that generates them excludes the youngest voters
+in 2016, who could not legally register to vote in Florida in 2008,
+and younger registered voters are, \emph{ceteris paribus}, less likely
+to turn out to vote \citep{shinosmith:registrationtiming}.  Table
+\ref{tab:reg} also shows that, \emph{ceteris paribus}, registered men
+vote less frequently than women and that registered whites vote often
+than non-whites.  This gender finding is consistent with
+\citet{leighleynagler:whovotesnow} although the race result is not.
 
 Our objective is not to explore the relationship between demographic
 covariates and voter turnout in Florida in 2016.  Rather, we want to
@@ -1292,7 +1295,7 @@ know about the marginal effect of waiting in line on future turnout,
 and to this end Figure \ref{fig:prvoting2016} displays graphically the
 probability of voting in 2016 of a black male between the ages of
 50-60 who is a registered Democrat, voted in 2008, and lives in a
-zip-code with the average median household income.  % XXX what type of income?
+zip-code with the average median household income. 
 
 Figure \ref{fig:prvoting2016} estimates are conditioned on each hour
 of the early voting day in 2012. Its black points represent estimated
@@ -1338,11 +1341,12 @@ based on time of early vote in 2012.  We generated the results in the
 Figure \ref{fig:margfx2016} with a simulation.  Our simulation (500
 repetitions) drew from a multivariate normal distribution where the
 mean vector consists of values of the coefficient vector corresponding
-to the left-hand column in Table \ref{tab:reg}.  The covariance matrix
-for the multivariate normal is the estimated covariance matrix from
-our logistic regression.  The numbers in Figure \ref{fig:margfx2016}
-can be thought of as average treatment effects where the treatment on
-individuals in our sample is being forced to wait in a voting line in 2012.
+to the leftmost column (1) in Table \ref{tab:reg}.  The covariance
+matrix for the multivariate normal is the estimated covariance matrix
+from our logistic regression.  The numbers in Figure
+\ref{fig:margfx2016} can be thought of as average treatment effects
+where the treatment on individuals in our sample is being forced to
+wait in a voting line in 2012.
 
 %\input{table_out_ate.tex}
 
@@ -1355,9 +1359,9 @@ individuals in our sample is being forced to wait in a voting line in 2012.
 
 
 The point estimates in Figure \ref{fig:margfx2016} are all negative,
-indicating that waiting in line in 2012 led to decreased turnout
-probabilities in 2016.  The magnitude of the estimates range from very
-small (e.g., a 0.03 percentage point difference in turnout
+indicating that waiting in line in 2012 is associated with decreased
+turnout probabilities in 2016.  The magnitude of the estimates range
+from very small (e.g., a 0.03 percentage point difference in turnout
 probabilities associated with waiting to vote at 7:00am) to slightly
 over one percentage point later in the day.
 
@@ -1366,11 +1370,11 @@ turnout, albeit only barely---are similar to the conclusions in
 \citet{pettigrew:longlinesminorityprecincts}.  In particular,
 \citeauthor{pettigrew:longlinesminorityprecincts} argues that each
 hour an in-person voter spends waiting in line to vote is associated
-with a one percentage point drop in future turnout.  To the best of
-our knowledge, \citeauthor{pettigrew:longlinesminorityprecincts} is
-the first scholar to try to estimate the effect of waiting in line to
-vote on the later propensity to vote, and our results are
-qualitatively similar to his.
+with a one percentage point drop in the likelihood of future turnout.
+To the best of our knowledge,
+\citeauthor{pettigrew:longlinesminorityprecincts} is the first scholar
+to try to estimate the effect of waiting in line to vote on the later
+propensity to vote, and our results are qualitatively similar to his.
 
 Our regression results are based on individuals who were registered to
 vote in Florida in 2008, 2012, and 2016.  Among other things, this
@@ -1396,15 +1400,16 @@ excluding relatively younger voters in our regression model, we are
 making our results on the effect of waiting on future turnout
 conservative.
 
-Our regression analysis also selects against, say, recent movers and
-individuals who became felons between 2008 and 2016.  We do not know
-of any theoretical or empirical reasons to think that these types of
-individuals are systematically different in terms of sensitivity to
-voting lines.  However, conditioning our results on individuals who
-remained registered to vote in Florida across a span of eight years
-presumably means that we are conditioning our analysis on politically
-engaged individuals.  This will again make our results on the effect
-of voting lines on future turnout conservative.
+Our regression analysis also selects against recent movers into or out
+of and individuals who became felons, and thus lost the right to vote,
+between 2008 and 2016.  We do not know of any theoretical or empirical
+reasons to think that these types of individuals are systematically
+different in terms of sensitivity to voting lines.  However,
+conditioning our results on individuals who remained registered to
+vote in Florida across a span of eight years presumably means that we
+are conditioning our analysis on politically engaged individuals.
+This will again make our results on the effect of voting lines on
+future turnout conservative.
 
 % While there may be idiosyncrasies in the rates at which the above
 % types of individuals vote---e.g., young voters tend to have
@@ -1426,16 +1431,15 @@ of voting lines on future turnout conservative.
 % the willingness to live in Florida and thus to be listed in multiple
 % voter files.
 
-
-%% XXX MCH start here editing
+\subsubsection*{Effects of 2012 lines on 2016 early voting}
 
 Now restricting attention to 2016 voters only, we consider a second
 logistic regression that analyzes whether these individuals voted
 early in 2016---or, in contrast, voted in another fashion.
-Corresponding regression results are in the right column of Table
+Corresponding regression results are in the second (2) column of Table
 \ref{tab:reg}, and Figure \ref{fig:atevotingearly2016} contains a plot
-of early voting probabilities that is structured similarly as our
-earlier probability plot.
+of 2016 early voting probabilities that is structured similarly as our
+earlier turnout probability plot.
 
 \begin{figure}[!ht]
 \caption{The effect of waiting in line to vote in 2012 on voting early in 2016 and voting 2014}
@@ -1451,52 +1455,60 @@ earlier probability plot.
 \end{subfigure}
 \end{figure}
 
-Figure \ref{fig:atevotingearly2016} shows that the 2016 voters whom we
-identify as having waited in an early voting line in 2012 were less
-like to vote early in 2016, \emph{ceteris paribus}.  This is intuitive
-(voters responded to high costs of early voting but choosing an
-alternative way to vote) and highlights a downstream consequence of
-voting lines.  The percentage point gaps (black dot to grey dot) are
-around one to two points, which is small albeit not negligible.  Early
-voting, after all, was designed as a convenience, and Figure
-\ref{fig:atevotingearly2016} suggests that the value of this
-convenience can be lost in the shadow of a previous bad experience.
+Intuitively, and to the extent that time spent in line increase the
+cost of voting, we would expect that waiting in an early voting line
+in 2012 is associated with a decreased likelihood of voting early in
+2016.  Indeed, Figure \ref{fig:atevotingearly2016} shows that the 2016
+voters whom we identify as having waited in an early voting line in
+2012 were less like to vote early in 2016, \emph{ceteris paribus}.
+This result shows how some voters responded to high costs of early
+voting by choosing an alternative way to vote in a later election, and
+it highlights a downstream consequence of voting lines.  Still, Figure
+\ref{fig:atevotingearly2016}'s percentage point gaps (black dot to
+grey dot) are around one to two points, which is small albeit not
+negligible.  Early voting, after all, was designed as a convenience,
+and Figure \ref{fig:atevotingearly2016} suggests that the value of
+this convenience can be lost in the shadow of a previous bad
+experience.
 
 There is a U-shape to the points in Figure
 \ref{fig:atevotingearly2016}, and we can only speculate as to what is
 responsible for this.  We know from the number of post-7:00pm closing
 times that, in 2012, early voting locations were congested in the
 evening.  We suspect that morning early voting hours also suffered
-from congestion albeit from a different source, when individuals
-stopped by to vote, say, before going to work.  If lines discourage
-future early voting, this pattern would yield a U-shape as in Figure
-\ref{fig:atevotingearly2016}.  It is also interesting to note that
-early voters in 2012 who voted at locations that closed before 7:30pm
-also have a U-shape in their early voting probabilities.  We suspect
-this is because these locations probably suffered from morning and
-evening lines, albeit not very long ones.\footnote{This discussion
-  suggests that employed individuals may be disproportionately
-  sensitive to waiting in line to vote, which would be consistent with
-  the relationship between affluence and tolerance for waiting in a
-  supermarket line \citep[e.g.,][]{bennett:waitinginlinechars}.  There
-  is no employment data in the Florida statewide voter files, but a
-  relationship between work opportunities and one's willingness to
-  wait in line is worth considering in future research.}
+from congestion albeit from a different source, perhaps when
+individuals stopped by to vote, say, before going to work.  If lines
+discourage future early voting, this pattern would yield a U-shape as
+in Figure \ref{fig:atevotingearly2016}.  It is also interesting to
+note that early voters in 2012 who voted at locations that closed
+before 7:30pm also have a U-shape in their early voting probabilities.
+We suspect this is because these locations probably suffered from
+morning and evening lines, albeit not very long ones.\footnote{This
+  discussion suggests that employed individuals may be
+  disproportionately sensitive to waiting in line to vote, and this
+  would be consistent with the relationship between affluence and
+  tolerance for waiting in a supermarket line
+  \citep[e.g.,][]{bennett:waitinginlinechars}.  There is no employment
+  data in the Florida statewide voter files, but a relationship
+  between work opportunities and one's willingness to wait in line is
+  worth considering in future research.}
 
 A full analysis of Figure \ref{fig:atevotingearly2016} is beyond our
-scope.  But, what is most important about the figure is that it 
+scope.  However, what is most important about the figure is that it
 highlights how voting experiences can affect forms of future political
 participation.  Wanting to voting early, but not doing so on account
 of fear of lines, imposes a cost on voters, and future research on
 election administration needs to pay attention to the way that
 electoral experiences, both positive and negative, can accumulate over
-time and potentially affect future choices. 
+time and potentially affect future choices.
+
+\subsubsection*{Effects of 2012 lines on 2014 early voting}
+
+
 
 %in particular
 %if their Election Day polling place is relocated \cite{amos_etal2017}.
 
-
-% XXX What about 2014?
 
 \section*{Conclusion}
 
