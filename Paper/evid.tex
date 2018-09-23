@@ -179,7 +179,7 @@ is at risk.
 Here we consider how voting lines, an aspect of election
 administration, are related to equal treatment.  The lines that
 develop outside a polling station reflect administrative decisions
-about resource allocation as well as the extent of voter turnout
+about resource allocation as well as the magnitude of voter turnout
 \citep{herronsmith:hanoverstudy}.  If lines adversely affect some
 voters more than others, then the cost of voting will vary across
 voters.  Thus, any assessment of the extent to which a given election
@@ -279,10 +279,10 @@ concentrated on certain voters group, which most would argue violate
 equal treatment regardless of whether there are downstream
 consequences of waiting to vote. With this in mind, our empirical
 analysis of voting lines during early in-person voting in Florida is
-divided into two sections. First, we assess which voters are more
-likely to wait in line. Second, we consider whether individuals who
-wait excessively to vote are less likely to vote in a subsequent
-election.
+divided into two sections. First, we assess the types of voters who
+experience voting lines prior to casting their ballots. Second, we
+consider whether individuals who wait excessively to vote are less
+likely to vote in a subsequent election.
 
 % One of the difficulties in studying voting lines in the United States
 % is data availability: it is not easy to determine precisely how long
@@ -310,8 +310,8 @@ counties that recorded check-ins from early voting sites in the 2012
 and 2016 General Elections.  The hundreds of thousands of check-in
 times which form the basis of our results are not subject to potential
 biases arising in self-reports of time spent in line.  Moreover, we
-can associate a voter's check-in time with her race/ethnicity, party
-registration, and history of electoral participation, pieces of
+can associate a voter's check-in time with his or her race/ethnicity,
+party registration, and history of electoral participation, pieces of
 information publicly available in Florida's statewide voter file.  Our
 use of early voting check-in times complements the literature's heavy
 use of survey results.
@@ -672,8 +672,9 @@ Florida in the 2012 and 2016 General Elections,
 respectively.\footnote{The numbers in Table \ref{tab:evidcounts} do
   not include 115 EViD check-in times (28 from 2012 and 87 from 2016)
   that are listed as midnight.  We are suspicious that these times are
-  not accurate and hence drop them.  Given the total number of EViD
-  votes cast, dropping 115 cases is negligible.\label{fn:midnight}}
+  not accurate and hence drop them.  Given the thousands of EViD
+  check-ins that we analyze here, dropping 115 cases is
+  negligible.\label{fn:midnight}}
 
 % > 942166 / 2409097 * 100
 % [1] 39.10868
@@ -685,12 +686,13 @@ respectively.\footnote{The numbers in Table \ref{tab:evidcounts} do
 
 \input{county_evid_counts.tex}
 
-EViD timestamps, one per early voter, are not subject to potential
-self-reporting biases and hence are presumably more accurate than
-surveys of voter times or even within-polling place observations of
-when voters checked-in.  Moreover, EViD timestamps as associated with
-official Florida voter identification numbers, which we can link to
-the nearly 14 million individual voter registration records in
+EViD timestamps, one per early voter, are generated when a voter
+checks-in at a voting location.  These timestamps are not subject to
+potential self-reporting biases and hence are presumably more accurate
+than surveys of voter times or even within-polling place observations
+of when voters checked-in.  Moreover, EViD timestamps as associated
+with official Florida voter identification numbers, which we can link
+to the nearly 14 million individual voter registration records in
 Florida's statewide voter file.  To this end, we merge our EViD
 timestamps with statewide voter files that cover the 2012 and 2016
 General Elections.\footnote{Per Table \ref{tab:evidcounts}, we
@@ -1066,7 +1068,8 @@ of allowable early voting.\footnote{We use the verb ``appears'' here
 % Sun Dec 10 10:42:55 2017
 \begin{table}[ht]
 \centering
-\caption{Wait times of Florida respondents in the SPAE, 2012 and 2016 General Elections} 
+\caption{Wait times of Florida respondents in the SPAE, 2012 and 2016
+  General Elections, broken down by percentages} 
 \label{tab:floridaspae}
 \begin{tabular}{lrr}
   \hline
@@ -1084,7 +1087,7 @@ of allowable early voting.\footnote{We use the verb ``appears'' here
 \end{tabular}
 \begin{flushleft}
   \emph{Note: ignores individuals with missing responses to the SPAE
-    wait time question, which was, "Approximately, how long did you have to wait in line to vote?"}
+    wait time question, "Approximately, how long did you have to wait in line to vote?"}
 \end{flushleft}
 \end{table}
 
@@ -1105,8 +1108,8 @@ voters. Moreover, non-white early voters in Florida had
 disproportionately late check-ins in 2012.  We already have seen
 evidence of this, but Figure \ref{fig:race2012and2016} shows as well
 how this problem did not appear in 2016.  There were slightly more
-non-whites with late check-ins in 2016, but the magnitude of the white
-versus non-white gap shrunk between the two years.
+non-whites with late check-ins in this latter year, but the magnitude
+of the white versus non-white gap shrunk between 2016 compared to 2012.
 
 \begin{figure}[!ht]
   \caption{Distribution of voter check-ins, 2012 General Election
@@ -1121,7 +1124,11 @@ changes made to the early voting period appears to have reduced the
 congestion outside of the polls. The increased number of days and
 hours may have helped, as these six counties still served roughly the
 same number of early voters per day in 2016 (approximately 120,516) as
-they did in 2012 (approximately 117,771). 
+they did in 2012 (approximately 117,771).\footnote{It is an open
+  question in the literature on election administration as to the
+  marginal effect of additional days versus hours per day on early
+  voting usage.  See \citet{walkeretal:ncearly} for a study of these
+  issues in North Carolina in 2016.}
 
 %  Given reduced prevalence of
 % lines in 2016, it is likely that these and other reforms made the
@@ -1393,10 +1400,9 @@ emergency rooms without being seen by medical professionals find that
 being young is a risk factor for this behavior
 \citep{sunetal:lwbs,clareycooke:emergencyroomleave,shaikh:howlongwaiter}.
 In other words, young individuals seems unduly sensitive to wait
-times, what might be called impatience.  If this is true, then by
-excluding relatively younger voters in our regression model, we are
-making our results on the effect of waiting on future turnout
-conservative.
+times.  If this is true, then by excluding relatively younger voters
+in our regression model, we are making our results on the effect of
+waiting on future turnout conservative.
 
 Our regression analysis also selects against recent movers into or out
 of and individuals who became felons, and thus lost the right to vote,
@@ -1497,25 +1503,34 @@ time and potentially affect future choices.
 
 Our final set of results on the effects of lines considers turnout in
 the 2014 General Election as a function of line waiting in 2012.  Our
-use of voter behavior in 2014 is notable for two reasons.  First,
-the year 2014 is only two years after 2012.  Thus, if the
-effect of waiting in line attenuates in time (because bad memories of
-line waiting become less salient, for example), we would expect to see
-greater consequences of waiting in line on 2014 turnout compared to
-2016 turnout. Moreover, the 2014 statewide election in
-Florida was a midterm election as opposed to a presidential election.  
-Given that midterms are generally less attractive to voters,
-a negative experience in 2012 might be enough to discourage a voter from 
-turning out to vote in 2014 when it might not have been enough to discourage
-that same voter from voting in the presidential election in 2016.
-Hence, having to wait in line to vote in 2012 would cause a more profound reduction in turnout in 2014
-compared to 2016. 
+consideration of 2014 reflects the possibility that the effect of
+waiting in line attenuates in time (because bad memories of line
+waiting become less salient, for example).  If this is true, we would
+expect to see greater consequences of waiting in line in 2012 on 2014
+turnout compared to 2016 turnout. 
 
-On the other hand, midterm electorates may be more energized and politically
-engaged than presidential electorates.  As a result, a negative experience waiting in line in 2012 might
-not be enough to deter the already motivated midterm voter.  Hence, if this is the case,  we might expect to see smaller
-effects of lines on 2014 turnout compared to 2016 turnout.  We cannot know which of these two effects
-is greater, but we note them in the interest of transparency.
+One drawback of analyzing 2014 turnout based on 2012 line waiting is
+the fact that the 2014 statewide election in Florida was a midterm
+election as opposed to a presidential election.  Given that midterms
+are generally less attractive to voters as the stakes are ostensibly
+lower in the former, a negative voting experience in 2012 might be
+sufficient to discourage a voter from turning out to vote in 2014 when
+such an experience might not have been enough to discourage that same
+voter from voting in the presidential election in 2016.  Hence, having
+to wait in line to vote in 2012 may cause a more profound reduction in
+turnout in 2014 compared to 2016.  On the other hand, midterm
+electorates may be more energized and politically engaged than
+presidential electorates, the latter of which attract all sorts of
+voters on account of the perceived high stakes.  As a result, a
+negative experience waiting in line in 2012 might not be enough to
+deter an already motivated midterm voter.  If this is the case, we
+might expect to see smaller effects of 2012 lines on 2014 turnout
+compared to 2016 turnout.
+
+Per the above, there are limitations inherent in our consideration of
+2014 turnout as a function of 2012 line experiences.  In an
+observational study like ours, these limitations are unavoidable, and
+we note them in the interest of transparency.
 
 %in particular
 %if their Election Day polling place is relocated \cite{amos_etal2017}.
@@ -1528,25 +1543,40 @@ is greater, but we note them in the interest of transparency.
   \label{fig:prvoting2014}
 \end{figure}
 
-Figure \ref{fig:prvoting2014} presents the effects of having to wait in line to 
-vote in 2012 on the probability of voting in the 2014 midterm.  What is most
-noticeable about this figure is that the effect of waiting in line to vote is much stronger in
-2014 than it is in 2016.  Those who voted in
-congested polling locations in 2012 were between 2.5 and 4.5 percentage points less likely to
-vote in 2014 compared to those who voted in polling locations that were not so congested in 2012. 
-Whereas in 2016, those same individuals were between 0 and 1.25 percentage points less likely
-to vote.  This suggests that the negative experience in 2012 was more profound in altering midterm
-turnout than it was in altering turnout in the presidential election two years later.
+Figure \ref{fig:prvoting2014} presents our estimates of the effect of
+having waited in line to vote in 2012 on the probability of turning
+out to vote in the 2014 midterm election.  What is most noticeable
+about this figure is that the downstream effect of having waiting in
+line in 2012 is much stronger in 2014 than it is in 2016.  Individuals
+who voted in congested polling locations in 2012 were between 2.5 and
+4.5 percentage points less likely to vote in 2014 compared to those
+who voted in polling locations that were not so congested in 2012.  In
+2016, those same individuals were between zero and 1.25 percentage
+points less likely to vote.  This suggests that negative voting
+experiences in 2012 were more profound in altering midterm turnout
+than they were in altering turnout in the presidential election two
+years later.
 
-Figure \ref{fig:prvoting2014} and Figure \ref{fig:atevotingearly2016} share some similarities in that both
- the effects on 2014 turnout and the effects on 2016 turnout are conditional on the
-hour in which one voted in 2012.  Afternoon voters were more affected by congested polling locations
-than before-noon voters.  Although the condition is more pronounced in 2016,  we do see that the magnitude
-of the effect in 2014 increases between noon and 3:00pm, and then gradually returns to before-noon effects
-for voters who voted just before the 7pm cutoff.  While it is unclear why the effect is strongest just before 3:00pm, 
-it is clear that there is a slight conditional effect of time, and that this effect is outweighed by a much stronger effect of
-just having to vote in a congested precinct. 
-
+Figure \ref{fig:prvoting2014} and the earlier Figure
+\ref{fig:atevotingearly2016} share some similarities: in both figures,
+effects on 2014 turnout and effects on 2016 turnout are conditional on
+the hour in which one voted in 2012.  In both figures, afternoon
+voters (based on 2012 voting times) were more affected by congested
+polling locations than before-noon voters.  Although a so-called
+afternoon effect is more pronounced in 2016, we do see that, in 2014,
+the magnitude of the effect of line waiting on turnout increases
+between noon and 3:00pm and then gradually returns to before-noon
+levels for voters who voted just before the 7:00pm cutoff.  While it
+is unclear why the effect of lines is strongest regarding 2014 turnout
+just before 3:00pm, it is clear that, in 2014, there is a slight
+conditional effect of time from 2012 and that this effect is
+outweighed by a much stronger effect of having voted in a congested
+precinct.\footnote{An interesting question for future research is the
+  extent to which bad experiences via voting lines compound over time
+  or cancel themselves out.  We do not at present have data that would
+  allow us to analyze the 2016 turnout decisions of, say, individuals
+  who experienced a long line in 2012 but no line in 2014.  We will
+  pursue this sort of a research agenda in the future.}
 
 \section*{Conclusion}
 
@@ -1557,20 +1587,22 @@ elections that affect the cost of voting are thus part of the overall
 calculus of whether an election was characterized by equal treatment
 or the lack thereof.  A notable administrative aspect of elections is
 the presence of voting lines, and lengthy voting lines in recent
-United States General Elections have been of concern, both to scholars
+United States General Elections have been of concern both to scholars
 and election officials.  Burdensome wait times not only impose
 opportunity costs on those forced to wait in line, but they can also
 discourage future electoral participation.
 
-Research on voting lines is challenged by the lack of observational
-data on who waits to vote.  Other than noting the times at which polls
-officially closed and recording information about which voters cast
-their ballots after voting lines were capped, there is little data
-collected by election officials that might distinguish between those
-who waited in line to vote from those who did not.  Notwithstanding a
-limited number of exceptions, local election officials do not maintain
-official records on line evolution or how long individual voters
-waited \citep{herron:confidence}.
+Research on voting lines has historically been challenged by the lack
+of observational data on who waits to vote.  Other than noting the
+times at which polls officially closed and recording information about
+which voters cast their ballots after voting lines were capped, there
+is little data collected by election officials that might distinguish
+those who waited in line to vote from those who did not (not to
+mention individuals who waited in a voting line for a limited period
+and then departed a queue without casting a ballot).  Notwithstanding
+a limited number of exceptions, local election officials do not
+maintain official records on line evolution or how long individual
+voters waited \citep{herron:confidence}.
 
 % Previous research using election
 % records to study lines have thus been limited to examining variables
@@ -1597,10 +1629,10 @@ Beach Counties, we are able to identify the exact day and time at
 which many thousands of voters checked-in to vote.  These check-in
 times not only provide novel insight into voting patterns across time
 but, given some natural assumptions, also allow us to characterize
-individual voters who likely waited in line to vote. Of course,
-despite their advantages, EViD check-in times are not a panacea in the
-quest to understand voting lines and their consequences, as such times
-do not specify how long an individual may have waited to vote.  
+individual voters who likely waited in line to vote. Despite their
+advantages, EViD check-in times are not a panacea in the quest to
+understand voting lines and their consequences, as such times do not
+specify how long an individual may have waited to vote.
 
 % As
 % such, our our analysis of check-in times should be viewed as a
@@ -1619,32 +1651,35 @@ though the counties we study in 2016 served as many individual per day
 as they had in 2012, they appear to have been more prepared to handle
 the high rates of early voting.
   
-We estimated the effect that waiting in line has on future electoral
-participation.  Using temporal variation in voting across polling
-locations, we found a very slight negative effect on turnout,
-amounting to no more than a one percentage point decrease in the
-propensity to vote. The result is similar to that identified by
-\citet{pettigrew:racegapwaittimes}.  The effect is small in magnitude,
-which is normatively pleasing, but any negative effect on future
-turnout is normatively troubling.  Not only are some voters penalized
-by waiting in line, but a small number of these individuals appear to
-be dissuaded from voting in the future, thus lessening their voices.
+We estimated the effect that waiting in line in 2012 had on future
+electoral participation, i.e., on voting in 2014 and in 2016 .  We
+found a very slight negative effect of 2012 line waiting on turnout in
+2016, an effect amounting to no more than a one percentage point
+decrease in the propensity to vote. The result is similar to that
+identified by \citet{pettigrew:racegapwaittimes}.  A one percentage
+point effect is small in magnitude, which is normatively pleasing, but
+any negative effect on future turnout is normatively troubling.  In
+2014, a midterm election year, we find larger effects of 2012 line
+waiting on turnout.  Thus, not only are some voters penalized by
+waiting in line, but a small number of these individuals appear to be
+dissuaded from voting in the future, thus lessening their voices.  
+
 We offered some evidence as well that long early voting lines dissuade
 voters from casting early ballots.  To the extent that early voting is
-a form of ``convenience'' voting, this result shows how the value of
-this convenience can be compromised by long lines, something that most
+a form of convenience voting, this result shows how the value of this
+convenience can be compromised by long lines, something that most
 observers would classify as administrative failures.
 
 Overall, our evidence shows that the 2012 General Election in Florida
 did not treat all voters equally with respect to time spent waiting in
 line.  Minority voters in 2012 voters faced disproportionately long
 lines---thus, disproportionately high costs of voting---and then, in
-some cases, a small downstream effect of a decreased propensity to
-vote.  Our results illustrate how administrative aspects of elections,
-like the resource allocation decisions that influence whether an
-election will have lines or not, should be understood not just as
-administrative in nature but also as relevant to underlying fairness
-and the extent to which voters are treated in a like manner.
+some cases, a small downstream effect in 2014 and 2016 of a decreased
+propensity to vote.  Our results illustrate how administrative aspects
+of elections, like the resource allocation decisions that influence
+whether an election will have lines or not, should be understood not
+just as administrative in nature but also as relevant to underlying
+fairness and the extent to which voters are treated in a like manner.
 
 % Except for the few states that require voters to cast ballots by mail
 % (or use drop off boxes), waiting to vote at the polls is likely to
