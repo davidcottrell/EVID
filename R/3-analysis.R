@@ -247,7 +247,7 @@ plot2save <- ggplot(plt1, aes(hr, pct, shape = race, group = race, ymin = low, y
   scale_y_continuous(breaks = seq(0, 1, .05), labels = seq(0, 100, 5), name = "Percent of total voters\n") +
   scale_x_discrete(limits = c(levels(plt1$hr), "1:00am") ) +
   #ggtitle("Racial Composition of Early Voters by Hour") +
-  scale_shape_discrete(name = "Race")  
+  scale_shape_discrete(name = "Race/ethnicity")  
 ggsave(plot2save, filename = "../Plots/racial_composition.pdf", height = 4, width = 7)
 
 
