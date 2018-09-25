@@ -428,10 +428,12 @@ ggsave(margfx4, filename = "../Plots/margfx_2014_vote.pdf", height = 5, width = 
 
 
 orderedvar <- names(mn1$coefficients)[-1][c(1:12, 27:37, 13:26)]
-t <- stargazer(mn1, mn2, mn3, mn4,               
+# t <- stargazer(mn1, mn2, mn3, mn4,               
+t <- stargazer(mn1, mn2, mn4,                              
                title = "Logit regression predicting voter turnout in 2016",
                label = "tab:reg",
-               dep.var.labels =  c("Voted in 2016", "Voted early in 2016", "Voted absentee in 2016", "Voted in 2014"),               
+               ##                   dep.var.labels =  c("Voted in 2016", "Voted early in 2016", "Voted absentee in 2016", "Voted in 2014"),               
+               dep.var.labels =  c("Voted in 2016", "Voted early in 2016", "Voted absentee in 2016", "Voted in 2014"),                              
                omit.stat=c("LL","ser","f"),
                type = "latex",
                order = c(1:12, 27:37, 13:26),
