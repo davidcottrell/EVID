@@ -145,8 +145,8 @@ evid12$day <- factor(evid12$day,
 
 xlabs <- c(paste0(c(7:11), ":00am"), paste0(c(12, 1:11), ":00pm"), paste0(c(12,1), ":00am"))
 hst <- evid12 %>% filter(location %in% "Fred B. Karl County Center", day == "SAT 11/03", !is.na(race))
-hst$race2 <- if_else(hst$race == "White", "White", "Non-White")
-hst$race2 <- factor(hst$race2, levels = c("White", "Non-White"))
+hst$race2 <- if_else(hst$race == "White", "White", "Non-white")
+hst$race2 <- factor(hst$race2, levels = c("White", "Non-white"))
 hst$time2[hst$time2 <= 7] <- 7 + .000001
 clse <- hst %>% group_by(day) %>% summarize( close = max(time2))
 plot2save <- ggplot(hst , aes(time2, fill = race2)) + 
@@ -266,7 +266,7 @@ plot2save <- ggplot(pt, aes(hr, pct, shape = race, group = race)) +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
   scale_y_continuous(breaks = seq(0, 1, .05), labels = seq(0, 100, 5), name = "Percent Democratic\n", limits = c(.3,1)) +
   scale_x_discrete(limits = lim) +
-  scale_shape_discrete(name = "Race")  
+  scale_shape_discrete(name = "Race/ethnicity")  
 #ggtitle("Partisan Composition of Early Voters by Hour (Whites)")
 ggsave(plot2save, file = "../Plots/partisan_composition_by_race.pdf", height = 4, width = 7)
 
