@@ -337,10 +337,10 @@ vte$party <- factor(vte$party, c("DEM", "REP", "IDP", "NPA"))
 vte$hr <- factor(vte$hr, c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm","1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm"))
 vte$gender <- factor(vte$gender, c("F", "M"))
 vte$agegroup <- factor(vte$agegroup, c("[18,30)","[30,40)","[40,50)","[50,60)","[60,70)","[70,120)"))
-mn1 <- glm(voted_16 ~ hr + over + hr:over +  gender + race + agegroup + party + logincome + voted_08, data = vte, family = "binomial")
-mn2 <- glm(voted_early_16 ~ hr + over + hr:over +  gender + race + agegroup + party + logincome + voted_08, data = vte, family = "binomial")
-mn3 <- glm(voted_absentee_16 ~ hr + over + hr:over +  gender + race + agegroup + party + logincome + voted_08, data = vte, family = "binomial")
-mn4 <- glm(voted_14 ~ hr + over + hr:over +  gender + race + agegroup + party + logincome + voted_08, data = vte, family = "binomial")
+mn1 <- glm(voted_16 ~ county + hr + over + hr:over +  gender + race + agegroup + party + logincome + voted_08, data = vte, family = "binomial")
+mn2 <- glm(voted_early_16 ~ county + hr + over + hr:over +  gender + race + agegroup + party + logincome + voted_08, data = vte, family = "binomial")
+mn3 <- glm(voted_absentee_16 ~ county + hr + over + hr:over +  gender + race + agegroup + party + logincome + voted_08, data = vte, family = "binomial")
+mn4 <- glm(voted_14 ~ county + hr + over + hr:over +  gender + race + agegroup + party + logincome + voted_08, data = vte, family = "binomial")
 
 
 ####################
@@ -495,7 +495,8 @@ newdata <-  data.frame(
   party = "DEM",
   voted_08 = 0,
   logincome = mean(vte$logincome, na.rm = T),
-  over = TRUE
+  over = TRUE,
+  county = "HIL"
 )
 
 p2over <- predict(mn1, newdata = newdata, type = "link", se = TRUE)
