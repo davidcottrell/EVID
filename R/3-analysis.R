@@ -481,9 +481,10 @@ t <- stargazer(mn1, mn2, mn4,
                no.space = TRUE,
                font.size = "scriptsize")
 
+row2change <- match(TRUE, grepl("\\{\\}", t))
+t[row2change] <- gsub("\\{\\}", "\\{County fixed effects not displayed.\\}", t[row2change])
+
 cat(t, file = "../plots/table_out.tex", sep = "\n")
-
-
 
 newdata <-  data.frame(
   hr = factor(levels(vte$hr), levels(vte$hr)),
