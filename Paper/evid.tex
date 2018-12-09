@@ -579,14 +579,8 @@ these figures imply that our results apply to millions of Americans.
 
 In terms of our use of Florida voting data \emph{per se}, the state's
 open records laws make it an excellent laboratory for the study
-of election administration. For example, in their study of congestion
-at the polls in Florida in the 2012 General Election,
-\cite{herronsmith:closingtimes} use precinct-level data detailing when
-the last voter in a precinct checked-in to vote in a study showing
-significant differences in the closing times of precincts within
-counties, contingent on a precinct's racial and ethnic
-composition. Florida's laws also provide a wealth of information not
-only about who votes, but when and how indivdiuals register to vote or cast ballots.
+of election administration, as there is a wealth of information not
+only about who votes and by what method of voting, but when and how indivdiuals register to vote or cast ballots.
 Drawing on Florida's statewide voter registration records, \cite{herron_smith2013} trace 
 the ebb and flow of new voter registrations after the state legislature placed 
 restrictions on groups engaged in voter registration drives; 
@@ -596,8 +590,13 @@ likely to turn out in a proximate general election, but not in
 subsequent elections; and \cite{amos_etal2017} find differences in
 individual-level turnout across political party and racial and ethnic
 categories among registered voters whose precincts were eliminated or
-relocated by local election administrators.  Similarly, by linking
-multiple statewide voter files and individual-level early voting
+relocated by local election administrators. In their study of congestion
+at the polls in Florida in the 2012 General Election,
+\cite{herronsmith:closingtimes} use precinct-level data detailing when
+the last voter in a precinct checked-in to vote in a study showing
+significant differences in the closing times of precincts within
+counties, contingent on a precinct's racial and ethnic
+composition. Similarly, by linking multiple statewide voter files and individual-level early voting
 files, \cite{herron_smith2014} demonstrate how reductions in the
 number of early voting days following the 2008 General Election were
 associated with a drop in early voting in 2012, especially among
@@ -635,9 +634,9 @@ Florida counties.\footnote{We made public records requests to
 % across a variety of early voting stations during the 2012 and 2016
 % General Elections.  
 
-A Florida voter who wishes to cast his or her ballot early may vote at
+A Florida voter who wishes to cast his or her ballot prior to Election Day may vote at
 any early voting polling location in the county in which he or she is
-registered.  This is distinct from in-person, Election Day voting,
+registered. This is distinct from in-person, Election Day voting,
 during which a registered Florida voter may vote only at his or her
 assigned precinct.  This flexibility necessitates that a county track
 its early voters.  Rather than relying on traditional, paper-based
@@ -659,9 +658,7 @@ EViD machines allow county pollworkers to check-in and verify the
 registration statuses and identities of Floridians casting early,
 in-person ballots. The EViD system is designed to reduce the time it
 takes to process early voters, and it fosters synchronization across a
-county's early voting centers (important because, as just noted, early
-voters in Florida can choose where to cast their ballots) as well as
-with the Florida statewide voter database.  For our purposes, EViD
+county's early voting centers as well as with the Florida statewide voter database.  For our purposes, EViD
 machines record the check-in times for all early voters, and this
 provides us with timestamps that specify when a voter began his or her
 voting process. EViD timestamps are recorded to the minute, and using
@@ -674,9 +671,9 @@ elector in line at 7:00pm is allowed to cast a ballot.\footnote{See
   \url{http://www.leg.state.fl.us/Statutes/index.cfm?App\_mode=Display\_Statute\&Search\_String=\&URL=0100-0199/0100/Sections/0100.011.html}
   (last accessed December 15, 2017).}
 
-We have EViD check-in times from six Florida counties, Alachua,
-Broward, Hillsborough, Miami-Dade, Orange, and Palm Beach, and Table
-\ref{tab:evidcounts} lists corresponding numbers of EViD timestamps.
+Through public records requests, we obtained EViD check-in times from six Florida counties, Alachua,
+Broward, Hillsborough, Miami-Dade, Orange, and Palm Beach. Table
+\ref{tab:evidcounts} lists the corresponding numbers of EViD timestamps.
 In the 2012 General Election, there were 2,409,097 total early ballots
 cast in Florida, and in 2016, 3,876,753 early ballots.\footnote{2012
   General Election turnout statistics are located at
@@ -685,7 +682,7 @@ cast in Florida, and in 2016, 3,876,753 early ballots.\footnote{2012
   Election statistics at
   \url{http://dos.myflorida.com/media/697842/2016-ge-summaries-ballots-by-type-activity.pdf}
   (last accessed December 10, 2017).}  Our EViD data thus cover
-approximately 39 percent and 44 percent of total ballots cast in
+approximately 39 percent and 44 percent of all early in-person ballots cast in
 Florida in the 2012 and 2016 General Elections,
 respectively.\footnote{The numbers in Table \ref{tab:evidcounts} do
   not include 115 EViD check-in times (28 from 2012 and 87 from 2016)
@@ -799,9 +796,9 @@ Kendall Regional Library, though, the vast majority of early voters
 were non-white.  The fraction of non-white voters appears plausibly
 consistent across November 3.
 
-Lastly, and very roughly speaking, we observe a flatter or
+Lastly, and very roughly speaking, we observe a flatter, 
 more-uniform distribution of check-in times at Karl County Center than
-in West Kendall Library.  We will draw on this fact later, when we try
+in West Kendall Library.  We draw on this fact later when we try
 to determine which early voters in our six counties waited in line,
 and here we provide some intuition.  As illustrated in Figure
 \ref{fig:tenminhist}, it appears that early voting locations in
@@ -867,8 +864,8 @@ voters in the eight day long, 2012 early voting period.\footnote{This
     \centering\includegraphics[scale = 0.8]{number_of_Locations.pdf}
 \end{figure}
 
-Figure \ref{fig:nrlocs2012} describes by day of early voting and by
-hourly window the number of locations across our six counties that
+Figure \ref{fig:nrlocs2012} describes by day of early voting, and by
+hourly window, the number of locations across our six counties that
 actively served voters.  All locations served early voters virtually
 the entire day, and this is evident in the flat line, for the most
 part pegged a bit under 80 prior to 7:00pm, at the top of the figure.
@@ -1183,11 +1180,11 @@ assuming that this individual still lived in Florida as of November
 The challenges associated with assessing the effects of waiting to
 vote in 2012 are twofold.  First, while we know voter check-in times
 from our EViD data, we do not have voter arrival times, which are not
-collected by election officials or anyone else for that matter.
+collected by election officials, or anyone else for that matter.
 Indeed, were arrival times regularly tracked by election
 administrators across the United States, there would be no need for
-the research design employed here.  Second, early voters who voted at,
-say, 9:00am on a given day of early voting may be systematically
+the research design employed here, much less national surveys asking about wait times.  
+Second, early voters who voted at, say, 9:00am on a given day of early voting may be systematically
 different from those who voted at 6:00pm. Consequently, estimating the
 effect of voting after closing time---when we know voters must have
 waited in line---is potentially confounded by voter-level selection.
@@ -1202,7 +1199,7 @@ future turnout.
 % along with some assumptions.  
 
 Our approach is as follows.  We condition on county, race/ethnicity,
-partisanship measured by party registration, gender, age, neighborhood
+party registration, gender, age, neighborhood
 income, and previous voting history.  And, we make the following
 assumption: individuals who voted at Florida early voting locations
 which stayed open well past the 7:00pm cutoff time are more likely to
@@ -1273,7 +1270,7 @@ who appear in the history of Florida voting in 2008; $County$
 indicates a voter's county; $Over$ indicates if the voter had to wait
 in line in 2012; $Hour$ indicates the hour of the day in 2012 at which
 a voter checked-in, between 7:00am and 7:00pm; $Gender$ indicates
-whether the voter identifies as male or female; $Race/ethnicity$
+whether the voter identifies as male or female; $Race/Ethnicity$
 indicates if the voter self-identifies as white, black, Hispanic, or
 Asian; $Age Group$ classifies voters according to their 2016 age and
 bins them into 10-year age groups (20-29, 30-39, 40-49, 50-59, 60-69,
@@ -1398,8 +1395,7 @@ turnout, albeit only barely---are similar to the conclusions in
 \citet{pettigrew:longlinesminorityprecincts} wherein each hour an
 in-person voter spends waiting in line to vote is associated with a
 one percentage point drop in the likelihood of future turnout.  To the
-best of our knowledge,
-\citeauthor{pettigrew:longlinesminorityprecincts} is the first scholar
+best of our knowledge, \citeauthor{pettigrew:longlinesminorityprecincts} is the first scholar
 to try to estimate the effect of waiting in line to vote on a later
 propensity to vote, and our results are qualitatively similar to his.
 
@@ -1422,9 +1418,9 @@ emergency rooms without being seen by medical professionals find that
 being young is a risk factor for this behavior
 \citep{sunetal:lwbs,clareycooke:emergencyroomleave,shaikh:howlongwaiter}.
 In other words, young individuals seems unduly sensitive to wait
-times.  If this is true, then by excluding relatively younger voters
-in our regression model, we are making our results on the effect of
-waiting on future election turnout conservative.
+times.  If this is true, by excluding relatively younger voters
+in our regression model, our estimates on the effect of
+waiting on future election turnout are conservative.
 
 Our regression analysis also selects against recent movers into or out
 of Florida and individuals who became felons, and thus lost the right
@@ -1568,7 +1564,7 @@ compared to 2016 turnout.
 Figure \ref{fig:prvoting2014} presents our estimates of the effect of
 having waited in line to vote in 2012 on the probability of turning
 out to vote in the 2014 midterm election.  What is most noticeable
-about this figure is that the downstream effect of having waiting in
+about this figure is that the downstream effect of having waited in
 line in 2012 is much stronger in 2014 than it is in 2016.  Individuals
 who voted in congested polling locations in 2012 were between 2.5 and
 4.5 percentage points less likely to vote in 2014 compared to those
@@ -1582,8 +1578,8 @@ election.
 In both Figure \ref{fig:prvoting2014} and the earlier Figure
 \ref{fig:atevotingearly2016}, effects of waiting to vote on 2014
 turnout and on 2016 turnout are conditional on the hour in which one
-voted in 2012.  In both figures, afternoon early voters in 2012 were
-more affected by congested polling locations than before-noon voters.
+voted in 2012.  In both figures, early voters who cast their ballot in the afternoon in 2012 were
+more affected by congested polling locations than voters who cast their ballot before noon.
 Although a so-called afternoon effect is more pronounced in 2016, we
 do see that, in 2014, the magnitude of the effect of line waiting on
 turnout increases between noon and 3:00pm and then gradually returns
@@ -1633,7 +1629,7 @@ estimate any effect of hour of voting cross having voted in a
 congested location. Our assumption about late-closing early voting
 locations is thus conservative, and we note that we have found
 significant effects on future turnout of voters having cast their
-ballots in voting locations that we identified as closing late,
+ballots in voting locations that we identified as closing late.
 
 \section*{Conclusion}
 
