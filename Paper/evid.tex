@@ -1,309 +1,11 @@
-\documentclass[12pt,titlepage]{article}
-
-% \usepackages21{fancyhdr}
-
-\usepackage[margin=0.8in]{geometry}
-
-\usepackage[printwatermark]{xwatermark}
-
-\usepackage{grffile}
-\usepackage{xcolor}
-\usepackage{lipsum}
-\usepackage{times}
-\usepackage{soul}
-\usepackage{epsfig}
-\usepackage{rotating}
-%\usepackage[hyphens]{url}
-%\usepackage[breaklinks=true]{hyperref}
-\usepackage{hyperref}
-\usepackage{etoolbox}
-\appto\UrlBreaks{\do\-}
-
-\usepackage{latexsym}
-\usepackage{graphicx}
-\usepackage{amsfonts}
-\usepackage{amsmath, amsthm, amssymb}
-\usepackage{setspace}
-\usepackage{natbib}
-\usepackage{longtable}
-\usepackage{keyval}
-\usepackage{caption,subcaption}
-\usepackage{arydshln}
-
-
-\providecommand{\keywords}[1]{\textbf{\normalsize{Keywords: }} \normalsize{#1}}
-
-%% set 1-inch margins
-%\usepackage{fullpage}
-
-%% APSR submission: no commas in citations between name and year
-%% See http://merkel.zoneo.net/Latex/natbib.php
-\bibpunct{(}{)}{;}{author-year}{}{;}
-
-% the opening bracket symbol, default = (
-% the closing bracket symbol, default = )
-% the punctuation between multiple citations, default = ;
-% the letter `n' for numerical style, or `s' for numerical superscript style, any other letter for author-year, default = author-year;
-% the punctuation that comes between the author names and the year
-% the punctuation that comes between years or numbers when common author lists are suppressed (default = ,);
-
-\usepackage{footmisc}
-\renewcommand{\footnotelayout}{\doublespacing} % set spacing in footnotes
-\newlength{\myfootnotesep}
-\setlength{\myfootnotesep}{\baselineskip}
-\addtolength{\myfootnotesep}{-\footnotesep}
-\setlength{\footnotesep}{\myfootnotesep} % set spacing between footnotes
-
-% make footnote font size same as regular font size in text
-\renewcommand{\footnotesize}{\normalsize} 
-
-%% make possessivecite macro since this does not exist in natbib
-\newcommand{\possessivecite}[1]{\citeauthor{#1}'s (\citeyear{#1})}
-
-%% Use this for a "DRAFT" watermark
-% \newwatermark[allpages,color=pink!30,angle=45,scale=5,xpos=-25,ypos=40]{DRAFT}
-
-%% List all locations for graphics here
-\graphicspath{ {../Plots/} }
-\begin{document}
-\sloppy
-\thispagestyle{empty}
-
-%% APSR submission requires double-spaced footnotes
-%%\newcommand{\footnote}[1]{\footnote{\doublespacing #1}} %% <-- note \doublespacing here.
-
-\renewcommand{\topfraction}{.85}
-\renewcommand{\bottomfraction}{.7}
-\renewcommand{\textfraction}{.15}
-\renewcommand{\floatpagefraction}{.66}
-\renewcommand{\dbltopfraction}{.66}
-\renewcommand{\dblfloatpagefraction}{.66}
-
-% \urldef\myurlncsl1\url{foo%.com}
-% \begin{document}
-% text\footnote{WWW: \myurl}
-
-
-\title{Voting lines, equal treatment,\\and early voting check-in times
-  in Florida\thanks{Earlier versions of this manuscript were presented
-    at the 2017 Annual Meeting of the Midwest Political Science
-    Association, Northwestern University, and the Free University
-    of Berlin.  The authors thank Evan Morgan for research assistance,
-    Michael Hanmer and Hollye Swinehart for comments on earlier
-    drafts, and staff members from various Florida Supervisor of
-    Elections offices for data on early voting check-in
-    times.}\author{David Cottrell\thanks{Lecturer, Department of
-      Government, Dartmouth College.  6108 Silsby Hall, Hanover, NH
-      03755 (\texttt{david.cottrell@dartmouth.edu})} \and Michael C.\
-    Herron\thanks{Professor of Government, Dartmouth College.  6108
-      Silsby Hall, Hanover, NH 03755-3547
-      (\texttt{michael.c.herron@dartmouth.edu}).} \and Daniel A.\
-    Smith\thanks{Professor of Political Science, University of
-      Florida, 234 Anderson Hall, Gainesville, FL 32611-7325
-      (\texttt{dasmith@ufl.edu}).}}\vspace{1cm}\\\keywords{voting
-    lines, equal treatment, election administration, turnout, early
-    voting}}
-
-%\title{Voting lines, equal treatment,\\and early voting check-in times
- %in Florida}
-
-
-\maketitle \doublespacing 
-
-
-
-% \topskip0pt
-% \vspace*{\fill}
-% \begin{center}
-%   \Large{\textbf{Word count: 8,790}}
-% \end{center}
-%  \vspace*{\fill}
-
-%Moreover, long lines may \mbox{additionally} influence the willingness
-%of eligible voters to participate in future elections.
-
-
-\begin{abstract}
-  \noindent 
-  Expansive lines at the polls raise the cost of voting and can
-  precipitate unequal treatment of voters.  Despite this, research on
-  lines is hampered by a fundamental measurement problem: little is
-  known about the distribution of wait times among voters.  We argue
-  that early, in-person voter check-in times from Florida---942,166
-  check-ins from the 2012 General Election and 1,687,217 from
-  2016---allow us identify individuals who waited in line to vote.  We
-  highlight disproportionately long wait times incurred by minority
-  voters in 2012 and show that Florida early in-person voters who
-  waited excessively in 2012 had a slightly lower
-  probability---approximately one percent---of turning out to vote in
-  the 2016 General Election, \emph{ceteris paribus}.  These
-  individuals also had slightly lower turnout probabilities in the
-  2014 Midterm Election, \emph{ceteris paribus}.  Our results draw
-  attention to the ongoing importance of the administrative features
-  of elections that influence the cost of voting and ultimately the
-  extent to which voters are treated equally.
-\end{abstract}
-
-
-% > evid %>% group_by(year) %>% count
-% # A tibble: 2 x 2 # Groups: year [2] year n <int> <int> 1 2012
-% 942166 2 2016 1687217
-
-\newpage
-\section*{Introduction}
-
-Modern democracies are characterized by regular and free elections,
-the legitimacy of which can suffer in the face of perceptions of
-unfairness and unequal treatment of voters \citep{norris2014electoral}.
-An election can fail to treat all voters equally if, for example,
-there are meaningful differences in vote tabulating technologies
-across an electorate \citep[e.g.,][]{kimballkropf:tech}; if some
-groups of voters must contend with registration hurdles that others do
-not \cite[e.g.,][]{ansolhersh:registration}; if some voters face
-strict photo identification requirements and others no such
-requirements \citep[e.g.,][]{benteleetal:newjimcrow}; and, if some
-voters have to travel much longer distances than others to cast their
-ballots \citep[e.g.,][]{dyckgimpel:distance}.  More generally, when in
-a given election the \emph{cost of voting} in the sense of
-\cite{downs:econtheory} varies significantly by voter group---where
-group membership could be based on race/ethnicity or party
-affiliation, for example---the principle of equal treatment of voters
-is at risk.
-
-%   Elections affected by fraud certainly fall in this
-% category, as \citet{cottrelletal:fraud2016} argue, and elections
-% conducted in the midst of acrimonious debates over the nature of the
-% franchise risk being thought of as unfair \citet{hasen:votingwars}.
-% Fairness can also be in the eye of the beholder:
-% \citet{sancesstewart:confidence} show how confidence in a given
-% election outcome can be a function of whether an individual's
-% preferred candidate won.
-
-
-
-% The connection between lines and
-% equal treatment is straightforward: if lines adversely affect some
-% types of voters more than others, then the cost of voting will vary
-% systematically by voter group, threatening the principle of equal
-% treatment of voters.
-
-% Thus, any assessment of
-% the extent to which a given election featured equal treatment of
-% voters must include an analysis of voting lines and whether certain
-% groups of individuals waited in disproportionately long  lines.
-
-%  In-person voting experiences have a number of
-% features that are distinct from the experiences of those who vote by
-% mail, and our interest here is the act of waiting in line.
-
-% Casting an in-person ballot requires traveling to
-% a voting precinct; possibly spending time in a line prior to voting;
-% authenticating oneself in some fashion to election officials;
-% physically registering candidate and ballot measure preferences; and,
-% submitting a ballot for tabulation.  
-
-%% 2016 EAC is from p. 10
-%% really think we need to stick with polling station terminology, not precincts, as early voting is not precinct-based.
-
-% as opposed to lines in
-% which voters, already in the act of casting ballots, are forced to
-% stand. 
-
-There are two reasons that voting lines, whose lengths reflect
-interactions between in-person voter turnout at polling locations and
-administrative decisions about resource allocation
-\citep{herronsmith:hanoverstudy}, are related to equal treatment.
-First, waiting in line to vote constitutes a time tax
-\citep{mukherjee:timetax}. This tax can be negligible---for example, a
-voter waits a scant number of seconds prior to initiating her voting
-process---or imposing---some of the Florida voters we describe shortly
-waited several hours to vote in 2012. Associated with a voting line
-time tax are the distributional questions associated with all forms of
-taxation: is the burden of this tax spread uniformly or equally across
-voters or concentrated on selected groups of them?
-
-Second, waiting in line to vote may have ``downstream'' electoral
-effects in the sense of
-\citet{pettigrew:longlinesminorityprecincts}. When an individual is
-compelled to pay a relatively high tax in order to participate in a
-social or political activity, a natural response might be to avoid the
-activity, or substitute for it, in the future.  If voting lines
-operate in this fashion, then they will depress voter turnout.  And if
-lines affect some voter groups more than others, then their associated
-depressive effect on turnout will not burden all voters equally.
-Unequal burdens notwithstanding, given the relatively low rate of
-voter participation in American presidential elections---approximately
-58 percent of the eligible population turned out in 2012 and 60
-percent in 2016---any aspect of the voting experience that may have
-a depressive effect on turnout should be considered a matter worthy of
-study.\footnote{The national turnout rate for a general election
-  depends on the way that the number of eligible voters in the country
-  is calculated.  The figures cited here are from the United States
-  Election Project, available at
-  \url{http://www.electproject.org/home} (last accessed December 11,
-  2017).\label{fn:uselectionproject}}
-
-% To make matters
-% concrete, if a line in front of a particular restaurant is long, some
-% individuals may substitute an alternative eatery for the restaurant in
-% question, one without an imposing line, or even forego
-% eating.\footnote{Alternatively, a line in front of a restaurant might
-%   be a quality signal, in which case the presence of a line might be
-%   an incentive to wait in it.  The same could be said for voting, and
-%   here we ignore the possibility that lines form due to potential
-%   voters using the presence of lines as a means to gather information
-%   on whether voting is valuable.}
-
-%  While it is not
-% \emph{a priori} clear that voting can be substituted for in the way
-% that selecting a restaurant might be, we should not dismiss outright
-% the possibility that the effect of waiting in line to vote, which as
-% we have already argued raises the cost of voting, might decrease the
-% likelihood of voting in the future.  
-
-The time tax associated with voting lines and their potential
-downstream consequences are conceptually distinct. The former could be
-uniformly spread across voters, which might be normatively pleasing in
-the sense of not violating equal treatment of voters, and yet there
-could be a significant effect of waiting in line on future electoral
-participation. Or, the time tax could be concentrated on certain voter
-groups, violating equal treatment regardless of whether there are
-downstream consequences of waiting to vote.
-
-Given the relationship between voting lines and potential violations
-of equal treatment, one would expect a robust literature to
-have developed on this subject.  This has not happened, however, and
-the reason is as follows. Notwithstanding post-election surveys of
-voters aimed at understanding their experiences at the polls, little
-is known about the distribution of wait times among voters. This
-measurement problem, we argue, is the most meaningful impediment to
-voting lines research.
-
-To address this impediment, we turn to a relatively untapped source of
-electoral information: official early voter check-in times from
-Florida counties in the 2012 and 2016 General Elections.  We provide
-details shortly on check-in times, but for the moment it suffices to
-note that a voter's check-in time is when he or she began to vote.
-This said, the thousands of check-in times that form the basis of our
-research design have two valuable features.  One, they are
-automatically generated by machines installed in voting locations.
-And two, they are linkable to public records on race/ethnicity, party
-registration, gender, age, neighborhood income, and previous voting
-history.
-
-In the interests of full disclosure, we want to emphasize at the
-outset that a voter's check-in time by itself cannot specify the
-length of the line at the polls in which said voter waited before
-checking-in to vote.  Rather, in what follows we offer a set of
-assumptions under which check-in times can be used to assess the
-prevalence of voting lines.  Our assumptions are not costless, of
-course, but they differ from key assumptions in the extant voting
-lines literature, which assumes that voters when surveyed can
-accurately recount how long they waited in line to vote.  All research
-designs have limitations, ours included, and invoking triangulation we
-argue that the literature on voting lines and election administration
-more generally will be strengthened to the extent that it incorporates
-varied research designs.
+of voting lines.  Our assumptions are not
+costless, of course, but they differ from key assumptions in the
+extant voting lines literature, which assumes that voters when
+surveyed can accurately recount how long they waited in line to vote.
+All research designs have limitations, ours included, and invoking
+triangulation we argue that the literature on voting lines and
+election administration more generally will be strengthened to the
+extent that it incorporates varied research designs.
 
 % With this in mind, our empirical
 % analysis of voting lines during early in-person voting in Florida is
@@ -349,12 +51,13 @@ Elections.\footnote{For a national 2012 versus 2016 comparison, see
   \url{http://electionupdates.caltech.edu/2016/12/14/this-just-in-lines-at-the-polls-shorter-in-2016-than-in-2012}
   (last accessed March 30, 2017), as well as
   \url{http://www.richmond.com/opinion/their-opinion/guest-columnists/fortier-and-palmer-column-who-waits-the-longest-to-vote/article_81efabad-aa23-577b-83d1-0e524cf844ef.html}
-  (last accessed June 30, 2017).}  Whether the recent decrease in
-waiting times reflects progress in Florida election administration,
-substitution effects and voter sorting, or idiosyncrasies from either
-the 2012 or 2016 General Election is not clear.  Two election-years of
-data are unlikely to be sufficient to gauge broad progress in a state
-as populous and heterogeneous as Florida.
+  (last accessed June 30, 2017).}  Whether what appears to be a recent
+decrease in long lines reflects progress in Florida election
+administration, substitution effects and voter sorting, or
+idiosyncrasies from either the 2012 or 2016 General Election is not
+clear.  Two election-years of data are not sufficient to gauge broad
+progress in election administration in a state as populous and
+heterogeneous as Florida.
 
 % conditional on our strategy for identifying those
 % Florida early voters who suffered long waits in 2012, 
@@ -386,7 +89,7 @@ the polls and equal treatment of voters.
 Voting is a fundamental right in the United States.  Exercising this
 right entails costs, as discussed by \cite{downs:econtheory} in his
 formulation of the calculus of voting, and an excessively high cost of
-voting can diminish the meaning of the right to vote.  Per the United
+voting can debase the meaning of the right to vote.  Per the United
 States Supreme Court in \emph{Reynolds v.\ Sims} (1964), ``[T]he right
 of suffrage can be denied by a debasement or dilution of the weight of
 a citizen's vote just as effectively as by wholly prohibiting the free
@@ -490,7 +193,7 @@ With few exceptions \citep[e.g.,][]{spencermarkovits:renege,
   herronsmith:hanoverstudy, pettigrew:longlinesminorityprecincts},
 much of what we know about wait times for voters is derived from
 survey research.  Most notably, \citet{stewart:waitingtovote2012} and
-his coauthors have conducted Internet-based surveys in the United
+his coauthors have conducted internet-based surveys in the United
 States following the last three general elections.  These surveys
 query voters about their experiences at the polls and include items on
 wait times.  \citeauthor{stewart:waitingtovote2012}'s \emph{Survey of
@@ -534,10 +237,9 @@ minutes for Whites; Hispanics reported waiting 19 minutes, on
 average.''  \citeauthor{stewart:waitingtovote2012} concludes that
 these differences in wait times could be ``due to factors associated
 with where minority voters live, rather than with minority voters as
-individuals'' (pp.\ 457-458).  \cite{herron:confidence} draw on an
-exit poll conducted across Miami-Dade precincts in 2014 to gauge the
-experiences of voters as they were leaving their polling stations and
-report that those who waited longer in line had less confidence in 
+individuals'' (pp.\ 457-458).  \cite{herron:confidence}, drawing on
+exit polls conducted across Miami-Dade precincts in 2014, report that
+voters who waited longer in line expressed less confidence in
 electoral processes.
 
 The usefulness of surveys in the study of voter wait times depends on
@@ -598,7 +300,8 @@ Election, some 17 percent of the 137 million votes
 cast.\footnote{These numbers are drawn from the United States Election
   Project; see fn.\ \ref{fn:uselectionproject}.}  If one were to be
 concerned that our focus on early voters in Florida limits our scope,
-these figures imply that our results apply to millions of Americans.
+these figures imply that our results are relevant for millions of
+Americans.
 
 % , as there is a wealth of information not only
 % about who votes and by what method of voting, but when and how
