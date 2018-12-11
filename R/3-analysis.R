@@ -928,3 +928,33 @@ ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under.
 #   transmute(county = X1, countycode, X2, voterfile = n, actual = X3, difference = actual - voterfile, percentdiff = round(difference/voterfile*100, 2)) %>% arrange(desc(abs(percentdiff)))
 # 
 # 
+
+## make usage plot based on over
+
+forplot <- vte[names(mn1$linear.predictors),] %>% 
+  group_by(hr, over) %>% 
+  summarize(num = n() / length(unique(time))) %>%
+  mutate(over2 = recode(as.character(over), "TRUE" = 1, "FALSE" = 2)) %>%
+  mutate(over2 = as.factor(over2))
+  
+ggplot(data = forplot, aes(x = hr, y = num, colour = over2)) +
+  geom_point(size = 1.5, position = position_nudge(.5)) +
+  theme_bw() +
+  xlab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
+  scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...", 
+                     labels = c("last voter checked-in after 7:30pm", "last voter checked-in before 7:30pm")) +
+  scale_y_continuous(limits = c(0, 800), breaks = seq(0, 800, by = 100), name = "Check-ins per hour") +
+  scale_x_discrete(limits = 
+                     c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
+                       "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm", "7:00pm")) +
+  geom_vline(xintercept = 13, colour ="black", size = 1.25) +
+  theme(legend.position = c(0.3, 0.15))
+ggsave(filename = "../Plots/over-plot.pdf", height = 5, width = 7)
+
+  
+  
+  
+  
+
+

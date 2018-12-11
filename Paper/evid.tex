@@ -659,20 +659,21 @@ Florida counties.\footnote{We made public records requests to
 % across a variety of early voting stations during the 2012 and 2016
 % General Elections.  
 
-A Florida voter who wishes to cast his or her ballot prior to Election Day may vote at
-any early voting polling location in the county in which he or she is
-registered. This is distinct from in-person, Election Day voting,
-during which a registered Florida voter may vote only at his or her
-assigned precinct.  This flexibility necessitates that a county track
-its early voters.  Rather than relying on traditional, paper-based
-pollbooks to check in these individuals, as is the case for Election
-Day in many Florida counties, the 67 county Supervisors of Elections
-in Florida use electronic pollbooks to check in voters during the
-state's early voting period.  These pollbooks are for the most part
-known as Electronic Voter iDentification machines, or EViDs for short.
-Although there is variance across Florida counties in electronic
-pollbook implementation, for simplicity we refer to all electronic
-pollbooks as EViD machines.\footnote{For example, Sarasota County uses
+A Florida voter who wishes to cast his or her ballot prior to Election
+Day may vote at any early voting polling location in the county in
+which he or she is registered. This is distinct from in-person,
+Election Day voting, during which a registered Florida voter may vote
+only at his or her assigned precinct. This flexibility necessitates
+that a county track its early voters. Rather than relying on
+traditional, paper-based pollbooks to check in these individuals, as
+is the case for Election Day in many Florida counties, the 67 county
+Supervisors of Elections in Florida use electronic pollbooks to check
+in voters during the state's early voting period. These pollbooks are
+for the most part known as Electronic Voter iDentification machines,
+or EViDs for short. Although there is variance across Florida counties
+in electronic pollbook implementation, for simplicity we refer to all
+electronic pollbooks as EViD machines.\footnote{For example, Sarasota
+  County uses
   a different electronic voting system for its early voters (source
   for this is a phone call with Cathy Fowler, office of the Sarasota
   Supervisor of Elections, on March 31, 2017).}
@@ -1300,36 +1301,57 @@ code;\footnote{U.S.\ Census Bureau, 2010-2014 American Community
 for participation in the 2008 and 2016 General Elections.
 
 The covariates in our regression are based on findings in the
-literature on turnout in American elections.  This literature is
+literature on turnout in American elections. This literature is
 extensive, and among other things it considers how age
 \citep{strateetal:age,hightonwolfinger:lifecycle}, gender
 \citep{schlozman:genderdifferentvoice}, party
 \citep{martinezgill:partisanturnout,grofmanetal:turnout}, and race
 \citep{verbaetal:raceparticipation,fraga:raceturnout} are associated
-with individual-level turnout decisions.  We estimate our logistic
-regression using 758,266 individuals, and coefficient estimates appear
-in Table \ref{tab:reg} in the appendix.\footnote{Our regression is
+with individual-level turnout decisions. We estimate our logistic
+regression using 757,473 individuals.\footnote{Our regression is
   estimated only using individuals who voted before 7:00pm.  In
   addition, we restrict attention to individuals who are registered
   either Democrat, Republican, or Independent, or have recorded no
   party affiliation.  Finally, we drop registered voters who have no
   recorded gender, race, or birthdate.}
 
-Per the leftmost column (1) of Table \ref{tab:reg}, having voted in
-2008 in Florida is positively associated with subsequent voting in
-2016, and being older is associated with greater turnout,
-\emph{ceteris paribus}.  The latter result is consistent with findings
-on turnout and age \citep{costaetal:walkingthewalk}.  Our age
-estimates in Table \ref{tab:reg} are presumably underestimated; the
-regression model that generates them excludes the youngest voters in
-2016, who could not legally register to vote in Florida in 2008, and
-younger registered voters are, \emph{ceteris paribus}, less likely to
-turn out to vote \citep{shinosmith:registrationtiming}.  Table
-\ref{tab:reg} also shows that, \emph{ceteris paribus}, registered men
-vote less frequently than women and that registered whites vote often
-than non-whites.  This gender finding is consistent with
-\citet{leighleynagler:whovotesnow} although the race/ethnicity result
-is not.
+Before turning to results, we consider whether our indicator variable
+($Over$) for the presence of lines in voting locations is consistent
+with features of our check-in data. If, using the 7:30pm rule as noted
+above, the voting locations we identified as having been affected by
+lines truly were busier than the locations where we believe lines were
+not an issue, then we should observe greater numbers of check-ins in
+the former compared to the latter. On this point, see Figure
+\ref{fig:overplot}. This figure displays check-ins per location,
+broken down by $Over$. What we see in the figure is that, in every
+hour of the day, locations we believe had voting lines were busier
+than locations where we do not believe lines were prevalent. This
+constitutes a useful consistency check for $Over$.
+
+\begin{figure}[!ht]
+  \caption{Check-ins per hour across congested and non-congested
+    voting locations}
+  \label{fig:overplot}
+  \centering
+    \centering\includegraphics[scale = 1.0]{over-plot.pdf}
+\end{figure}
+
+Turning now to regression results, coefficient estimates appear in
+Table \ref{tab:reg} in the appendix. Per the leftmost column (1) of
+Table \ref{tab:reg}, having voted in 2008 in Florida is positively
+associated with subsequent voting in 2016, and being older is
+associated with greater turnout, \emph{ceteris paribus}. The latter
+result is consistent with findings on turnout and age
+\citep{costaetal:walkingthewalk}. Our age estimates in Table
+\ref{tab:reg} are presumably underestimated; the regression model that
+generates them excludes the youngest voters in 2016, who could not
+legally register to vote in Florida in 2008, and younger registered
+voters are, \emph{ceteris paribus}, less likely to turn out to vote
+\citep{shinosmith:registrationtiming}. Table \ref{tab:reg} also shows
+that, \emph{ceteris paribus}, registered men vote less frequently than
+women and that registered whites vote often than non-whites. This
+gender finding is consistent with \citet{leighleynagler:whovotesnow}
+although the race/ethnicity result is not.
 
 Our objective is not to explore the relationship between demographic
 covariates and voter turnout in Florida in 2016.  Rather, we want to
