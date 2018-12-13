@@ -376,7 +376,7 @@ margfx <- ggplot(marg1, aes(hrs, ybar, ymin = lo, ymax = hi)) +
   geom_vline(xintercept = 13, colour ="black", size = 1.25) +
   geom_hline(yintercept = 0) +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
-  scale_y_continuous(breaks = seq(-6, 2, .5),limits = c(-6, 2), name = "Average treatment effect (%)") +
+  scale_y_continuous(breaks = seq(-7, 2, .5), limits = c(-7, 2), name = "Average treatment effect (%)") +
   scale_x_discrete(limits = 
                      c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
                        "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm", "7:00pm")) +
@@ -390,7 +390,7 @@ margfx2 <- ggplot(marg2, aes(hrs, ybar, ymin = lo, ymax = hi)) +
   geom_vline(xintercept = 13, colour ="black", size = 1.25) +
   geom_hline(yintercept = 0) +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
-  scale_y_continuous(breaks = seq(-6, 2, .5),limits = c(-6, 2), name = "Average treatment effect (%)") +
+  scale_y_continuous(breaks = seq(-7, 2, .5),limits = c(-7, 2), name = "Average treatment effect (%)") +
   scale_x_discrete(limits = 
                      c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
                        "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm", "7:00pm")) +
@@ -404,7 +404,7 @@ margfx3 <- ggplot(marg3, aes(hrs, ybar, ymin = lo, ymax = hi)) +
   geom_vline(xintercept = 13, colour ="black", size = 1.25) +
   geom_hline(yintercept = 0) +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
-  scale_y_continuous(breaks = seq(-6, 2, .5),limits = c(-6, 2), name = "Average treatment effect (%)") +
+  scale_y_continuous(breaks = seq(-7, 2, .5),limits = c(-7, 2), name = "Average treatment effect (%)") +
   scale_x_discrete(limits = 
                      c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
                        "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm", "7:00pm")) +
@@ -418,7 +418,7 @@ margfx4 <- ggplot(marg4, aes(hrs, ybar, ymin = lo, ymax = hi)) +
   geom_vline(xintercept = 13, colour ="black", size = 1.25) +
   geom_hline(yintercept = 0) +
   theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5)) +
-  scale_y_continuous(breaks = seq(-6, 2, .5),limits = c(-6, 2), name = "Average treatment effect (%)") +
+  scale_y_continuous(breaks = seq(-7, 2, .5), limits = c(-7, 2), name = "Average treatment effect (%)") +
   scale_x_discrete(limits = 
                      c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
                        "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm", "7:00pm")) +
@@ -433,7 +433,7 @@ t <- stargazer(mn1, mn2, mn4,
                title = "Logit regression predicting voter turnout in 2016",
                label = "tab:reg",
                ##                   dep.var.labels =  c("Voted in 2016", "Voted early in 2016", "Voted absentee in 2016", "Voted in 2014"),               
-               dep.var.labels =  c("Voted in 2016", "Voted early in 2016", "Voted absentee in 2016", "Voted in 2014"),                              
+               dep.var.labels =  c("Voted in 2016", "Voted early in 2016", "Voted in 2014"),                              
                omit.stat=c("LL","ser","f"),
                type = "latex",
                order = c(1:12, 27:37, 13:26),
