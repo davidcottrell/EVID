@@ -10,6 +10,10 @@ coltypes <- list(
   time = col_character()
 )
 
+if (Sys.info()["user"] == "herron") {
+  setwd ("/Users/herron/research/EVID/R")
+}
+
 
 # Load EVL data -----------------------------------------------------------
 
@@ -36,7 +40,6 @@ path <- "../Data/Parsed/AlachuaEarlyVotingEVID2012General-parsed.txt"
 ala12 <- read_delim(path, delim = ";", col_types = coltypes)
 ala12 <- ala12 %>% transmute(voterid, county = "ALA", location, date, time)
 ala12 <- ala12 %>% mutate(time = str_pad(time, pad = "0", width = 5, side = "left"))
-
 
 path <- "../Data/Parsed/AlachuaEarlyVotingEVID2016General-parsed.txt"
 ala16 <- read_delim(path, delim = "\t", col_types = coltypes)
@@ -139,11 +142,22 @@ pal16 <- left_join(pal16, loc16, by = "voterid")
 pal16 <- pal16 %>% select(voterid, county, location, date, time)
 pal16 <- pal16 %>% filter(!is.na(location)) #remove 1,409 that dont match to in-person early voting locations
 
+# Osceola --------------------------------------------------------------
+
+path <- "../Data/Parsed/OsceolaEarlyVotingEVID2012General-parsed.tex"
+osc12 <- read_delim(path, delim = ";", col_types = coltypes)
+osc12 <- osc12 %>% transmute(voterid, county = "OSC", location, date, time)
+osc12 <- osc12 %>% mutate(time = str_pad(time, pad = "0", width = 5, side = "left"))
+
+path <- "../Data/Parsed/OsceolaEarlyVotingEVID2016General-parsed.tex"
+osc16 <- read_delim(path, delim = ";", col_types = coltypes)
+osc16 <- osc16 %>% transmute(voterid, county  = "OSC", location, date, time)
+osc16 <- osc16 %>% mutate(time = str_pad(time, pad = "0", width = 5, side = "left"))
 
 # Bind Counties ------------------------------------------------------------
 
-evid12 <- bind_rows(ala12, bro12, hil12, dad12, ora12, pal12)
-evid16 <- bind_rows(ala16, bro16, hil16, dad16, ora16, pal16)
+evid12 <- bind_rows(ala12, bro12, hil12, dad12, ora12, pal12, osc12)
+evid16 <- bind_rows(ala16, bro16, hil16, dad16, ora16, pal16, osc16)
 
 # clean date
 evid12 <- evid12 %>% separate(date, into = c("month", "day", "year"), sep = "/")
