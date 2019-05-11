@@ -160,6 +160,9 @@ path <- "../Data/Parsed/HernandoEarlyVotingEVID2012General-parsed.tex"
 her12 <- read_delim(path, delim = ";", col_types = coltypes)
 her12 <- her12 %>% transmute(voterid, county = "HER", location, date, time)
 her12 <- her12 %>% mutate(time = str_pad(time, pad = "0", width = 5, side = "left"))
+her12 <- her12 %>% select(-location) # the location variable for Hernando 2012 is missing
+her12 <- left_join(her12, loc12, by = "voterid")
+sum(is.na(her12$location))
 
 path <- "../Data/Parsed/HernandoEarlyVotingEVID2016General-parsed.tex"
 her16 <- read_delim(path, delim = ";", col_types = coltypes)
