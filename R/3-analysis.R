@@ -108,6 +108,7 @@ colnames(table2use)[match("DAD", colnames(table2use))] <- "Miami-Dade"
 colnames(table2use)[match("HIL", colnames(table2use))] <- "Hillsborough"
 colnames(table2use)[match("ORA", colnames(table2use))] <- "Orange"
 colnames(table2use)[match("PAL", colnames(table2use))] <- "Palm Beach"
+colnames(table2use)[match("OSC", colnames(table2use))] <- "Osceola"
 table2use <- table2use[, order(colnames(table2use))]
 
 Total <- apply(table2use, 1, sum)
