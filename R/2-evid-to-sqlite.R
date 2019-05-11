@@ -154,10 +154,23 @@ osc16 <- read_delim(path, delim = ";", col_types = coltypes)
 osc16 <- osc16 %>% transmute(voterid, county  = "OSC", location, date, time)
 osc16 <- osc16 %>% mutate(time = str_pad(time, pad = "0", width = 5, side = "left"))
 
+# Hernando --------------------------------------------------------------
+
+path <- "../Data/Parsed/HernandoEarlyVotingEVID2012General-parsed.tex"
+her12 <- read_delim(path, delim = ";", col_types = coltypes)
+her12 <- her12 %>% transmute(voterid, county = "HER", location, date, time)
+her12 <- her12 %>% mutate(time = str_pad(time, pad = "0", width = 5, side = "left"))
+
+path <- "../Data/Parsed/HernandoEarlyVotingEVID2016General-parsed.tex"
+her16 <- read_delim(path, delim = ";", col_types = coltypes)
+her16 <- her16 %>% transmute(voterid, county  = "HER", location, date, time)
+her16 <- her16 %>% mutate(time = str_pad(time, pad = "0", width = 5, side = "left"))
+
+
 # Bind Counties ------------------------------------------------------------
 
-evid12 <- bind_rows(ala12, bro12, hil12, dad12, ora12, pal12, osc12)
-evid16 <- bind_rows(ala16, bro16, hil16, dad16, ora16, pal16, osc16)
+evid12 <- bind_rows(ala12, bro12, hil12, dad12, ora12, pal12, osc12, her12)
+evid16 <- bind_rows(ala16, bro16, hil16, dad16, ora16, pal16, osc16, her16)
 
 # clean date
 evid12 <- evid12 %>% separate(date, into = c("month", "day", "year"), sep = "/")
