@@ -169,6 +169,16 @@ her16 <- read_delim(path, delim = ";", col_types = coltypes)
 her16 <- her16 %>% transmute(voterid, county  = "HER", location, date, time)
 her16 <- her16 %>% mutate(time = str_pad(time, pad = "0", width = 5, side = "left"))
 
+# Levy --------------------------------------------------------------
+
+
+## This does not work.  Extra columns in the Levy file and types are not correct.  To be completed.
+path <- "../Data/Parsed/LevyEarlyVotingEVID2012General-parsed.tex"
+lev12 <- read_delim(path, delim = ",")#, col_types = coltypes)
+her16 <- her16 %>% transmute(voterid, county  = "HER", location, date, time)
+her16 <- her16 %>% mutate(time = str_pad(time, pad = "0", width = 5, side = "left"))
+
+
 
 # Bind Counties ------------------------------------------------------------
 
