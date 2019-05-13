@@ -205,6 +205,11 @@ lev16 <- lev16 %>%
 lev16 <- lev16 %>%
   select(voterid, county, location, date, time)
 
+## Drop 2016 Levy county votes with 00:00 time and after early voting period
+lev16 <- lev16 %>%
+  filter(time != "00:00") %>%
+  filter(date != "11/07/16" & date != "11/08/16")
+
 # Bind Counties ------------------------------------------------------------
 
 evid12 <- bind_rows(ala12, bro12, hil12, dad12, ora12, pal12, osc12, her12, lev12)
