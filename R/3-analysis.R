@@ -110,6 +110,7 @@ colnames(table2use)[match("ORA", colnames(table2use))] <- "Orange"
 colnames(table2use)[match("PAL", colnames(table2use))] <- "Palm Beach"
 colnames(table2use)[match("OSC", colnames(table2use))] <- "Osceola"
 colnames(table2use)[match("HER", colnames(table2use))] <- "Hernando"
+colnames(table2use)[match("LEV", colnames(table2use))] <- "Levy"
 
 table2use <- table2use[, order(colnames(table2use))]
 
