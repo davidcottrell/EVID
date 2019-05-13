@@ -210,7 +210,12 @@ lev16 <- lev16 %>%
 ## Drop 2016 Levy county votes with 00:00 time, after early voting period, and well before early voting period
 lev16 <- lev16 %>%
   filter(time != "00:00") %>%
-  filter(date != "11/07/16" & date != "11/08/16" & date != "11/15/16") %>%
+  filter(date != "11/07/16" & 
+           date != "11/08/16" & 
+           date != "11/09/16" & 
+           date != "11/10/16" & 
+           date != "11/14/16" &
+           date != "11/18/16") %>%
   filter(date != "10/18/16")
   
 
