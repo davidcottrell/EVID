@@ -171,19 +171,44 @@ her16 <- her16 %>% mutate(time = str_pad(time, pad = "0", width = 5, side = "lef
 
 # Levy --------------------------------------------------------------
 
+## Warning!  Some voting times are reported as 00:00
 
-## This does not work.  Extra columns in the Levy file and types are not correct.  To be completed.
 path <- "../Data/Parsed/LevyEarlyVotingEVID2012General-parsed.tex"
-lev12 <- read_delim(path, delim = ",")#, col_types = coltypes)
-her16 <- her16 %>% transmute(voterid, county  = "HER", location, date, time)
-her16 <- her16 %>% mutate(time = str_pad(time, pad = "0", width = 5, side = "left"))
+## Warning: the read reports some warning messages (18476 rows) about QualifiedCertificate field
+lev12 <- read_delim(path, delim = ",", col_types = paste(rep("c", times = 18), collapse = ""))
+lev12 <- lev12 %>%
+  rename(voterid = RegNum) %>%
+  mutate(location = "Supervisor of Elections Office",
+         county = "LEV")
+lev12 <- lev12 %>%
+  mutate(time = str_sub(VoteDate, start = 12, end = 16)) 
+lev12 <- lev12 %>%
+  mutate(date = str_sub(VoteDate, start = 6, end = 10)) %>%
+  mutate(date = paste(date, "/12", sep = "")) %>%
+  mutate(date = str_replace_all(date, pattern = '-', replacement = '/'))
+lev12 <- lev12 %>%
+  select(voterid, county, location, date, time)
 
-
+path <- "../Data/Parsed/LevyEarlyVotingEVID2016General-parsed.tex"
+## Warning: the read reports some warning messages (19524 rows) about QualifiedCertificate field
+lev16 <- read_delim(path, delim = ",", col_types = paste(rep("c", times = 18), collapse = ""))
+lev16 <- lev16 %>%
+  rename(voterid = RegNum) %>%
+  mutate(location = "Supervisor of Elections Office",
+         county = "LEV")
+lev16 <- lev16 %>%
+  mutate(time = str_sub(VoteDate, start = 12, end = 16)) 
+lev16 <- lev16 %>%
+  mutate(date = str_sub(VoteDate, start = 6, end = 10)) %>%
+  mutate(date = paste(date, "/16", sep = "")) %>%
+  mutate(date = str_replace_all(date, pattern = '-', replacement = '/'))
+lev16 <- lev16 %>%
+  select(voterid, county, location, date, time)
 
 # Bind Counties ------------------------------------------------------------
 
-evid12 <- bind_rows(ala12, bro12, hil12, dad12, ora12, pal12, osc12, her12)
-evid16 <- bind_rows(ala16, bro16, hil16, dad16, ora16, pal16, osc16, her16)
+evid12 <- bind_rows(ala12, bro12, hil12, dad12, ora12, pal12, osc12, her12, lev12)
+evid16 <- bind_rows(ala16, bro16, hil16, dad16, ora16, pal16, osc16, her16, lev16)
 
 # clean date
 evid12 <- evid12 %>% separate(date, into = c("month", "day", "year"), sep = "/")
