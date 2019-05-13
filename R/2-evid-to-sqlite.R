@@ -191,6 +191,8 @@ lev12 <- lev12 %>%
 
 path <- "../Data/Parsed/LevyEarlyVotingEVID2016General-parsed.tex"
 ## Warning: the read reports some warning messages (19524 rows) about QualifiedCertificate field
+## Offical statement of 2016 Levy County vote:
+## https://www.votelevy.com/Portals/Levy/documents/StatementOfVotesCast%20new%20with%20splits.pdf
 lev16 <- read_delim(path, delim = ",", col_types = paste(rep("c", times = 18), collapse = ""))
 lev16 <- lev16 %>%
   rename(voterid = RegNum) %>%
