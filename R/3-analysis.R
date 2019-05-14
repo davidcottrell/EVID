@@ -96,7 +96,7 @@ evid <- evid %>% filter(time != "00:00") # There are spikes at midnight that don
 cat ("EVID counts after dropping midnight votes\n")
 evid %>% group_by(year) %>% count
 
-## Make evid count summary table for our six counties
+## Make evid count summary table for our ten counties
 
 table2use <- 
     rbind(table(dplyr::select(evid %>% filter(year == 2012), county)),
@@ -111,6 +111,7 @@ colnames(table2use)[match("PAL", colnames(table2use))] <- "Palm Beach"
 colnames(table2use)[match("OSC", colnames(table2use))] <- "Osceola"
 colnames(table2use)[match("HER", colnames(table2use))] <- "Hernando"
 colnames(table2use)[match("LEV", colnames(table2use))] <- "Levy"
+colnames(table2use)[match("PUT", colnames(table2use))] <- "Putnam"
 
 table2use <- table2use[, order(colnames(table2use))]
 
