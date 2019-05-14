@@ -213,11 +213,21 @@ lev16 <- lev16 %>%
   filter(date != "11/07/16" & date != "11/08/16" & date != "11/15/16") %>%
   filter(date != "10/18/16")
   
+# Putnam --------------------------------------------------------------
+
+path <- "../Data/Parsed/PutnamEarlyVotingEVID2012General-parsed.tex"
+put12 <- read_delim(path, delim = ";", col_types = coltypes)
+put12 <- put12 %>% transmute(voterid, county = "PUT", location, date, time)
+
+path <- "../Data/Parsed/PutnamEarlyVotingEVID2016General-parsed.tex"
+put16 <- read_delim(path, delim = ";", col_types = coltypes)
+put16 <- put16 %>% transmute(voterid, county  = "PUT", location, date, time)
+
 
 # Bind Counties ------------------------------------------------------------
 
-evid12 <- bind_rows(ala12, bro12, hil12, dad12, ora12, pal12, osc12, her12, lev12)
-evid16 <- bind_rows(ala16, bro16, hil16, dad16, ora16, pal16, osc16, her16, lev16)
+evid12 <- bind_rows(ala12, bro12, hil12, dad12, ora12, pal12, osc12, her12, lev12, put12)
+evid16 <- bind_rows(ala16, bro16, hil16, dad16, ora16, pal16, osc16, her16, lev16, put16)
 
 # clean date
 evid12 <- evid12 %>% separate(date, into = c("month", "day", "year"), sep = "/")
