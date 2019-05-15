@@ -23,7 +23,7 @@ simpleCap <- function(x) {
 
 path <- "../Data/Parsed/2012GEEarly.txt"
 loc12 <- read_delim(path, delim = "\t", col_types = cols(.default = "c")) # expect warning from number of columns error
-loc12 <- loc12 %>% select(voterid = FvrsVoterIdNumber, location = Location)
+loc12 <- loc12 %>% dplyr::select(voterid = FvrsVoterIdNumber, location = Location)
 loc12 <- loc12 %>% filter(voterid != "FvrsVoterIdNumber", !duplicated(voterid)) # get rid of the repeated header and the  32 duplicated ids
 loc12 <- loc12 %>% mutate(location = simpleCap(location))
 
@@ -186,6 +186,17 @@ lev12 <- lev12 %>%
   mutate(date = str_sub(VoteDate, start = 6, end = 10)) %>%
   mutate(date = paste(date, "/12", sep = "")) %>%
   mutate(date = str_replace_all(date, pattern = '-', replacement = '/'))
+lev12 <- lev12 %>%
+  filter(time != "00:00") %>%
+  filter(date == "10/27/12" | 
+           date == "10/28/12" |
+           date == "10/29/12" | 
+           date == "10/30/12" | 
+           date == "10/31/12" |
+           date == "11/01/12" |
+           date == "11/02/12" |
+           date == "11/03/12")
+
 lev12 <- lev12 %>%
   select(voterid, county, location, date, time)
 
