@@ -868,29 +868,36 @@ voter with such a late check-in must have waited to vote.
 %> unique(evid12$county)
 %[1] "ALA" "BRO" "HIL" "DAD" "ORA" "PAL"
 
-%> length(unique(evid12$location))
-%[1] 78
+% > evid %>% filter(year == 2012) %>% summarize(length(unique(location)))
+% # A tibble: 1 x 1
+%   `length(unique(location))`
+%                        <int>
+% 1                         88
+% > evid %>% filter(year == 2016) %>% summarize(length(unique(location)))
+% # A tibble: 1 x 1
+%   `length(unique(location))`
+%                        <int>
+% 1                        116
 
-% XXX MCH NEEDS TO FIX THIS SO THAT LOCATION NAMES ARE UNIQUE!!
-
-
-In 2012, there were across our \numcounties\ Florida counties 78XXX
-early voting stations in 2012 that serviced voters in an eight day
-long, early voting period.\footnote{Early voting locations in 2012
-  where two or fewer individuals recorded votes were dropped from our
-  analysis.  Some of our county EViD timestamp files lack voting
-  location data.  To determine the locations at which affected voters
-  cast their ballots, we link voters' early voting records to files that
-  record the location of every early vote in Florida. See Florida Division of Elections, 
-  ``Early Voting Locations and Times - Statewide File,'' available at
-  \url{https://dos.myflorida.com/media/697189/early-voting-locations-and-times-2016-general-election_eng.pdf} 
-  (last accessed May 11, 2019).}  Figure \ref{fig:nrlocs2012} describes by day of early voting and by hourly
-window the number of locations across our counties that actively
-served voters. Most locations served early voters virtually the entire
-day, and this is evident in the flat line, for the most part pegged a
-bit under 80XXX prior to 7:00pm, at the top of the figure.  The most
-notable exception to this pattern occurred at the earliest time of the
-day, during which several early voting stations lacked active voters.
+In 2012, there were across our \numcounties\ Florida counties 88 early
+voting stations in 2012 that serviced voters in an eight day long,
+early voting period.\footnote{Early voting locations in 2012 where two
+  or fewer individuals recorded votes were dropped from our analysis.
+  Some of our county EViD timestamp files lack voting location data.
+  To determine the locations at which affected voters cast their
+  ballots, we link voters' early voting records to files that record
+  the location of every early vote in Florida. See Florida Division of
+  Elections, ``Early Voting Locations and Times - Statewide File,''
+  available at
+  \url{https://dos.myflorida.com/media/697189/early-voting-locations-and-times-2016-general-election_eng.pdf}
+  (last accessed May 11, 2019).}  Figure \ref{fig:nrlocs2012}
+describes by day of early voting and by hourly window the number of
+locations across our counties that actively served voters. Most
+locations served early voters virtually the entire day, and this is
+evident in the flat line, for the most part pegged a bit under 80XXX
+prior to 7:00pm, at the top of the figure.  The most notable exception
+to this pattern occurred at the earliest time of the day, during which
+several early voting stations lacked active voters.
 
 \begin{figure}[!ht]
   \caption{Number of locations where early votes were cast, 2012 General Election}
@@ -1058,11 +1065,8 @@ increased its number of early voting days from eight to 14, ostensibly
 in an effort to reduce voting location congestion. Was this change
 effective?  Figure \ref{fig:nrlocs2016} is analogous to the earlier
 figure that described active early voting locations. Our \numcounties\
-counties had 104XXXx early voting stations in place for the 2016 General
+counties had 116 early voting stations in place for the 2016 General
 Election.
-
-% > length(unique(evid16$location))
-% [1] 102
 
 \begin{figure}[!ht]
   \caption{Number of locations where early votes were cast, 2016 General

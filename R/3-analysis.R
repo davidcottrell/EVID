@@ -23,6 +23,22 @@ my_db <- src_sqlite("../Data/evid-db.sqlite3")
 # Use evid table
 evid <- my_db %>% tbl("evid") %>% collect(Inf)
 
+# Check for repeated early voting locations across more than one county
+for (year2use in unique(evid$year)) {
+  locations2use <- evid %>% filter(year == year2use) %>% dplyr::select(location) %>% unique() %>% pull()
+  for (location2use in locations2use) {
+    num <- evid %>% 
+      filter(year == year2use, location == location2use) %>%
+      summarize(counties = unique(county))
+    if (nrow(num) > 1) {
+      cat ("Careful! Repeated counties with year/location ", year, "/", location2use, "\n")
+    }
+  }
+}  
+evid %>% filter(year == 2012) %>% summarize(length(unique(location)))
+evid %>% filter(year == 2016) %>% summarize(length(unique(location)))
+
+
 # Make time variables
 evid <- evid %>% mutate(datetime = parse_datetime(paste(date, time), "%m/%d/%y %H:%M" ))
 
@@ -47,7 +63,15 @@ evid$hr <- factor(evid$hour,levels = c(7:23,0,1), labels = hrs )
 
 #Recode race
 evid <- evid %>% 
-  mutate(race=recode(race, `1`="Other",`2`="Asian",`3`="Black",`4`="Hispanic",`5`="White",`6`="Other",`7`="Other",`9`="Other"))
+  mutate(race=recode(race, 
+                     `1` = "Other",
+                     `2` = "Asian",
+                     `3` = "Black",
+                     `4` = "Hispanic",
+                     `5` = "White",
+                     `6` = "Other",
+                     `7` = "Other",
+                     `9` = "Other"))
 
 
 #Recode party affiliation
@@ -58,7 +82,6 @@ age <- function(dob, age.day, units = "years") {
   calc.age = interval(dob, age.day) / duration(num = 1, units = units)
   return(calc.age)
 }
-
 
 evid <- evid %>%
   mutate(
@@ -83,14 +106,14 @@ evid <- evid %>%
     voted_absentee_16 = votedabsentee(gen_16)
   )
 
-# 942,194 early voters in 2012 and 1,687,304 early voters in 2016
+# 53188 in 2012 and 14911 in 2016 could not be matched to the voter extract.  
+evid %>% filter(is.na(gender) & is.na(race) & is.na(birthdate)) %>% group_by(year) %>% count
+
 cat ("EVID counts before dropping midnight votes\n")
 evid %>% group_by(year) %>% count
-
-# 40,455 in 2012 and 969 in 2016 could not be matched to the voter extract.  
-evid %>% filter(is.na(gender) & is.na(race) & is.na(birthdate)) %>% group_by(year)  %>% count
-
 evid <- evid %>% filter(time != "00:00") # There are spikes at midnight that dont make sense.  So remove 115 with suspicious midnight time
+cat ("EVID counts after dropping midnight votes\n")
+evid %>% group_by(year) %>% count
 
 # Total counts after dropping suspicious midnight votes
 cat ("EVID counts after dropping midnight votes\n")
@@ -960,6 +983,6 @@ ggsave(filename = "../Plots/over-plot.pdf", height = 5, width = 7)
   
   
   
-  
+
 
 
