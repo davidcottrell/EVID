@@ -959,7 +959,7 @@ ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under.
 
 ## make usage plot based on over
 
-forplot <- vte[names(mn1$linear.predictors),] %>% 
+forplot <- vte[as.integer(names(mn1$linear.predictors)),] %>% 
   group_by(hr, over) %>% 
   summarize(num = n() / length(unique(time))) %>%
   mutate(over2 = recode(as.character(over), "TRUE" = 1, "FALSE" = 2)) %>%
