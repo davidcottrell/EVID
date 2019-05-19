@@ -240,11 +240,21 @@ path <- "../Data/Parsed/PutnamEarlyVotingEVID2016General-parsed.tex"
 put16 <- read_delim(path, delim = ";", col_types = coltypes)
 put16 <- put16 %>% transmute(voterid, county  = "PUT", location, date, time)
 
+# Calhoun --------------------------------------------------------------
+
+path <- "../Data/Parsed/CalhounEarlyVotingEVID2012General-parsed.txt"
+cal12 <- read_delim(path, delim = ";", col_types = coltypes)
+cal12 <- cal12 %>% transmute(voterid, county = "CAL", location, date, time)
+
+path <- "../Data/Parsed/CalhounEarlyVotingEVID2016General-parsed.txt"
+cal16 <- read_delim(path, delim = ";", col_types = coltypes)
+cal16 <- cal16 %>% transmute(voterid, county  = "CAL", location, date, time)
+
 
 # Bind Counties ------------------------------------------------------------
 
-evid12 <- bind_rows(ala12, bro12, hil12, dad12, ora12, pal12, osc12, her12, lev12, put12)
-evid16 <- bind_rows(ala16, bro16, hil16, dad16, ora16, pal16, osc16, her16, lev16, put16)
+evid12 <- bind_rows(ala12, bro12, hil12, dad12, ora12, pal12, osc12, her12, lev12, put12, cal12)
+evid16 <- bind_rows(ala16, bro16, hil16, dad16, ora16, pal16, osc16, her16, lev16, put16, cal16)
 
 # clean date
 evid12 <- evid12 %>% separate(date, into = c("month", "day", "year"), sep = "/")
