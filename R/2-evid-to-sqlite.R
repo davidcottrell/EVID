@@ -250,11 +250,25 @@ path <- "../Data/Parsed/CalhounEarlyVotingEVID2016General-parsed.txt"
 cal16 <- read_delim(path, delim = ";", col_types = coltypes)
 cal16 <- cal16 %>% transmute(voterid, county  = "CAL", location, date, time)
 
+# Manatee --------------------------------------------------------------
+
+path <- "../Data/Parsed/ManateeEarlyVotingEVID2012General-parsed.txt"
+man12 <- read_delim(path, delim = ";", col_types = coltypes)
+man12 <- man12 %>% transmute(voterid, county = "MAN", location, date, time)
+man12 <- man12 %>% # Note: 2012 Manatee location is empty
+  mutate(location = "Supervisor Of Elections Office Manatee County")
+
+path <- "../Data/Parsed/ManateeEarlyVotingEVID2016General-parsed.txt"
+man16 <- read_delim(path, delim = ";", col_types = coltypes)
+man16 <- man16 %>% transmute(voterid, county  = "MAN", location, date, time)
+man16 <- man16 %>% # Note: 2016 Manatee location is empty
+  mutate(location = "Supervisor Of Elections Office Manatee County")
+
 
 # Bind Counties ------------------------------------------------------------
 
-evid12 <- bind_rows(ala12, bro12, hil12, dad12, ora12, pal12, osc12, her12, lev12, put12, cal12)
-evid16 <- bind_rows(ala16, bro16, hil16, dad16, ora16, pal16, osc16, her16, lev16, put16, cal16)
+evid12 <- bind_rows(ala12, bro12, hil12, dad12, ora12, pal12, osc12, her12, lev12, put12, cal12, man12)
+evid16 <- bind_rows(ala16, bro16, hil16, dad16, ora16, pal16, osc16, her16, lev16, put16, cal16, man16)
 
 # clean date
 evid12 <- evid12 %>% separate(date, into = c("month", "day", "year"), sep = "/")
