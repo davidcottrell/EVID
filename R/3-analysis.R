@@ -135,6 +135,8 @@ colnames(table2use)[match("OSC", colnames(table2use))] <- "Osceola"
 colnames(table2use)[match("HER", colnames(table2use))] <- "Hernando"
 colnames(table2use)[match("LEV", colnames(table2use))] <- "Levy"
 colnames(table2use)[match("PUT", colnames(table2use))] <- "Putnam"
+colnames(table2use)[match("CAL", colnames(table2use))] <- "Calhoun"
+colnames(table2use)[match("MAN", colnames(table2use))] <- "Manatee"
 
 table2use <- table2use[, order(colnames(table2use))]
 
