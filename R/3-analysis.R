@@ -106,9 +106,9 @@ evid <- evid %>%
     voted_absentee_16 = votedabsentee(gen_16)
   )
 
-# 53188 in 2012 and 14911 in 2016 could not be matched to the voter extract.  
+# 54174 in 2012 and 14961 in 2016 could not be matched to the voter extract.  
 evid %>% filter(is.na(gender) & is.na(race) & is.na(birthdate)) %>% group_by(year) %>% count
-
+evid %>% filter(is.na(gender) & is.na(race) & is.na(birthdate)) %>%  count()
 cat ("EVID counts before dropping midnight votes\n")
 evid %>% group_by(year) %>% count
 evid <- evid %>% filter(time != "00:00") # There are spikes at midnight that dont make sense.  So remove 115 with suspicious midnight time
@@ -983,7 +983,69 @@ ggplot(data = forplot, aes(x = hr, y = num, colour = over2)) +
 ggsave(filename = "../Plots/over-plot.pdf", height = 5, width = 7)
 
   
-  
+
+## Check sample bias.
+
+if (dbExistsTable(my_db$con, "zipdata")){dbRemoveTable(my_db$con, "zipdata")}
+
+copy_to(my_db, zipdata, "zipdata", temporary = FALSE, indexes = list("residencezipcode"))
+
+newextract <- tbl(
+  my_db,
+  sql(
+    "SELECT countycode IN ('ALA','BRO','HIL','DAD','ORA','PAL','OSC','HER','LEV','PUT') AS insample, gender, race, partyaffiliation, voterstatus,  (julianday('2016-11-08') - julianday(substr(birthdate,7,4)||'-'||substr(birthdate,1,2)||'-'||substr(birthdate,4,2)))/365 AS age, h4.gen16, z.logincome
+    FROM extract
+    LEFT JOIN history16 AS h4 ON extract.voterid = h4.voterid
+    LEFT JOIN zipdata AS z ON extract.residencezipcode = z.residencezipcode"
+  )
+)
+
+
+
+allflorida <- newextract %>% 
+  summarize(
+    `Total` = n(),
+    `Total Voted in 2016` = sum(gen16 != "N"),
+    `Total Voted Early in 2016` = sum(gen16 == "E"),
+    `% Male` = mean(gender == "M")*100,
+    `% White` = mean(race == 5)*100,
+    `% Democrat` = mean(partyaffiliation == "DEM")*100,
+    `Avg. Age` = mean(age),
+    `Avg. Median Income ($)` = mean(exp(logincome))
+  ) %>% collect()
+
+sampleflorida <- newextract %>% 
+  filter(insample == 1) %>%
+  summarize(
+    `Total` = n(),
+    `Total Voted in 2016` = sum(gen16 != "N"),
+    `Total Voted Early in 2016` = sum(gen16 == "E"),
+    `% Male` = mean(gender == "M")*100,
+    `% White` = mean(race == 5)*100,
+    `% Democrat` = mean(partyaffiliation == "DEM")*100,
+    `Avg. Age` = mean(age),
+    `Avg. Median Income ($)` = mean(exp(logincome))
+  ) %>% collect()
+options(scipen=999)
+fortable <- data.frame(t(rbind(allflorida, sampleflorida)))
+names(fortable) <- c("All Counties", "Sample Counties")
+fortable
+
+table2print <- xtable(round(fortable, 0),
+                      row.names =  TRUE,
+                      caption = "Summary of Registered Voters in Florida",
+                      label = "tab:regVoters",
+                      hline.after = TRUE,
+                      align = "lrr",
+                      type = "latex",
+                      digits = 0)
+
+latex2print <- print(table2print,format.args = list( big.mark = ","), caption.placement = "top")
+
+cat(latex2print,
+    file = "../Paper/all_vs_sample.tex", sep="\n")
+
+
   
 
 
