@@ -244,6 +244,7 @@ if (rundist == "yes"){
 #   summarise(open = min(time2), close = max(time2), maxdiff = max(diff))
 
 forplot <- evid12 %>%  distinct(hr, day, location) %>% count(hr, day) %>% complete(hr, day, fill = list(n = 0))
+max(forplot$n)
 
 plot2save <- ggplot(forplot, aes(hr, n, colour = day, group = day)) + geom_line(position = position_nudge(.5)) + theme_bw() + scale_colour_grey(start = 0.8, end = 0.2, name = "Day") + 
   geom_vline(xintercept = 13, colour = "black", size = 1.25) + geom_point( position = position_nudge(.5)) + xlab("") + xlim(lim) +
@@ -963,7 +964,8 @@ ggsave(plot2save, filename = "../Plots/probability_of_voting_in_2016_over_under.
 
 forplot <- vte[as.integer(names(mn1$linear.predictors)),] %>% 
   group_by(hr, over) %>% 
-  summarize(num = n() / length(unique(time))) %>%
+  #summarize(num = n() / length(unique(time))) %>%
+  summarize(num = n() / length(unique(location))) %>%
   mutate(over2 = recode(as.character(over), "TRUE" = 1, "FALSE" = 2)) %>%
   mutate(over2 = as.factor(over2))
   
@@ -974,7 +976,7 @@ ggplot(data = forplot, aes(x = hr, y = num, colour = over2)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
   scale_color_manual(values = c("grey50", "black"), name = "Among polling locations where...", 
                      labels = c("last voter checked-in after 7:30pm", "last voter checked-in before 7:30pm")) +
-  scale_y_continuous(limits = c(0, 800), breaks = seq(0, 800, by = 100), name = "Check-ins per hour") +
+  scale_y_continuous(limits = c(0, 800), breaks = seq(0, 800, by = 100), name = "Average number of check-ins per hour") +
   scale_x_discrete(limits = 
                      c("7:00am","8:00am","9:00am","10:00am","11:00am","12:00pm",
                        "1:00pm","2:00pm","3:00pm","4:00pm","5:00pm","6:00pm", "7:00pm")) +
@@ -993,20 +995,21 @@ copy_to(my_db, zipdata, "zipdata", temporary = FALSE, indexes = list("residencez
 newextract <- tbl(
   my_db,
   sql(
-    "SELECT countycode IN ('ALA','BRO','HIL','DAD','ORA','PAL','OSC','HER','LEV','PUT') AS insample, gender, race, partyaffiliation, voterstatus,  (julianday('2016-11-08') - julianday(substr(birthdate,7,4)||'-'||substr(birthdate,1,2)||'-'||substr(birthdate,4,2)))/365 AS age, h4.gen16, z.logincome
+    "SELECT countycode IN ('ALA','BRO','HIL','DAD','ORA','PAL','OSC','HER','LEV','PUT','MAN','CAL') AS insample, gender, race, partyaffiliation, voterstatus,  (julianday('2016-11-08') - julianday(substr(birthdate,7,4)||'-'||substr(birthdate,1,2)||'-'||substr(birthdate,4,2)))/365 AS age, h4.gen16, z.logincome
     FROM extract
     LEFT JOIN history16 AS h4 ON extract.voterid = h4.voterid
     LEFT JOIN zipdata AS z ON extract.residencezipcode = z.residencezipcode"
   )
 )
 
-
+newextract <- newextract %>%
+  mutate(gen16 = if_else(is.na(gen16), "N", gen16))
 
 allflorida <- newextract %>% 
   summarize(
     `Total` = n(),
-    `Total Voted in 2016` = sum(gen16 != "N"),
-    `Total Voted Early in 2016` = sum(gen16 == "E"),
+    `% Voted in 2016` = mean(gen16 != "N")*100,
+    `% Voted Early in 2016` = mean(gen16 == "E")*100,
     `% Male` = mean(gender == "M")*100,
     `% White` = mean(race == 5)*100,
     `% Democrat` = mean(partyaffiliation == "DEM")*100,
@@ -1018,8 +1021,8 @@ sampleflorida <- newextract %>%
   filter(insample == 1) %>%
   summarize(
     `Total` = n(),
-    `Total Voted in 2016` = sum(gen16 != "N"),
-    `Total Voted Early in 2016` = sum(gen16 == "E"),
+    `% Voted in 2016` = mean(gen16 != "N")*100,
+    `% Voted Early in 2016` = mean(gen16 == "E")*100,
     `% Male` = mean(gender == "M")*100,
     `% White` = mean(race == 5)*100,
     `% Democrat` = mean(partyaffiliation == "DEM")*100,
@@ -1033,7 +1036,7 @@ fortable
 
 table2print <- xtable(round(fortable, 0),
                       row.names =  TRUE,
-                      caption = "Summary of Registered Voters in Florida",
+                      caption = "Summary of Registered Voters in Florida Voter File as of January, 2016",
                       label = "tab:regVoters",
                       hline.after = TRUE,
                       align = "lrr",
@@ -1045,8 +1048,6 @@ latex2print <- print(table2print,format.args = list( big.mark = ","), caption.pl
 cat(latex2print,
     file = "../Paper/all_vs_sample.tex", sep="\n")
 
-
-  
 
 
 

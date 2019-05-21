@@ -54,7 +54,7 @@
 \addtolength{\myfootnotesep}{-\footnotesep}
 \setlength{\footnotesep}{\myfootnotesep} % set spacing between footnotes
 
-\newcommand{\numcounties}{ten} 
+\newcommand{\numcounties}{twelve} 
 
 % make footnote font size same as regular font size in text
 \renewcommand{\footnotesize}{\normalsize} 
@@ -133,7 +133,7 @@
   voting. We argue that early, in-person voter check-in times allow us
   identify individuals who waited in line to vote. Drawing on election
   administrative records from two General Elections in
-  Florida---1,015,091 check-ins from 2012 and 1,781,680 from 2016---we
+  Florida---1,031,179 check-ins from 2012 and 1,846,845 from 2016---we
   find that minority voters incurred disproportionately long wait
   times in 2012 and that in-person voters who waited excessively in
   2012 had a slightly lower probability---approximately one
@@ -148,10 +148,7 @@
 % > evid %>% group_by(year) %>% count
 % # A tibble: 2 x 2
 % # Groups:   year [2]
-%    year       n
-%   <int>   <int>
-% 1  2012 1015091
-% 2  2016 1781680
+%   year       n%  <int>   <int>% 1  2012 1031179% 2  2016 1846845
 
 \newpage
 \section*{Introduction}
@@ -691,12 +688,16 @@ allowed to cast a ballot.\footnote{See ``The 2017 Florida Statutes,''
   (last accessed December 15, 2017).}
 
 We obtained EViD check-in times from \numcounties\ Florida counties:
-Alachua, Broward, Hernando, Hillsborough, Levy, Miami-Dade, Orange,
+Alachua, Broward, Calhoun, Hernando, Hillsborough, Levy, Miami-Dade, Manatee, Orange,
 Osceola, Palm Beach, and Putnam.\footnote{From the EViD files we
   received from Florida Supervisors of Elections, we disregard all
   votes cast outside of official early voting periods.}  This group
-covers large and urban (Broward and Miami-Dade) as well as rural (Levy
-and Putnam) counties.  Table \ref{tab:evidcounts} contains counts of
+covers large and urban counties (Broward and Miami-Dade) as well as rural (Levy
+and Putnam) counties. The \numcounties\ counties combined contain approximately 46\% 
+of all registered voters in Florida and are representative of the state in terms of turnout
+rate, gender and age within a two percentage point difference .  However, the counties are slightly biased toward a
+demographic found in metropolitan areas, which tends to be less white and less Republican
+while earning a slightly higher salary (See Table \ref{tab:regVoters} in the Appendix). Table \ref{tab:evidcounts} contains counts of
 early voting EViD timestamps per county. In the 2012 General Election,
 there were 2,409,097 total early ballots cast in Florida, and in 2016,
 3,876,753 early ballots.\footnote{2012 General Election turnout
@@ -706,7 +707,7 @@ there were 2,409,097 total early ballots cast in Florida, and in 2016,
   Election statistics at
   \url{http://dos.myflorida.com/media/697842/2016-ge-summaries-ballots-by-type-activity.pdf}
   (last accessed December 10, 2017).} Our EViD data cover
-approximately 42 (46) percent of all early in-person ballots cast in
+approximately 43 (48) percent of all early in-person ballots cast in
 Florida in the 2012 (2016) General Election.\footnote{Table
   \ref{tab:evidcounts} does not include 116 EViD check-in times (29
   from 2012 and 87 from 2016) listed as midnight.  We are suspicious
@@ -718,28 +719,21 @@ to the nearly 14 million individual voter registration records in
 Florida's statewide voter file. To this end, we merge our EViD
 timestamps with statewide voter files that cover the 2012 and 2016
 General Elections.\footnote{Per Table \ref{tab:evidcounts}, we observe
-  1,012,566 early voters across our \numcounties\ counties in 2012 and
-  1,795,548 early voters in 2016. Of 2012 (2016) early voters, 53,188
-  (14,911) could not be matched to the registration records we have
+  1,031,179 early voters across our \numcounties\ counties in 2012 and
+  1,846,845 early voters in 2016. Of 2012 (2016) early voters, 54,174
+  (14,961) could not be matched to the registration records we have
   from the January 2014 (2016) statewide Florida voter extract file.
   In any analysis that uses demographic or partisan information about
   the voters, we drop those voters who could not be matched to
   registration records.}
 
-% > nrow(evid12) / 2409097 * 100
-% [1] 42.03094
-% > nrow(evid16) / 3876753 * 100
-% [1] 46.31577
+% > nrow(evid12) / 2409097 * 100% [1] 42.80355
+% > nrow(evid16) / 3876753 * 100% [1] 47.63896
 
 % > cat ("EVID counts after dropping midnight votes\n")
 % EVID counts after dropping midnight votes
 % > evid %>% group_by(year) %>% count
-% # A tibble: 2 x 2
-% # Groups:   year [2]
-%    year       n
-%   <int>   <int>
-% 1  2012 1012566
-% 2  2016 1795548
+%# A tibble: 2 x 2%# Groups:   year [2]%   year       n%  <int>   <int>%1  2012 1031179%2  2016 1846845
 % > 1012566 - 1012595
 % [1] -29
 % > 1795548 - 1795635
@@ -754,14 +748,7 @@ General Elections.\footnote{Per Table \ref{tab:evidcounts}, we observe
 % are recorded. Moreover, 
 
 
-% > evid %>% filter(is.na(gender) & is.na(race) & is.na(birthdate)) %>% group_by(year) %>% count
-% # A tibble: 2 x 2
-% # Groups:   year [2]
-%    year     n
-%   <int> <int>
-% 1  2012 53188
-% 2  2016 14911
-% > 
+%> # 54174 in 2012 and 14961 in 2016 could not be matched to the voter extract.  %> evid %>% filter(is.na(gender) & is.na(race) & is.na(birthdate)) %>% group_by(year) %>% count%# A tibble: 2 x 2%# Groups:   year [2]%   year     n%  <int> <int>%1  2012 54174%2  2016 14961
 
 
 In 2012, all 67 Florida counties offered between six and 12 daily
@@ -866,20 +853,20 @@ voter with such a late check-in must have waited to vote.
 % XXX need to cite this location file?  how do to this?  DONE
 
 %> unique(evid12$county)
-%[1] "ALA" "BRO" "HIL" "DAD" "ORA" "PAL"
+%[1] "ALA" "BRO" "HIL" "DAD" "ORA" "PAL" "OSC" "HER" "LEV" "PUT" "CAL" "MAN"
 
 % > evid %>% filter(year == 2012) %>% summarize(length(unique(location)))
 % # A tibble: 1 x 1
 %   `length(unique(location))`
 %                        <int>
-% 1                         88
+% 1                         90
 % > evid %>% filter(year == 2016) %>% summarize(length(unique(location)))
 % # A tibble: 1 x 1
 %   `length(unique(location))`
 %                        <int>
-% 1                        116
+% 1                        118
 
-In 2012, there were across our \numcounties\ Florida counties 88 early
+In 2012, there were across our \numcounties\ Florida counties 90 early
 voting stations in 2012 that serviced voters in an eight day long,
 early voting period.\footnote{Early voting locations in 2012 where two
   or fewer individuals recorded votes were dropped from our analysis.
@@ -894,10 +881,12 @@ early voting period.\footnote{Early voting locations in 2012 where two
 describes by day of early voting and by hourly window the number of
 locations across our counties that actively served voters. Most
 locations served early voters virtually the entire day, and this is
-evident in the flat line, for the most part pegged a bit under 80XXX
+evident in the flat line, for the most part pegged at 90
 prior to 7:00pm, at the top of the figure.  The most notable exception
 to this pattern occurred at the earliest time of the day, during which
 several early voting stations lacked active voters.
+
+% > max(forplot$n)% [1] 90
 
 \begin{figure}[!ht]
   \caption{Number of locations where early votes were cast, 2012 General Election}
@@ -914,7 +903,7 @@ active stations starting at this time.  Even with this drop, however,
 there were still at least five open locations at 9:00pm on every day
 of early voting.  Then, on the last two days of early voting, November
 2 and 3, many early voting stations remained open well beyond 7:00pm.
-On the final Saturday of early voting, over 30 stations were still
+On the final Saturday of early voting, over 50 stations were still
 open at 9:00pm, and a few processed voters through midnight.
 
 \begin{figure}[!ht]
@@ -931,12 +920,12 @@ day with a small peak before noon.  From 7:00am to 7:00pm, our
 \numcounties\ counties consistently served around 70,000 Florida early
 voters per hour. After 7:00pm, at which point new voters could not
 join existing voting queues, the number of voters served per hour
-dropped drastically---but not entirely.  A total of 84,112 early
+dropped drastically---but not entirely.  A total of 84,446 early
 voters in 2012 across our \numcounties\ counties cast ballots after
 7:00pm. These are individuals who were in line at the time the polls
 closed and were allowed to continue to wait to vote.  We know that all
 of these voters had to wait in this way although we do not know
-precisely how long each individual waited.  Of this group, 36,187
+precisely how long each individual waited.  Of this group, 36,230
 voted after 8:00pm.  These voters waited at least one hour to vote,
 and 13,568 voters, who checked-in after 9:00pm, waited at least two
 hours to vote.
@@ -945,12 +934,12 @@ hours to vote.
 % # A tibble: 1 x 1
 %       n
 %   <int>
-% 1 84112
+% 1 84466
 % > evid12 %>% filter(time2 > 20) %>% count()
 % # A tibble: 1 x 1
 %       n
 %   <int>
-% 1 36187
+% 1 36230
 % > evid12 %>% filter(time2 > 21) %>% count()
 % # A tibble: 1 x 1
 %       n
@@ -1044,8 +1033,7 @@ forced voters to cast their ballots after 7:00pm.
 % > table(evid12$party)/nrow(evid12)
 
 %         DEM         IDP         NPA         OTH         REP 
-% 0.530144208 0.002131219 0.162395340 0.066948722 0.238380511 
-
+% 0.528399046 0.002181968 0.161766289 0.066933093 0.240719603 
 
 Figure \ref{fig:party2012} describes the breakdown of party
 registration by race/ethnicity, which reflects the aforementioned
@@ -1065,8 +1053,10 @@ increased its number of early voting days from eight to 14, ostensibly
 in an effort to reduce voting location congestion. Was this change
 effective?  Figure \ref{fig:nrlocs2016} is analogous to the earlier
 figure that described active early voting locations. Our \numcounties\
-counties had 116 early voting stations in place for the 2016 General
+counties had 118 early voting stations in place for the 2016 General
 Election.
+
+%> length(unique(evid16$location))%[1] 118
 
 \begin{figure}[!ht]
   \caption{Number of locations where early votes were cast, 2016 General
@@ -1159,7 +1149,7 @@ changes made to the early voting period appear to have reduced the
 congestion outside of the polls. The increased number of days and
 hours may have helped, as our \numcounties\ counties still served
 roughly the same number of early voters per day in 2016 (approximately
-128,253) as they did in 2012 (approximately 126,571). It is an open
+131,918) as they did in 2012 (approximately 128,897). It is an open
 question in the literature on election administration as to the
 marginal effect of additional days versus hours per day on early
 voting usage \citep[e.g.,][]{walkeretal:ncearly}.
@@ -1169,9 +1159,9 @@ voting usage \citep[e.g.,][]{walkeretal:ncearly}.
 % difference for congestion.
 
 % > nrow(evid12) / 8
-% [1] 126570.8
+% [1] 128897.4
 % > nrow(evid16) / 14
-% [1] 128253.4
+% [1] 131917.5
 % > 
 
 \subsection*{Effects of waiting to vote}
@@ -1300,7 +1290,7 @@ gender \citep{schlozman:genderdifferentvoice}, party
 \citep{martinezgill:partisanturnout,grofmanetal:turnout}, and race
 \citep{verbaetal:raceparticipation,fraga:raceturnout} are associated
 with individual-level turnout decisions. We estimate our logistic
-regression using 809,914 individuals.\footnote{Our regression is
+regression using 826,145 individuals.\footnote{Our regression is
   estimated using individuals who voted before 7:00pm, who are
   registered either Democrat, Republican, or Independent, or have
   recorded no party affiliation, and who have recorded gender, race,
@@ -1313,14 +1303,14 @@ rule as noted above, the voting locations we identify as having been
 affected by lines truly were busier than the locations where we
 believe lines were not an issue, then we should observe greater
 numbers of check-ins in the former compared to the latter. On this
-point, see Figure \ref{fig:overplot}. This figure displays check-ins
+point, see Figure \ref{fig:overplot}. This figure displays hourly total check-ins
 per location, disaggregated by $Over$. What we see in the figure is
 that, in every hour of the day, locations we believe had voting lines
-were busier than locations where we do not believe lines were
+were on average busier than locations where we do not believe lines were
 prevalent.% This constitutes a consistency check for $Over$.
 
 \begin{figure}[!ht]
-  \caption{Check-ins per hour across congested and non-congested
+  \caption{Average check-ins per hour across congested and non-congested
     voting locations}
   \label{fig:overplot}
   \centering
