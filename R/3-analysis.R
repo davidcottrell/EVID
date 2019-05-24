@@ -145,7 +145,7 @@ table2use <- cbind(table2use, Total)
 
 table2print <- xtable(t(table2use),
                       row.names =  TRUE,
-                      caption = "EVID check-ins by county, 2012 and 2016 General Elections",
+                      caption = "EViD check-ins by county, 2012 and 2016 General Elections",
                       label = "tab:evidcounts",
                       hline.after = TRUE,
                       align = "lrr",
