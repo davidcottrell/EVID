@@ -54,7 +54,7 @@
 \addtolength{\myfootnotesep}{-\footnotesep}
 \setlength{\footnotesep}{\myfootnotesep} % set spacing between footnotes
 
-\newcommand{\numcounties}{twelve} 
+\newcommand{\numcounties}{12}
 
 % make footnote font size same as regular font size in text
 \renewcommand{\footnotesize}{\normalsize} 
@@ -329,12 +329,11 @@ each with its own assumptions.
 %In light of potential concern with survey-based evidence on voting
 %lines,
 
-% Still, in the interests
-% of being transparent about limitations in our research design, a
-% voter's check-in time is not directly connected to the amount of time
-% she spent waiting in line.  We describe below how we link voter
-% check-in times with corresponding waiting times, but the connection is
-% not perfect.
+% Still, in the interests of being transparent about limitations in
+% our research design, a voter's check-in time is not directly
+% connected to the amount of time she spent waiting in line.  We
+% describe below how we link voter check-in times with corresponding
+% waiting times, but the connection is not perfect.
 
 Regarding the time tax associated with waiting to vote, we find a
 disproportionate concentration of this tax on minority voters. The
@@ -665,7 +664,7 @@ EViD machines.\footnote{As of the 2016 General Election, nearly all
   \url{https://www.vrsystems.com/Products/EViD} (last accessed May 11,
   2019).  A few counties relied on different systems to process their
   early voters (phone call with Cathy Fowler, office of the Sarasota
-  Supervisor of Elections, on March 31, 2017).}
+  County Supervisor of Elections, on March 31, 2017).}
 
 %% Cathy Fowler:  cfowler@sarasotavotes.com
 
@@ -871,23 +870,22 @@ voter with such a late check-in must have waited to vote.
 
 In 2012, there were across our \numcounties\ Florida counties 90 early
 voting stations in 2012 that serviced voters in an eight day long,
-early voting period.\footnote{Early voting locations in 2012 where two
-  or fewer individuals recorded votes were dropped from our analysis.
-  Some of our county EViD timestamp files lack voting location data.
-  To determine the locations at which affected voters cast their
-  ballots, we link voters' early voting records to files that record
-  the location of every early vote in Florida. See Florida Division of
-  Elections, ``Early Voting Locations and Times - Statewide File,''
-  available at
+early voting period.\footnote{Early voting locations in 2012 with two
+  or fewer recorded votes were dropped from our analysis.  Some of our
+  county EViD timestamp files lack voting locations.  To determine the
+  locations at which affected voters cast ballots, we link early
+  voting records to files containing the locations of every early
+  vote. See Florida Division of Elections, ``Early Voting Locations
+  and Times - Statewide File,'' available at
   \url{https://dos.myflorida.com/media/697189/early-voting-locations-and-times-2016-general-election_eng.pdf}
   (last accessed May 11, 2019).}  Figure \ref{fig:nrlocs2012}
 describes by day of early voting and by hourly window the number of
 locations across our counties that actively served voters. Most
 locations served early voters virtually the entire day, and this is
-evident in the flat line, for the most part pegged at 90
-prior to 7:00pm, at the top of the figure.  The most notable exception
-to this pattern occurred at the earliest time of the day, during which
-several early voting stations lacked active voters.
+evident in the flat line, for the most part pegged at 90 prior to
+7:00pm, at the top of the figure.  The most notable exception to this
+pattern occurred at the earliest time of the day, during which several
+early voting stations lacked active voters.
 
 % > max(forplot$n)% [1] 90
 
@@ -1013,15 +1011,15 @@ the 8:00pm-9:00pm window, the pool is less than 25 percent white.
 % 9	Unknown
 
 The party registration of the early voting pool varies slightly with
-time although not nearly as starkly as its racial/ethnic composition.
-This is illustrated in Figure \ref{fig:party2012}, which describes by
-hour the partisan breakdown of early voters in our \numcounties\
-counties as well as the party breakdown of the four aforementioned
-racial/ethnic groups.  While Democrats made up approximately 53\% of
-all those who voted early in our \numcounties\ Florida counties, we
-see from the black line in the figure that this percentage varied by
-hour of the day.  Notably, Democrats composed a greater share of the
-voters in both the early hours of voting and the hours after 7:00pm.
+time although not as starkly as its racial/ethnic composition.  This
+is illustrated in Figure \ref{fig:party2012}, which describes by hour
+the partisan breakdown of early voters in our \numcounties\ counties
+as well as the party breakdown of the four aforementioned
+racial/ethnic groups.  While Democrats constituted approximately 53\%
+of all those who voted early in our \numcounties\ counties, we see
+from the black line in the figure that this percentage varied by hour
+of the day.  Notably, Democrats composed a greater share of the voters
+in both the early hours of voting and the hours after 7:00pm.
 
 % Hence, Democrats were disproportionately affected by voting lines that
 % forced voters to cast their ballots after 7:00pm.
@@ -1174,9 +1172,9 @@ We now consider the downstream effects on future electoral political
 participation of waiting in line to vote. We focus first on the
 consequences of waiting in an early voting line in the 2012 General
 Election on turnout in the 2016 General Election. We then assess how
-waiting in line in 2012 affected early voting in 2016. Lastly we
-consider how waiting in 2012 was associated with turnout in 2014, the
-year of a midterm election.
+waiting in line in 2012 affected early voting. Lastly we consider how
+waiting in 2012 was associated with turnout in 2014, the year of a
+midterm election.
 
 \subsubsection*{Effects of 2012 lines on 2016 turnout}
 
@@ -1295,10 +1293,10 @@ gender \citep{schlozman:genderdifferentvoice}, party
 \citep{verbaetal:raceparticipation,fraga:raceturnout} are associated
 with individual-level turnout decisions. We estimate our logistic
 regression using 826,145 individuals.\footnote{Our regression is
-  estimated using individuals who voted before 7:00pm, who are
-  registered either Democrat, Republican, or Independent, or have
-  recorded no party affiliation, and who have recorded gender, race,
-  and birthdate.}
+  estimated using individuals who voted before 7:00pm, registered
+  either Democrat, Republican, or Independent, or have recorded no
+  party affiliation, and who have recorded gender, race, and
+  birthdate.}
 
 Before turning to results, we consider whether our indicator variable
 ($Over$) for the presence of lines in voting locations is consistent
@@ -1321,22 +1319,22 @@ prevalent.% This constitutes a consistency check for $Over$.
     \centering\includegraphics[scale = 1.0]{over-plot.pdf}
 \end{figure}
 
-Turning now to regression results, coefficient estimates appear in
-Table \ref{tab:reg} in the appendix. Per the leftmost column (1) of
-Table \ref{tab:reg}, having voted in 2008 in Florida is positively
-associated with subsequent voting in 2016, and being older is
-associated with greater turnout, \emph{ceteris paribus}. The latter
-result is consistent with findings on turnout and age
-\citep{costaetal:walkingthewalk}. Our age estimates in Table
-\ref{tab:reg} are presumably underestimated; the regression model that
-generates them excludes the youngest voters in 2016, who could not
-legally register to vote in Florida in 2008, and younger registered
-voters are, \emph{ceteris paribus}, less likely to turn out to vote
-\citep{shinosmith:registrationtiming}. Table \ref{tab:reg} also shows
-that, \emph{ceteris paribus}, registered men vote less frequently than
-women and that registered whites vote often than non-whites. This
-gender finding is consistent with \citet{leighleynagler:whovotesnow}
-although the race/ethnicity result is not.
+Turning to regression results, coefficient estimates appear in Table
+\ref{tab:reg} in the appendix. Per the leftmost column (1) of the
+table, having voted in 2008 in Florida is positively associated with
+subsequent voting in 2016, and being older is associated with greater
+turnout, \emph{ceteris paribus}. The latter result is consistent with
+findings on turnout and age \citep{costaetal:walkingthewalk}. Our age
+estimates in Table \ref{tab:reg} are presumably underestimated; the
+model that generates them excludes the youngest voters in 2016, who
+could not legally register to vote in Florida in 2008, and younger
+registered voters are, \emph{ceteris paribus}, less likely to turn out
+to vote \citep{shinosmith:registrationtiming}. Table \ref{tab:reg}
+also shows that, \emph{ceteris paribus}, registered men vote less
+frequently than women and that registered whites vote often than
+non-whites. This gender finding is consistent with
+\citet{leighleynagler:whovotesnow} although the race/ethnicity result
+is not.
 
 Our objective is not to explore the relationship between demographic
 covariates and voter turnout in Florida in 2016.  Rather, we want to
@@ -1355,10 +1353,10 @@ line.  In contrast, the grey points in Figure \ref{fig:prvoting2016}
 are the estimated probabilities of voting in 2016 conditional on
 casting an early ballot at a polling location that closed \emph{after}
 7:30pm.  These estimates reflect individuals who likely did wait in
-line to vote.  Hence, the difference between the figure's two sets of
-estimates should reflect the effect of waiting in line.  Moreover, the
-effect should be most isolated as one compares voters casting ballots
-closer to 7:00pm.
+line to vote.  The differences between the figure's two sets of
+estimates reflect the effect of waiting in line, and we expect the to
+be most isolated as one compares voters casting ballots closer to
+7:00pm.
 
 \begin{figure}[!ht]
 \caption{Probability of voting in 2016, given 2012 check-in time}
@@ -1371,31 +1369,30 @@ Beginning at around 2:00pm, there is a small albeit negative
 difference between individuals who voted in congested polling places
 compared to those who cast their ballots in non-congested places.
 This suggests that voting lines may have started in the early
-afternoon, and the reason there is no difference between congested and
+afternoon; the reason there is no difference between congested and
 non-congested polling places earlier in the day may be because long
 lines had yet to form then. As congested polling places become
-congested, we begin to see a small but statistically significant
-effect on future political participation, an effect which suggests
-that voting lines slightly dampen future electoral participation.  The
-effect is small, amounting to no more than roughly a percentage point
-difference.
+congested, we observe a small but statistically significant effect on
+future political participation, suggesting that voting lines slightly
+dampen future electoral participation.  The effect is small, amounting
+to no more than roughly a percentage point difference.
 
 Voting probability plots for other demographic groups are similar to
-the plot in Figure \ref{fig:prvoting2016}, and rather than showing
-many such plots we generalize to our complete sample the marginal
-effect of waiting in line in 2012 on voting in 2016.  Across our
-sample, Figure \ref{fig:margfx2016} displays estimates, along with
-95\% confidence intervals, of the change in probability of voting in
-2016 based on time of early vote in 2012.  We generated the results in
-the Figure \ref{fig:margfx2016} with a simulation.  Our simulation
-(500 repetitions) drew from a multivariate normal distribution where
-the mean vector consists of values of the coefficient vector
-corresponding to the leftmost column (1) in Table \ref{tab:reg}.  The
-covariance matrix for the multivariate normal is the estimated
-covariance matrix from our logistic regression.  The numbers in Figure
+that in Figure \ref{fig:prvoting2016}, and rather than displaying many
+such plots we generalize to our complete sample the marginal effect of
+waiting in line in 2012 on voting in 2016.  Across the sample, Figure
+\ref{fig:margfx2016} displays estimates, with 95\% confidence
+intervals, of the change in probability of voting in 2016 based on
+time of early vote in 2012.  We generated the results in the Figure
+\ref{fig:margfx2016} with a simulation.  Our simulation (500
+repetitions) drew from a multivariate normal distribution where the
+mean vector consists of values of the coefficient vector corresponding
+to the leftmost column (1) in Table \ref{tab:reg}.  The covariance
+matrix for the multivariate normal is the estimated covariance matrix
+from our logistic regression.  The numbers in Figure
 \ref{fig:margfx2016} can be thought of as average treatment effects
-where the treatment on individuals in our sample is being forced to
-wait in a voting line in 2012.
+where the treatment on individuals is being forced to wait in a voting
+line in 2012.
 
 %\input{table_out_ate.tex}
 
